@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>信誉积分 V3 原型</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #64748b;
+      --line: #e3e9f1;
+      --blue: #2f6bff;
+      --blue-soft: #edf4ff;
+      --warn: #b97712;
+      --warn-soft: #fff4dd;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      color: var(--text);
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #dfeaf7 0%, #f8fbff 100%);
+    }
+
+    main {
+      width: min(900px, 100%);
+      padding: 34px;
+      border: 1px solid rgba(84, 107, 139, 0.18);
+      border-radius: 12px;
+      background: var(--card);
+      box-shadow: 0 22px 56px rgba(29, 45, 68, 0.13);
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .desc {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      font-weight: 760;
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    a {
+      min-height: 150px;
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: inherit;
+      background: #fff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      border-color: #aac7ff;
+      background: #f8fbff;
+    }
+
+    strong {
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 760;
+    }
+
+    .note {
+      margin-top: 22px;
+      padding: 13px 14px;
+      border: 1px solid #f2dfbd;
+      border-radius: 8px;
+      color: #76501d;
+      background: var(--warn-soft);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 780;
+    }
+
+    @media (max-width: 680px) {
+      body { padding: 16px; }
+      main { padding: 24px; }
+      .links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="kicker">Credit V3 Prototype</p>
+    <h1>信誉积分 V3 原型入口</h1>
+    <p class="desc">用于在线预览移动端与 PC 端信誉积分 V3 原型。当前版本包含首页、积分明细、申诉记录、申诉提交、规则说明等交互。</p>
+    <section class="links" aria-label="原型入口">
+      <a href="./mobile.html">
+        <strong>移动端原型</strong>
+        <span>查看移动端首页、积分明细、申诉记录、申诉提交弹窗和规则说明。</span>
+      </a>
+      <a href="./pc.html">
+        <strong>PC 端原型</strong>
+        <span>查看 PC 端可交互信誉积分详情页、明细、申诉记录和规则说明。</span>
+      </a>
+    </section>
+    <div class="note">当前页面仅作为原型预览入口，正式规则值和扣分项以后续 PRD 与后台配置为准。</div>
+  </main>
+</body>
+</html>
