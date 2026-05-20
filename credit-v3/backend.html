@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>信誉积分V3后台配置设计稿_V6</title>
+  <title>信誉积分V3后台配置设计稿_V7</title>
   <style>
     :root {
       --bg: #f3f5f8;
@@ -599,10 +599,15 @@
       color: #f5302f;
       font-weight: 900;
       white-space: nowrap;
+      cursor: pointer;
     }
 
     .op.secondary {
       color: #3772ff;
+    }
+
+    .op + .op {
+      margin-left: 16px;
     }
 
     .pill {
@@ -1173,7 +1178,7 @@
                           <td><span class="pill on">加分行为</span></td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>订单行为</td>
@@ -1181,7 +1186,7 @@
                           <td><span class="pill on">加分行为</span></td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>守约行为</td>
@@ -1189,7 +1194,7 @@
                           <td><span class="pill danger">扣分行为</span></td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>处罚行为</td>
@@ -1197,7 +1202,7 @@
                           <td><span class="pill danger">扣分行为</span></td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>基础信息</td>
@@ -1205,7 +1210,7 @@
                           <td><span class="pill off">不计分</span></td>
                           <td>否</td>
                           <td><span class="pill off">不启用</span></td>
-                          <td><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>系统调整</td>
@@ -1213,7 +1218,7 @@
                           <td><span class="pill off">不计分</span></td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -1292,7 +1297,7 @@
                           <td>订单结算</td>
                           <td><span class="pill on">履约加分</span></td>
                           <td>租号 / 陪玩 / 代练 / 交易</td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td class="left">连续正常结算</td>
@@ -1300,7 +1305,7 @@
                           <td>连续履约</td>
                           <td><span class="pill on">订单加分</span></td>
                           <td>租号 / 陪玩 / 代练 / 交易</td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td class="left">异常撤单</td>
@@ -1308,7 +1313,7 @@
                           <td>投诉撤单</td>
                           <td><span class="pill danger">违规扣分</span></td>
                           <td>租号</td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td class="left">虚假投诉</td>
@@ -1316,7 +1321,7 @@
                           <td>投诉核实</td>
                           <td><span class="pill danger">违规扣分</span></td>
                           <td>租号 / 交易</td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td class="left">账号异常使用</td>
@@ -1324,7 +1329,7 @@
                           <td>风控命中</td>
                           <td><span class="pill danger">违规扣分</span></td>
                           <td>租号</td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td class="left">实名认证</td>
@@ -1332,7 +1337,7 @@
                           <td>身份资料</td>
                           <td><span class="pill off">不计分</span></td>
                           <td>全业务</td>
-                          <td><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -1403,7 +1408,7 @@
                           <td class="left">个人原因撤单 / 核实成立</td>
                           <td>-6</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td class="left">虚假投诉扣分</td>
@@ -1413,7 +1418,7 @@
                           <td class="left">重复申诉 / 核实不成立</td>
                           <td>-8</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td class="left">账号异常使用</td>
@@ -1423,7 +1428,7 @@
                           <td class="left">账号风险 / 核实成立</td>
                           <td>-4</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td class="left">恶意撤单</td>
@@ -1433,7 +1438,7 @@
                           <td class="left">高频撤单 / 核实成立</td>
                           <td>-5</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td class="left">处罚命中扣分</td>
@@ -1443,7 +1448,7 @@
                           <td class="left">违规等级 2 / 核实成功</td>
                           <td>-12</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -1523,7 +1528,7 @@
                           <td><span class="pill warn">提醒</span></td>
                           <td>当天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>特价专区</td>
@@ -1531,7 +1536,7 @@
                           <td><span class="pill danger">拦截下单</span></td>
                           <td>7 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>发布账号</td>
@@ -1539,7 +1544,7 @@
                           <td><span class="pill danger">拦截</span></td>
                           <td>30 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>领券中心</td>
@@ -1547,7 +1552,7 @@
                           <td><span class="pill danger">禁止领券</span></td>
                           <td>30 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>活动参与</td>
@@ -1555,7 +1560,7 @@
                           <td><span class="pill danger">禁止参与活动</span></td>
                           <td>7 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -1618,14 +1623,15 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 14%;">状态名称</th>
-                          <th style="width: 10%;">状态等级</th>
-                          <th style="width: 16%;">总信誉积分区间</th>
-                          <th style="width: 14%;">近期行为分区间</th>
-                          <th style="width: 18%;">展示文案</th>
-                          <th style="width: 12%;">触发惩罚</th>
-                          <th style="width: 12%;">关联限制策略</th>
-                          <th style="width: 4%;">状态</th>
+                          <th style="width: 12%;">状态名称</th>
+                          <th style="width: 8%;">状态等级</th>
+                          <th style="width: 14%;">总信誉积分区间</th>
+                          <th style="width: 13%;">近期行为分区间</th>
+                          <th style="width: 17%;">展示文案</th>
+                          <th style="width: 10%;">触发惩罚</th>
+                          <th style="width: 10%;">关联限制策略</th>
+                          <th style="width: 6%;">状态</th>
+                          <th style="width: 10%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1638,6 +1644,7 @@
                           <td>否</td>
                           <td>--</td>
                           <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>预警</td>
@@ -1648,6 +1655,7 @@
                           <td>部分</td>
                           <td class="left">高价值账号提醒</td>
                           <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>部分受限</td>
@@ -1658,6 +1666,7 @@
                           <td>是</td>
                           <td class="left">特价专区限制</td>
                           <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>限制</td>
@@ -1668,6 +1677,7 @@
                           <td>是</td>
                           <td class="left">发布账号限制</td>
                           <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                         <tr>
                           <td>高风险</td>
@@ -1678,6 +1688,7 @@
                           <td>是</td>
                           <td class="left">领券 / 活动限制</td>
                           <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -2430,38 +2441,12 @@
     }
 
     function deleteDialogConfig(action) {
-      const activePanel = document.querySelector(".panel.active")?.dataset.panel || "system";
-      const row = action.closest("tr");
-      const cells = row ? Array.from(row.cells).map((cell) => cell.innerText.trim().replace(/\s+/g, " ")) : [];
-      const panelNameMap = {
-        system: "体系配置",
-        dictionary: "字典项配置",
-        deduct: "扣分规则",
-        punish: "限制策略",
-        grade: "信誉状态",
-        detail: "信誉积分明细",
-        appeal: "申诉记录",
-        log: "规则日志"
-      };
-      const targetName = cells.length > 1 ? `${cells[0]} / ${cells[1]}` : cells[0] || "当前配置";
-      const panelName = panelNameMap[activePanel] || "当前配置";
-
       return {
         title: "确认删除",
-        desc: `即将删除${panelName}中的配置项。删除前请确认该配置未被线上规则引用。`,
+        desc: "确认删除当前规则吗？",
         danger: true,
         primaryAction: "确认删除",
-        sections: [
-          {
-            title: "删除确认",
-            fields: [
-              ["删除对象", targetName, true],
-              ["影响说明", "删除后不可恢复；如该配置已被其他规则引用，请先解除引用后再删除。", false, "wide"],
-              ["删除原因", "请输入删除原因，便于后续审计追溯", true, "wide"]
-            ],
-            tip: "删除操作需要记录操作人、删除时间和删除原因；本原型仅展示交互，不执行真实删除。"
-          }
-        ]
+        sections: []
       };
     }
 
