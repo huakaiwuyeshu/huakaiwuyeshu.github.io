@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>信誉积分V3后台配置设计稿_V8</title>
+  <title>信誉积分V3后台配置设计稿_V9</title>
   <style>
     :root {
       --bg: #f3f5f8;
@@ -1113,6 +1113,7 @@
           <button class="tab active" data-tab="system">体系配置</button>
           <button class="tab" data-tab="deduct">减分配置</button>
           <button class="tab" data-tab="punish">惩罚配置</button>
+          <button class="tab" data-tab="legacy">历史功能拓展</button>
           <button class="tab" data-tab="grade">等级配置</button>
           <button class="tab" data-tab="detail">信誉积分明细</button>
           <button class="tab" data-tab="appeal">申诉审核</button>
@@ -1602,6 +1603,173 @@
                     </div>
                   </div>
                 </aside>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="legacy">
+            <div class="panel-shell">
+              <div class="panel-head">
+                <h1 class="panel-title">历史功能拓展 / 投诉与撤单限制</h1>
+                <p class="panel-desc">基于现有“撤单限制配置”和“租客投诉规则列表”做字段扩展，原“信誉积分”条件拆成历史累积分和近期行为分两个子项。</p>
+              </div>
+              <div class="toolbar">
+                <div class="group">
+                  <button class="btn primary" data-dialog="legacyRule">新增历史规则</button>
+                  <button class="btn">查询</button>
+                </div>
+                <div class="group">
+                  <span class="badge blue">撤单限制</span>
+                  <span class="badge orange">租客投诉</span>
+                  <span class="badge gray">双分值条件</span>
+                </div>
+              </div>
+              <div style="padding: 14px 18px 18px;">
+                <div class="card">
+                  <div class="card-head">
+                    <div>
+                      <h3 class="card-title">撤单限制配置（扩展后）</h3>
+                    </div>
+                  </div>
+                  <div class="card-body" style="padding: 0;">
+                    <div class="table-wrap">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th rowspan="2" style="width: 6%;">编号</th>
+                            <th rowspan="2" style="width: 10%;">用户身份</th>
+                            <th rowspan="2" style="width: 10%;">游戏类型</th>
+                            <th colspan="2" style="width: 20%;">信誉积分条件</th>
+                            <th rowspan="2" style="width: 10%;">注册时间</th>
+                            <th rowspan="2" style="width: 9%;">近一周订单数</th>
+                            <th rowspan="2" style="width: 18%;">投诉类型</th>
+                            <th rowspan="2" style="width: 7%;">提醒次数</th>
+                            <th rowspan="2" style="width: 8%;">限制周期</th>
+                            <th rowspan="2" style="width: 6%;">状态</th>
+                            <th rowspan="2" style="width: 8%;">操作</th>
+                          </tr>
+                          <tr>
+                            <th>历史累积分</th>
+                            <th>近期行为分</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>264</td>
+                            <td>至尊VIP用户</td>
+                            <td>全部</td>
+                            <td>小于100分</td>
+                            <td>小于60分</td>
+                            <td>注册时间 &lt;= 7天</td>
+                            <td>不限</td>
+                            <td class="left">租错号、不想玩了、租错区服、选错时长/套餐</td>
+                            <td>2</td>
+                            <td>3/1</td>
+                            <td>开启</td>
+                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          </tr>
+                          <tr>
+                            <td>263</td>
+                            <td>至尊VIP用户</td>
+                            <td>全部</td>
+                            <td>小于45分</td>
+                            <td>小于40分</td>
+                            <td>注册时间 &gt; 7天</td>
+                            <td>不限</td>
+                            <td class="left">租错号、不想玩了、计划有变</td>
+                            <td>1</td>
+                            <td>2/1</td>
+                            <td>开启</td>
+                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          </tr>
+                          <tr>
+                            <td>260</td>
+                            <td>普通分销</td>
+                            <td>全部</td>
+                            <td>小于100分</td>
+                            <td>不限</td>
+                            <td>不限</td>
+                            <td>不限</td>
+                            <td class="left">不限</td>
+                            <td>10</td>
+                            <td>20/1</td>
+                            <td>开启</td>
+                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card" style="margin-top: 14px;">
+                  <div class="card-head">
+                    <div>
+                      <h3 class="card-title">租客投诉规则列表（扩展后）</h3>
+                    </div>
+                  </div>
+                  <div class="card-body" style="padding: 0;">
+                    <div class="table-wrap">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th rowspan="2" style="width: 6%;">编号</th>
+                            <th rowspan="2" style="width: 10%;">用户身份</th>
+                            <th rowspan="2" style="width: 12%;">游戏类型</th>
+                            <th colspan="2" style="width: 20%;">信誉积分条件</th>
+                            <th rowspan="2" style="width: 12%;">限制方式</th>
+                            <th rowspan="2" style="width: 22%;">投诉类型</th>
+                            <th rowspan="2" style="width: 8%;">操作人</th>
+                            <th rowspan="2" style="width: 8%;">状态</th>
+                            <th rowspan="2" style="width: 8%;">操作</th>
+                          </tr>
+                          <tr>
+                            <th>历史累积分</th>
+                            <th>近期行为分</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>51</td>
+                            <td>普通用户</td>
+                            <td>全部游戏</td>
+                            <td>小于等于61分</td>
+                            <td>小于等于50分</td>
+                            <td>限制部分类型次数上限</td>
+                            <td class="left">租错号了、不想玩了、租错区服、选错时长/套餐</td>
+                            <td>何冰冰</td>
+                            <td>关闭</td>
+                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          </tr>
+                          <tr>
+                            <td>50</td>
+                            <td>普通用户</td>
+                            <td>全部游戏</td>
+                            <td>小于等于40分</td>
+                            <td>小于等于35分</td>
+                            <td>限制部分类型不可选</td>
+                            <td class="left">租错号了、不想玩了、计划有变</td>
+                            <td>何冰冰</td>
+                            <td>关闭</td>
+                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          </tr>
+                          <tr>
+                            <td>49</td>
+                            <td>普通用户</td>
+                            <td>全部游戏</td>
+                            <td>小于等于44分</td>
+                            <td>小于等于45分</td>
+                            <td>限制部分类型次数上限</td>
+                            <td class="left">账号描述不符、密码错误、无法登录、账号禁赛</td>
+                            <td>何冰冰</td>
+                            <td>开启</td>
+                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -2232,6 +2400,39 @@
           }
         ]
       },
+      legacyRule: {
+        title: "新增历史功能规则",
+        desc: "用于在撤单限制配置、租客投诉规则列表等历史功能中补充双分值条件。",
+        sections: [
+          {
+            title: "基础条件",
+            fields: [
+              ["历史功能类型", "撤单限制配置 / 租客投诉规则列表", true, "", "select"],
+              ["用户身份", "普通用户 / 普通分销 / 至尊VIP用户", true, "", "select"],
+              ["游戏类型", "全部游戏 / 指定游戏", true, "", "select"],
+              ["投诉类型", "请选择投诉类型", true, "", "select"]
+            ]
+          },
+          {
+            title: "信誉积分条件",
+            fields: [
+              ["历史累积分条件", "不限 / 小于 / 小于等于 / 大于等于", true, "", "select"],
+              ["历史累积分阈值", "请输入历史累积分阈值，例如 100", false],
+              ["近期行为分条件", "不限 / 小于 / 小于等于 / 大于等于", true, "", "select"],
+              ["近期行为分阈值", "请输入近期行为分阈值，例如 60", false]
+            ],
+            tip: "历史功能原有“信誉积分”字段拆成两个子项：历史累积分用于长期表现判断，近期行为分用于近期风险判断。"
+          },
+          {
+            title: "限制配置",
+            fields: [
+              ["限制方式", "撤单提醒 / 限制撤单 / 限制部分类型次数上限 / 限制部分类型不可选", true, "", "select"],
+              ["限制周期", "请输入限制次数/周期，例如 3/1", false],
+              ["状态", "开启 / 关闭", true, "", "select"]
+            ]
+          }
+        ]
+      },
       copyLimit: {
         title: "复制限制策略",
         desc: "用于从已有场景复制限制策略后微调，减少重复配置成本。",
@@ -2357,6 +2558,7 @@
         "分值配置方式",
         "是否允许申诉", "状态", "投诉类型", "投诉选项", "核实结果",
         "限制场景", "处理方式", "限制时长", "源策略", "目标场景",
+        "历史功能类型", "用户身份", "游戏类型", "历史累积分条件", "近期行为分条件", "限制方式",
         "复制内容", "生效方式", "是否触发限制策略", "关联限制策略",
         "调整类型", "关联业务单号", "申诉状态", "审核结果",
         "是否回滚", "处理来源", "日志类型"
@@ -2504,6 +2706,7 @@
           dictionary: "dictionaryItem",
           deduct: "deductRule",
           punish: "limitRule",
+          legacy: "legacyRule",
           grade: "statusRule",
           detail: tableAction.textContent.includes("调整") ? "manualAdjust" : "logQuery",
           appeal: "appealAudit",
