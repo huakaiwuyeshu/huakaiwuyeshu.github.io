@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>信誉积分V3后台配置设计稿_V9</title>
+  <title>信誉积分V3后台配置设计稿_V10</title>
   <style>
     :root {
       --bg: #f3f5f8;
@@ -259,6 +259,47 @@
       bottom: -11px;
       height: 2px;
       background: #5f6672;
+    }
+
+    .subtab-row {
+      display: inline-flex;
+      gap: 0;
+      margin: 14px 18px 0;
+      border: 1px solid #dbe5f2;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .subtab {
+      min-width: 150px;
+      height: 34px;
+      padding: 0 18px;
+      border: 0;
+      border-right: 1px solid #dbe5f2;
+      color: #36557e;
+      background: #fff;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .subtab:last-child {
+      border-right: 0;
+    }
+
+    .subtab.active {
+      color: #fff;
+      background: #5f8ff7;
+    }
+
+    .legacy-pane {
+      display: none;
+    }
+
+    .legacy-pane.active {
+      display: block;
     }
 
     .status-strip {
@@ -1113,12 +1154,12 @@
           <button class="tab active" data-tab="system">体系配置</button>
           <button class="tab" data-tab="deduct">减分配置</button>
           <button class="tab" data-tab="punish">惩罚配置</button>
-          <button class="tab" data-tab="legacy">历史功能拓展</button>
           <button class="tab" data-tab="grade">等级配置</button>
           <button class="tab" data-tab="detail">信誉积分明细</button>
           <button class="tab" data-tab="appeal">申诉审核</button>
           <button class="tab" data-tab="log">规则日志</button>
           <button class="tab" data-tab="dictionary">字典项配置</button>
+          <button class="tab" data-tab="legacy">历史功能拓展</button>
         </div>
       </section>
 
@@ -1624,7 +1665,12 @@
                   <span class="badge gray">双分值条件</span>
                 </div>
               </div>
+              <div class="subtab-row" aria-label="历史功能子页面">
+                <button class="subtab active" data-legacy-tab="cancel">撤单限制配置</button>
+                <button class="subtab" data-legacy-tab="complaint">租客投诉规则列表</button>
+              </div>
               <div style="padding: 14px 18px 18px;">
+                <div class="legacy-pane active" data-legacy-panel="cancel">
                 <div class="card">
                   <div class="card-head">
                     <div>
@@ -1701,8 +1747,10 @@
                     </div>
                   </div>
                 </div>
+                </div>
 
-                <div class="card" style="margin-top: 14px;">
+                <div class="legacy-pane" data-legacy-panel="complaint">
+                <div class="card">
                   <div class="card-head">
                     <div>
                       <h3 class="card-title">租客投诉规则列表（扩展后）</h3>
@@ -1769,6 +1817,7 @@
                       </table>
                     </div>
                   </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -2287,6 +2336,8 @@
   <script>
     const tabs = document.querySelectorAll(".tab");
     const panels = document.querySelectorAll(".panel");
+    const legacySubtabs = document.querySelectorAll("[data-legacy-tab]");
+    const legacyPanes = document.querySelectorAll("[data-legacy-panel]");
     const modal = document.getElementById("configModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalDesc = document.getElementById("modalDesc");
@@ -2550,6 +2601,11 @@
       panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.panel === tabKey));
     }
 
+    function activateLegacy(tabKey) {
+      legacySubtabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.legacyTab === tabKey));
+      legacyPanes.forEach((pane) => pane.classList.toggle("active", pane.dataset.legacyPanel === tabKey));
+    }
+
     function fieldHtml(field) {
       const [label, placeholder, required, span, type] = field;
       const className = span === "full" ? "modal-field full" : span === "wide" ? "modal-field wide" : "modal-field";
@@ -2685,6 +2741,12 @@
       if (tabGo) {
         activate(tabGo.dataset.goTab);
         history.replaceState(null, "", "#" + tabGo.dataset.goTab);
+        return;
+      }
+
+      const legacyGo = event.target.closest("[data-legacy-tab]");
+      if (legacyGo) {
+        activateLegacy(legacyGo.dataset.legacyTab);
         return;
       }
 
