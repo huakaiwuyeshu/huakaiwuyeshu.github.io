@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>信誉积分V3后台配置设计稿_V7</title>
+  <title>信誉积分V3后台配置设计稿_V8</title>
   <style>
     :root {
       --bg: #f3f5f8;
@@ -1163,11 +1163,12 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 16%;">一级分类</th>
-                          <th style="width: 28%;">二级分类</th>
-                          <th style="width: 16%;">行为范围</th>
-                          <th style="width: 12%;">申诉配置</th>
-                          <th style="width: 12%;">状态</th>
+                          <th style="width: 14%;">一级分类</th>
+                          <th style="width: 24%;">二级分类</th>
+                          <th style="width: 14%;">行为范围</th>
+                          <th style="width: 12%;">单次分值</th>
+                          <th style="width: 10%;">申诉配置</th>
+                          <th style="width: 10%;">状态</th>
                           <th style="width: 16%;">操作</th>
                         </tr>
                       </thead>
@@ -1176,6 +1177,7 @@
                           <td>履约行为</td>
                           <td class="left">订单结算、连续履约</td>
                           <td><span class="pill on">加分行为</span></td>
+                          <td>+2</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">删除</span></td>
@@ -1184,6 +1186,7 @@
                           <td>订单行为</td>
                           <td class="left">有效订单、订单完成</td>
                           <td><span class="pill on">加分行为</span></td>
+                          <td>+3</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">删除</span></td>
@@ -1192,6 +1195,7 @@
                           <td>守约行为</td>
                           <td class="left">投诉撤单、投诉核实、风控命中</td>
                           <td><span class="pill danger">扣分行为</span></td>
+                          <td>按扣分规则</td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">删除</span></td>
@@ -1200,6 +1204,7 @@
                           <td>处罚行为</td>
                           <td class="left">分级处罚、严重处罚</td>
                           <td><span class="pill danger">扣分行为</span></td>
+                          <td>按扣分规则</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">删除</span></td>
@@ -1208,6 +1213,7 @@
                           <td>基础信息</td>
                           <td class="left">实名认证、绑定手机、绑定支付宝</td>
                           <td><span class="pill off">不计分</span></td>
+                          <td>0</td>
                           <td>否</td>
                           <td><span class="pill off">不启用</span></td>
                           <td><span class="op secondary">修改</span><span class="op">删除</span></td>
@@ -1216,6 +1222,7 @@
                           <td>系统调整</td>
                           <td class="left">人工调整、申诉回滚</td>
                           <td><span class="pill off">不计分</span></td>
+                          <td>人工录入</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">删除</span></td>
@@ -2121,7 +2128,7 @@
     const dialogConfigs = {
       systemRule: {
         title: "新增分类规则",
-        desc: "用于配置一级分类和二级分类关系。具体扣分值来自扣分规则，申诉口径由一级分类统一控制。",
+        desc: "用于配置一级分类、二级分类和加减分值口径。守约类具体扣分可继续在扣分规则中细化。",
         sections: [
           {
             title: "分类与映射",
@@ -2131,6 +2138,15 @@
               ["行为范围", "加分行为 / 扣分行为 / 不计分", true, "", "select"],
               ["适用业务", "租号 / 陪玩 / 代练 / 交易 / 投诉", true, "", "select"]
             ]
+          },
+          {
+            title: "分值配置",
+            fields: [
+              ["分值配置方式", "固定分值 / 关联扣分规则 / 不计分 / 人工录入", true, "", "select"],
+              ["单次分值", "请输入加减分值，例如 +2 / -6；关联扣分规则时可填写默认值", true],
+              ["分值说明", "用于说明该分类规则的加减分口径", false, "wide"]
+            ],
+            tip: "加分行为可直接填写正分；扣分行为可填写默认扣分值，或选择关联扣分规则后在减分配置中维护具体扣分。"
           },
           {
             title: "申诉与状态",
@@ -2338,6 +2354,7 @@
       const className = span === "full" ? "modal-field full" : span === "wide" ? "modal-field wide" : "modal-field";
       const selectLabels = new Set([
         "行为字典项", "一级分类", "二级场景", "二级分类", "适用业务", "行为类型", "行为范围",
+        "分值配置方式",
         "是否允许申诉", "状态", "投诉类型", "投诉选项", "核实结果",
         "限制场景", "处理方式", "限制时长", "源策略", "目标场景",
         "复制内容", "生效方式", "是否触发限制策略", "关联限制策略",
