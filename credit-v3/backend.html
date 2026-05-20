@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>信誉积分V3后台配置设计稿_V4</title>
+  <title>信誉积分V3后台配置设计稿_V5</title>
   <style>
     :root {
       --bg: #f3f5f8;
@@ -1128,7 +1128,7 @@
         <div class="metric">
           <div class="label">当前待审核申诉</div>
           <div class="value">18 单</div>
-          <div class="hint">审核通过后同步生成回滚明细并刷新限制状态。</div>
+          <div class="hint">审核通过后同步生成回滚明细。</div>
         </div>
       </section>
 
@@ -1152,7 +1152,7 @@
                       <thead>
                         <tr>
                           <th style="width: 16%;">一级分类</th>
-                          <th style="width: 28%;">归拢行为</th>
+                          <th style="width: 28%;">二级分类</th>
                           <th style="width: 16%;">行为范围</th>
                           <th style="width: 12%;">申诉配置</th>
                           <th style="width: 12%;">状态</th>
@@ -1162,7 +1162,7 @@
                       <tbody>
                         <tr>
                           <td>履约行为</td>
-                          <td class="left">正常结算、连续正常结算</td>
+                          <td class="left">订单结算、连续履约</td>
                           <td><span class="pill on">加分行为</span></td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
@@ -1170,7 +1170,7 @@
                         </tr>
                         <tr>
                           <td>订单行为</td>
-                          <td class="left">有效订单、订单完成、订单恢复</td>
+                          <td class="left">有效订单、订单完成</td>
                           <td><span class="pill on">加分行为</span></td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
@@ -1178,7 +1178,7 @@
                         </tr>
                         <tr>
                           <td>守约行为</td>
-                          <td class="left">异常撤单、虚假投诉、恶意撤单、账号异常使用</td>
+                          <td class="left">投诉撤单、投诉核实、风控命中</td>
                           <td><span class="pill danger">扣分行为</span></td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
@@ -1186,7 +1186,7 @@
                         </tr>
                         <tr>
                           <td>处罚行为</td>
-                          <td class="left">分级处罚命中、严重风控处罚</td>
+                          <td class="left">分级处罚、严重处罚</td>
                           <td><span class="pill danger">扣分行为</span></td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
@@ -1202,7 +1202,7 @@
                         </tr>
                         <tr>
                           <td>系统调整</td>
-                          <td class="left">人工调整、申诉回滚、系统修正</td>
+                          <td class="left">人工调整、申诉回滚</td>
                           <td><span class="pill off">不计分</span></td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
@@ -1235,7 +1235,7 @@
                     <div class="bd">
                       <div class="side-list">
                         <div class="item">分类申诉<small>控制该一级分类下扣分记录是否可申诉</small></div>
-                        <div class="item">归拢映射<small>将多个具体行为统一归入同一一级分类</small></div>
+                        <div class="item">二级分类<small>用于承接一级分类下的业务场景</small></div>
                       </div>
                     </div>
                   </div>
@@ -1248,7 +1248,7 @@
             <div class="panel-shell">
               <div class="panel-head">
                 <h1 class="panel-title">字典项配置 / 行为字典</h1>
-                <p class="panel-desc">新增行为先进入字典项配置，只维护行为名称、一级分类、二级场景、行为类型、适用业务和备注；申诉、分值、限制策略不在字典层配置。</p>
+                <p class="panel-desc">新增行为先进入字典项配置，只维护行为名称、一级分类、二级分类、行为类型、适用业务和备注；申诉、分值、限制策略不在字典层配置。</p>
               </div>
               <div class="toolbar">
                 <div class="group">
@@ -1343,7 +1343,7 @@
                     <div class="bd">
                       <div class="side-list">
                         <div class="item">字典项<small>行为名称、分类、场景、业务和备注</small></div>
-                        <div class="item">体系配置<small>一级分类归拢、申诉开关</small></div>
+                        <div class="item">体系配置<small>一级分类、二级分类、申诉开关</small></div>
                         <div class="item">扣分规则<small>具体扣分行为和分值</small></div>
                         <div class="item">计算任务<small>按统计窗口进入近期行为分或历史累积分</small></div>
                       </div>
@@ -1377,18 +1377,20 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 20%;">扣分规则名称</th>
-                          <th style="width: 16%;">行为字典项</th>
-                          <th style="width: 14%;">投诉类型</th>
+                          <th style="width: 18%;">扣分规则名称</th>
+                          <th style="width: 10%;">一级分类</th>
+                          <th style="width: 14%;">行为字典项</th>
+                          <th style="width: 12%;">投诉类型</th>
                           <th style="width: 22%;">投诉选项 / 核实结果</th>
-                          <th style="width: 10%;">分值</th>
-                          <th style="width: 10%;">状态</th>
+                          <th style="width: 8%;">分值</th>
+                          <th style="width: 8%;">状态</th>
                           <th style="width: 8%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td class="left">异常撤单扣分</td>
+                          <td>守约行为</td>
                           <td>异常撤单</td>
                           <td>买家投诉</td>
                           <td class="left">个人原因撤单 / 核实成立</td>
@@ -1398,6 +1400,7 @@
                         </tr>
                         <tr>
                           <td class="left">虚假投诉扣分</td>
+                          <td>守约行为</td>
                           <td>虚假投诉</td>
                           <td>客服投诉</td>
                           <td class="left">重复申诉 / 核实不成立</td>
@@ -1407,6 +1410,7 @@
                         </tr>
                         <tr>
                           <td class="left">账号异常使用</td>
+                          <td>守约行为</td>
                           <td>账号异常使用</td>
                           <td>防御命中</td>
                           <td class="left">账号风险 / 核实成立</td>
@@ -1416,6 +1420,7 @@
                         </tr>
                         <tr>
                           <td class="left">恶意撤单</td>
+                          <td>守约行为</td>
                           <td>恶意撤单</td>
                           <td>上号器投诉</td>
                           <td class="left">高频撤单 / 核实成立</td>
@@ -1425,6 +1430,7 @@
                         </tr>
                         <tr>
                           <td class="left">处罚命中扣分</td>
+                          <td>守约行为</td>
                           <td>处罚命中</td>
                           <td>分级处罚</td>
                           <td class="left">违规等级 2 / 核实成功</td>
@@ -1436,7 +1442,7 @@
                     </table>
                   </div>
                   <div class="footer-info">
-                    这里保留“扣分规则名称、行为字典项、投诉类型、投诉选项、核实结果、分值、状态、操作”。申诉和限制不在扣分规则层配置。
+                    这里保留“扣分规则名称、一级分类、行为字典项、投诉类型、投诉选项、核实结果、分值、状态、操作”。申诉和限制不在扣分规则层配置。
                   </div>
                 </div>
                 <aside class="sidebar">
@@ -1461,6 +1467,7 @@
                     <div class="bd">
                       <div class="side-list">
                         <div class="item">扣分规则名称<small>用于后台和用户侧展示</small></div>
+                        <div class="item">一级分类<small>全部归属于守约行为</small></div>
                         <div class="item">行为字典项<small>用于关联具体扣分行为</small></div>
                         <div class="item">核实结果<small>用于确定是否触发扣分</small></div>
                       </div>
@@ -1776,7 +1783,7 @@
                     </table>
                   </div>
                   <div class="footer-info">
-                    手动加减分弹窗建议保留：用户 UID、调整类型、调整分值、调整原因、备注、操作人、是否立即刷新限制状态。
+                    手动加减分弹窗建议保留：用户 UID、调整类型、调整分值、调整原因、关联业务单号、备注、操作人。
                   </div>
                 </div>
                 <aside class="sidebar">
@@ -1789,7 +1796,6 @@
                       <div class="mini-list">
                         <div class="mini-item"><div><strong>调整类型</strong><span>加分 / 扣分 / 系统调整</span></div><span class="chip green">必填</span></div>
                         <div class="mini-item"><div><strong>调整原因</strong><span>必须记录审计原因</span></div><span class="chip orange">必填</span></div>
-                        <div class="mini-item"><div><strong>限制刷新</strong><span>是否立即刷新状态</span></div><span class="chip blue">可选</span></div>
                       </div>
                     </div>
                   </div>
@@ -1894,7 +1900,7 @@
                       <div class="flow">
                         <div class="flow-step"><strong>1 查看扣分</strong>定位关联扣分记录和申诉理由</div>
                         <div class="flow-step"><strong>2 审核结果</strong>通过 / 驳回 / 补充说明</div>
-                        <div class="flow-step"><strong>3 回滚刷新</strong>通过后生成回滚明细并刷新限制状态</div>
+                        <div class="flow-step"><strong>3 回滚记录</strong>通过后生成回滚明细，系统按最新分值匹配限制策略</div>
                       </div>
                     </div>
                   </div>
@@ -1930,8 +1936,8 @@
                 <div class="group">
                   <span class="badge gray">规则命中</span>
                   <span class="badge gray">配置变更</span>
+                  <span class="badge gray">手动调整</span>
                   <span class="badge gray">回滚日志</span>
-                  <span class="badge gray">批量重算</span>
                 </div>
               </div>
               <div class="log-grid" style="padding: 14px 18px 18px;">
@@ -1940,33 +1946,36 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 12%;">日志类型</th>
-                          <th style="width: 14%;">对象</th>
-                          <th style="width: 22%;">操作内容</th>
-                          <th style="width: 14%;">变更前 / 后</th>
-                          <th style="width: 12%;">来源</th>
-                          <th style="width: 12%;">操作人</th>
-                          <th style="width: 10%;">时间</th>
-                          <th style="width: 4%;">操作</th>
+                          <th style="width: 10%;">日志类型</th>
+                          <th style="width: 11%;">用户 / 对象</th>
+                          <th style="width: 11%;">调整类型</th>
+                          <th style="width: 10%;">分值 / 变更</th>
+                          <th style="width: 22%;">调整原因 / 操作内容</th>
+                          <th style="width: 14%;">关联业务单号</th>
+                          <th style="width: 10%;">调整人</th>
+                          <th style="width: 9%;">时间</th>
+                          <th style="width: 3%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>规则命中</td>
-                          <td>异常撤单扣分</td>
-                          <td class="left">命中订单 ORDER202605130042</td>
-                          <td>-4 / -6</td>
-                          <td>订单系统</td>
+                          <td>101406347</td>
+                          <td>扣分</td>
+                          <td>-6</td>
+                          <td class="left">命中异常撤单扣分规则</td>
+                          <td class="left">ORDER202605130042</td>
                           <td>系统</td>
                           <td>2026-05-19 10:40</td>
                           <td><span class="op secondary">查看</span></td>
                         </tr>
                         <tr>
                           <td>配置变更</td>
-                          <td>惩罚配置</td>
-                          <td class="left">调整特价专区阈值为 20 分</td>
+                          <td>特价专区限制</td>
+                          <td>阈值调整</td>
                           <td>30 / 20</td>
-                          <td>后台</td>
+                          <td class="left">调整特价专区触发阈值</td>
+                          <td>--</td>
                           <td>何冰冰</td>
                           <td>2026-05-19 11:12</td>
                           <td><span class="op secondary">查看</span></td>
@@ -1974,9 +1983,10 @@
                         <tr>
                           <td>手动调整</td>
                           <td>用户 101406347</td>
-                          <td class="left">人工补分，修正误扣</td>
-                          <td>-4 / +4</td>
-                          <td>审核后台</td>
+                          <td>手动加分</td>
+                          <td>+4</td>
+                          <td class="left">修正异常撤单误扣</td>
+                          <td class="left">ORDER202605130042</td>
                           <td>何冰冰</td>
                           <td>2026-05-19 14:08</td>
                           <td><span class="op secondary">查看</span></td>
@@ -1984,9 +1994,10 @@
                         <tr>
                           <td>回滚日志</td>
                           <td>AP20260512</td>
-                          <td class="left">申诉通过后生成恢复明细</td>
-                          <td>扣分 / 回滚</td>
-                          <td>审核后台</td>
+                          <td>申诉回滚</td>
+                          <td>+6</td>
+                          <td class="left">申诉通过恢复原扣分</td>
+                          <td class="left">APPEAL202605140018</td>
                           <td>何冰冰</td>
                           <td>2026-05-19 15:32</td>
                           <td><span class="op secondary">查看</span></td>
@@ -2091,13 +2102,13 @@
     const dialogConfigs = {
       systemRule: {
         title: "新增分类规则",
-        desc: "用于配置一级分类和行为归拢关系。具体扣分值来自扣分规则，申诉口径由一级分类统一控制。",
+        desc: "用于配置一级分类和二级分类关系。具体扣分值来自扣分规则，申诉口径由一级分类统一控制。",
         sections: [
           {
             title: "分类与映射",
             fields: [
               ["一级分类", "履约行为 / 订单行为 / 守约行为 / 处罚行为", true, "", "select"],
-              ["归拢行为", "请选择：异常撤单 / 虚假投诉 / 恶意撤单 / 账号异常使用", true, "", "select"],
+              ["二级分类", "请选择：订单结算 / 连续履约 / 投诉撤单 / 投诉核实 / 风控命中", true, "", "select"],
               ["行为范围", "加分行为 / 扣分行为 / 不计分", true, "", "select"],
               ["适用业务", "租号 / 陪玩 / 代练 / 交易 / 投诉", true, "", "select"]
             ]
@@ -2236,8 +2247,7 @@
             fields: [
               ["用户 UID", "请输入用户 UID", true],
               ["调整类型", "加分 / 扣分 / 系统调整", true, "", "select"],
-              ["调整分值", "请输入本次调整分值", true],
-              ["是否立即刷新限制状态", "是 / 否", true, "", "select"]
+              ["调整分值", "请输入本次调整分值", true]
             ]
           },
           {
@@ -2248,13 +2258,13 @@
               ["备注", "选填，仅后台可见", false, "wide"],
               ["操作人", "系统自动记录当前后台账号", true]
             ],
-            tip: "手动调整不允许无原因提交；提交后需要同步进入用户明细、人工调整日志和规则命中追溯。"
+            tip: "手动调整不允许无原因提交；提交后需要同步进入用户明细，并在规则日志中记录调整详情、调整原因和操作人。"
           }
         ]
       },
       appealAudit: {
         title: "申诉审核",
-        desc: "用于处理用户对扣分记录的申诉，审核通过后触发扣分回滚和限制状态刷新。",
+        desc: "用于处理用户对扣分记录的申诉，审核通过后触发扣分回滚，系统按最新信誉分自动匹配限制策略。",
         sections: [
           {
             title: "申诉单信息",
@@ -2263,8 +2273,7 @@
               ["用户 UID", "101406347", true],
               ["关联扣分记录", "ORDER202605130042", true],
               ["扣分规则名称", "异常撤单扣分", true],
-              ["原扣分值", "-6", true],
-              ["申诉状态", "待审核 / 审核中", true, "", "select"]
+              ["原扣分值", "-6", true]
             ]
           },
           {
@@ -2274,26 +2283,27 @@
               ["审核说明", "请输入处理说明，用户端可展示", true, "wide"],
               ["是否回滚", "通过时默认回滚", true, "", "select"],
               ["回滚分值", "自动带出原扣分值", true],
-              ["是否刷新限制状态", "是 / 否", true, "", "select"],
               ["处理来源", "审核后台", true, "", "select"]
             ],
-            tip: "审核通过：生成恢复/回滚明细，原扣分记录保留；审核驳回：原扣分继续生效并展示驳回原因。"
+            tip: "审核通过：生成恢复/回滚明细，原扣分记录保留；审核驳回：原扣分继续生效并展示驳回原因。业务限制由系统按最新分值自动判断。"
           }
         ]
       },
       logQuery: {
         title: "日志查询",
-        desc: "用于查询规则命中、配置变更、手动调整、回滚日志和存量重算记录。",
+        desc: "用于查询规则命中、配置变更、手动调整和回滚日志。",
         sections: [
           {
             title: "查询条件",
             fields: [
               ["日志类型", "规则命中 / 配置变更 / 手动调整 / 回滚", true, "", "select"],
+              ["调整类型", "加分 / 扣分 / 系统调整 / 申诉回滚", false, "", "select"],
               ["用户 UID", "可选", false],
               ["关联业务单号", "可选", false],
+              ["操作人", "可选", false],
               ["时间范围", "开始时间 - 结束时间", true]
             ],
-            tip: "日志查询用于解释为什么加分、为什么扣分、为什么被限制，以及是谁修改了后台配置。"
+            tip: "日志查询需要能追溯每一次手动加减分的调整详情、调整原因、关联单号和操作人。"
           }
         ]
       }
@@ -2308,11 +2318,11 @@
       const [label, placeholder, required, span, type] = field;
       const className = span === "full" ? "modal-field full" : span === "wide" ? "modal-field wide" : "modal-field";
       const selectLabels = new Set([
-        "行为字典项", "一级分类", "二级场景", "适用业务", "行为类型", "归拢行为", "行为范围",
+        "行为字典项", "一级分类", "二级场景", "二级分类", "适用业务", "行为类型", "行为范围",
         "是否允许申诉", "状态", "投诉类型", "投诉选项", "核实结果",
         "限制场景", "处理方式", "限制时长", "源策略", "目标场景",
         "复制内容", "生效方式", "是否触发限制策略", "关联限制策略",
-        "调整类型", "是否立即刷新限制状态", "关联业务单号", "申诉状态", "审核结果",
+        "调整类型", "关联业务单号", "申诉状态", "审核结果",
         "是否回滚", "处理来源", "日志类型"
       ]);
       const isSelect = type === "select" || selectLabels.has(label);
