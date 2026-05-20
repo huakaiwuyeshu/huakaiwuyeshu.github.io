@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>信誉积分V3后台配置设计稿_V5</title>
+  <title>信誉积分V3后台配置设计稿_V6</title>
   <style>
     :root {
       --bg: #f3f5f8;
@@ -209,6 +209,13 @@
     .btn.ghost {
       color: #36557e;
       background: #f9fbff;
+    }
+
+    .btn.danger {
+      border-color: #f05252;
+      color: #fff;
+      background: linear-gradient(180deg, #ff6b6b 0%, #ef4444 100%);
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.18);
     }
 
     .tabs {
@@ -2083,7 +2090,7 @@
         <button class="modal-close" type="button" data-close-modal aria-label="关闭">×</button>
       </header>
       <div class="modal-body" id="modalBody"></div>
-      <footer class="modal-actions">
+      <footer class="modal-actions" id="modalActions">
         <button class="btn" type="button" data-close-modal>取消</button>
         <button class="btn ghost" type="button">保存草稿</button>
         <button class="btn primary" type="button" data-close-modal>确认保存</button>
@@ -2098,6 +2105,7 @@
     const modalTitle = document.getElementById("modalTitle");
     const modalDesc = document.getElementById("modalDesc");
     const modalBody = document.getElementById("modalBody");
+    const modalActions = document.getElementById("modalActions");
 
     const dialogConfigs = {
       systemRule: {
@@ -2395,12 +2403,66 @@
       `;
     }
 
-    function openDialog(key) {
-      const config = dialogConfigs[key] || dialogConfigs.systemRule;
+    function openDialog(keyOrConfig) {
+      const config = typeof keyOrConfig === "string"
+        ? dialogConfigs[keyOrConfig] || dialogConfigs.systemRule
+        : keyOrConfig;
       modalTitle.textContent = config.title;
       modalDesc.textContent = config.desc;
       modalBody.innerHTML = config.sections.map(sectionHtml).join("");
+      modalActions.innerHTML = actionHtml(config);
       modal.hidden = false;
+    }
+
+    function actionHtml(config) {
+      if (config.danger) {
+        return `
+          <button class="btn" type="button" data-close-modal>取消</button>
+          <button class="btn danger" type="button" data-close-modal>${escapeHtml(config.primaryAction || "确认删除")}</button>
+        `;
+      }
+
+      return `
+        <button class="btn" type="button" data-close-modal>取消</button>
+        <button class="btn ghost" type="button">保存草稿</button>
+        <button class="btn primary" type="button" data-close-modal>${escapeHtml(config.primaryAction || "确认保存")}</button>
+      `;
+    }
+
+    function deleteDialogConfig(action) {
+      const activePanel = document.querySelector(".panel.active")?.dataset.panel || "system";
+      const row = action.closest("tr");
+      const cells = row ? Array.from(row.cells).map((cell) => cell.innerText.trim().replace(/\s+/g, " ")) : [];
+      const panelNameMap = {
+        system: "体系配置",
+        dictionary: "字典项配置",
+        deduct: "扣分规则",
+        punish: "限制策略",
+        grade: "信誉状态",
+        detail: "信誉积分明细",
+        appeal: "申诉记录",
+        log: "规则日志"
+      };
+      const targetName = cells.length > 1 ? `${cells[0]} / ${cells[1]}` : cells[0] || "当前配置";
+      const panelName = panelNameMap[activePanel] || "当前配置";
+
+      return {
+        title: "确认删除",
+        desc: `即将删除${panelName}中的配置项。删除前请确认该配置未被线上规则引用。`,
+        danger: true,
+        primaryAction: "确认删除",
+        sections: [
+          {
+            title: "删除确认",
+            fields: [
+              ["删除对象", targetName, true],
+              ["影响说明", "删除后不可恢复；如该配置已被其他规则引用，请先解除引用后再删除。", false, "wide"],
+              ["删除原因", "请输入删除原因，便于后续审计追溯", true, "wide"]
+            ],
+            tip: "删除操作需要记录操作人、删除时间和删除原因；本原型仅展示交互，不执行真实删除。"
+          }
+        ]
+      };
     }
 
     function closeDialog() {
@@ -2425,6 +2487,11 @@
       const dialogTarget = event.target.closest("[data-dialog]");
       if (dialogTarget) {
         openDialog(dialogTarget.dataset.dialog);
+        return;
+      }
+      const deleteAction = event.target.closest(".op");
+      if (deleteAction && deleteAction.textContent.trim() === "删除") {
+        openDialog(deleteDialogConfig(deleteAction));
         return;
       }
       const tableAction = event.target.closest(".op.secondary");
