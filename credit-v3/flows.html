@@ -270,7 +270,7 @@
       min-height: 0;
       display: grid;
       place-items: center;
-      padding: 24px;
+      padding: 18px 24px 50px;
       overflow: auto;
       background: #eef2f8;
     }
@@ -281,7 +281,7 @@
 
     .mobile-frame {
       width: 393px;
-      height: 852px;
+      height: 720px;
       position: relative;
       overflow: hidden;
       border: 10px solid #191d27;
@@ -306,7 +306,7 @@
     .hint {
       position: absolute;
       left: 50%;
-      bottom: -42px;
+      bottom: -36px;
       transform: translateX(-50%);
       min-width: max-content;
       padding: 8px 12px;
@@ -327,7 +327,21 @@
       background: #f5f6fa;
     }
 
-    .mobile-frame .screen { font-size: 13px; }
+    .mobile-frame .screen {
+      overflow-y: auto;
+      font-size: 13px;
+      scrollbar-width: thin;
+      scrollbar-color: #c7cfdb transparent;
+    }
+
+    .mobile-frame .screen::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .mobile-frame .screen::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: #c7cfdb;
+    }
 
     .app-pc {
       width: 100%;
