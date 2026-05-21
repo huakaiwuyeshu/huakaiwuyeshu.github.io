@@ -31,7 +31,7 @@
     }
 
     main {
-      width: min(900px, 100%);
+      width: min(1060px, 100%);
       padding: 34px;
       border: 1px solid rgba(84, 107, 139, 0.18);
       border-radius: 12px;
@@ -63,7 +63,7 @@
 
     .links {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 16px;
       margin-top: 28px;
     }
@@ -122,7 +122,7 @@
   <main>
     <p class="kicker">Credit V3 Prototype</p>
     <h1>信誉积分 V3 原型入口</h1>
-    <p class="desc">用于在线预览信誉积分 V3 原型。当前版本包含移动端、PC 端和后台配置三类页面。</p>
+    <p class="desc">用于在线预览信誉积分 V3 原型。当前版本包含移动端详情、PC 端详情、后台配置和业务关键流程四类页面。</p>
     <section class="links" aria-label="原型入口">
       <a href="./mobile.html">
         <strong>移动端原型</strong>
@@ -135,6 +135,10 @@
       <a href="./backend.html">
         <strong>后台配置原型</strong>
         <span>查看系统配置下的信誉积分体系配置、减分配置、惩罚配置、申诉审核、规则日志和字典项配置。</span>
+      </a>
+      <a href="./flows.html">
+        <strong>业务关键流程</strong>
+        <span>查看找号、下单、投诉撤单、投诉类型和领券中心的限制弹窗交互。</span>
       </a>
     </section>
     <div class="note">当前页面仅作为原型预览入口，正式规则值和扣分项以后续 PRD 与后台配置为准。</div>

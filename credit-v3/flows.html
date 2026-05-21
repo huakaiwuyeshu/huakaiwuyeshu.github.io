@@ -1,0 +1,1755 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>信誉积分V3业务关键流程交互原型</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --ink: #171a22;
+      --muted: #687384;
+      --line: #e8edf5;
+      --pink: #ff3f72;
+      --pink-dark: #ec285f;
+      --pink-soft: #fff0f5;
+      --blue: #2f73ff;
+      --green: #13a879;
+      --orange: #ff8a2a;
+      --red: #ef4056;
+      --shadow: 0 18px 48px rgba(25, 36, 60, 0.13);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 63, 114, 0.10), transparent 28%),
+        linear-gradient(180deg, #fbfcff 0%, var(--bg) 100%);
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 292px minmax(0, 1fr);
+      gap: 22px;
+      padding: 22px;
+    }
+
+    .side,
+    .stage-card {
+      border: 1px solid rgba(210, 218, 230, 0.9);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .side {
+      height: calc(100vh - 44px);
+      position: sticky;
+      top: 22px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .brand {
+      padding: 22px 20px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 34px;
+      padding: 0 11px;
+      margin-bottom: 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #344154;
+      background: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .kicker {
+      margin: 0 0 7px;
+      color: var(--pink-dark);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .desc {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+      font-weight: 720;
+    }
+
+    .device-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 14px 20px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .device-tab,
+    .scenario {
+      border: 0;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.18s ease;
+    }
+
+    .device-tab {
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: #647083;
+      background: #f3f6fb;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .device-tab.active {
+      color: #fff;
+      background: var(--pink);
+      box-shadow: 0 9px 20px rgba(255, 63, 114, 0.26);
+    }
+
+    .scenario-list {
+      overflow: auto;
+      padding: 12px;
+    }
+
+    .scenario {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+      padding: 12px 10px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: transparent;
+    }
+
+    .scenario:hover {
+      background: #fafcff;
+      border-color: var(--line);
+    }
+
+    .scenario.active {
+      background: var(--pink-soft);
+      border-color: #ffd1dd;
+    }
+
+    .scenario-num {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: #aeb7c4;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .scenario.active .scenario-num { background: var(--pink); }
+
+    .scenario-title {
+      display: block;
+      color: #1e2430;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 950;
+    }
+
+    .scenario-desc {
+      display: block;
+      margin-top: 4px;
+      color: #788292;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 680;
+    }
+
+    .disabled-note {
+      margin: 4px 20px 18px;
+      padding: 10px 12px;
+      border: 1px solid #ffe1ba;
+      border-radius: 10px;
+      color: #8f5b12;
+      background: #fff8ec;
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 780;
+    }
+
+    .stage-card {
+      min-height: calc(100vh - 44px);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+    }
+
+    .toolbar h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .toolbar p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 720;
+    }
+
+    .toolbar-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .link-chip {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #344154;
+      background: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .canvas {
+      min-height: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      overflow: auto;
+      background: #eef2f8;
+    }
+
+    .preview-wrap {
+      position: relative;
+    }
+
+    .mobile-frame {
+      width: 393px;
+      height: 852px;
+      position: relative;
+      overflow: hidden;
+      border: 10px solid #191d27;
+      border-radius: 34px;
+      background: #f5f6fa;
+      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.28);
+      transform-origin: center;
+    }
+
+    .pc-frame {
+      width: 1180px;
+      height: 720px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #cfd6e2;
+      border-radius: 16px;
+      background: #f3f5f8;
+      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.20);
+      transform-origin: center;
+    }
+
+    .hint {
+      position: absolute;
+      left: 50%;
+      bottom: -42px;
+      transform: translateX(-50%);
+      min-width: max-content;
+      padding: 8px 12px;
+      border: 1px solid #ffd2dd;
+      border-radius: 999px;
+      color: var(--pink-dark);
+      background: #fff;
+      font-size: 12px;
+      font-weight: 850;
+      box-shadow: 0 10px 24px rgba(25, 36, 60, 0.12);
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      background: #f5f6fa;
+    }
+
+    .mobile-frame .screen { font-size: 13px; }
+
+    .app-pc {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 184px 1fr;
+      grid-template-rows: 64px 1fr;
+      background: #f3f5f8;
+    }
+
+    .pc-side {
+      grid-row: 1 / span 2;
+      padding: 18px 12px;
+      border-right: 1px solid #edf0f5;
+      background: #f1f3f7;
+    }
+
+    .pc-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      font-size: 20px;
+      font-weight: 950;
+    }
+
+    .pc-logo {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #111827;
+      border-radius: 9px;
+      color: #111827;
+    }
+
+    .pc-nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    .pc-nav span {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 8px;
+      color: #697382;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .pc-nav .active {
+      color: #fff;
+      background: var(--pink);
+    }
+
+    .pc-top {
+      display: grid;
+      grid-template-columns: 70px 420px 1fr 170px;
+      gap: 14px;
+      align-items: center;
+      padding: 0 18px;
+      background: #fff;
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    .pc-search {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+      color: #697382;
+      background: #f8fafc;
+      font-size: 13px;
+      font-weight: 780;
+    }
+
+    .pc-search span {
+      padding: 0 14px;
+    }
+
+    .pc-search strong {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      margin-left: auto;
+      padding: 0 16px;
+      color: #fff;
+      background: var(--pink);
+    }
+
+    .pc-content {
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .home-top,
+    .m-nav {
+      height: 46px;
+      display: grid;
+      align-items: center;
+      background: #fff;
+    }
+
+    .home-top {
+      grid-template-columns: repeat(4, auto) 1fr;
+      gap: 16px;
+      padding: 0 14px;
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .home-top .active {
+      color: var(--pink);
+      font-size: 21px;
+    }
+
+    .m-nav {
+      grid-template-columns: 44px 1fr 44px;
+      padding: 0 8px;
+      font-size: 17px;
+      font-weight: 950;
+      text-align: center;
+    }
+
+    .m-back {
+      border: 0;
+      background: transparent;
+      color: #2d3036;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr 44px;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #fff;
+    }
+
+    .search-input {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      padding: 0 13px;
+      border-radius: 999px;
+      color: #8b94a1;
+      background: #f1f3f7;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .search-button {
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--pink);
+      font-weight: 950;
+    }
+
+    .recommend-tabs {
+      display: flex;
+      gap: 18px;
+      overflow: hidden;
+      padding: 9px 14px 12px;
+      color: #697382;
+      background: #fff;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .recommend-tabs .active { color: var(--pink); }
+
+    .shelf-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      padding: 10px;
+    }
+
+    .goods,
+    .goods-card,
+    .order-card,
+    .rent-card,
+    .detail-panel,
+    .complaint-card,
+    .coupon-panel,
+    .store-panel,
+    .pc-card {
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(30, 39, 64, 0.08);
+    }
+
+    .goods {
+      overflow: hidden;
+    }
+
+    .goods-cover,
+    .cover {
+      position: relative;
+      min-height: 112px;
+      background:
+        linear-gradient(135deg, rgba(23, 27, 37, .72), rgba(23, 27, 37, .1)),
+        linear-gradient(135deg, #1e314d, #4960a8 48%, #ff7a9d);
+    }
+
+    .goods-cover.alt,
+    .cover.alt { background: linear-gradient(135deg, #2b1d46, #4756aa 46%, #ff9d4c); }
+
+    .goods-cover.green,
+    .cover.green { background: linear-gradient(135deg, #173f3c, #289e8f 48%, #ffbc5c); }
+
+    .cover-title,
+    .hot,
+    .exclusive,
+    .count {
+      position: absolute;
+      z-index: 1;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 950;
+    }
+
+    .cover-title {
+      left: 8px;
+      top: 8px;
+      color: #fff;
+      opacity: .96;
+    }
+
+    .hot {
+      right: 8px;
+      top: 8px;
+      padding: 3px 6px;
+      color: #fff;
+      background: rgba(0, 0, 0, .35);
+    }
+
+    .exclusive {
+      left: 8px;
+      bottom: 8px;
+      padding: 4px 7px;
+      color: #fff;
+      background: var(--pink);
+    }
+
+    .goods-body {
+      padding: 8px;
+    }
+
+    .goods-title {
+      height: 36px;
+      overflow: hidden;
+      color: #22242a;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 850;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 18px;
+      padding: 0 6px;
+      border-radius: 999px;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .tag.pink {
+      color: var(--pink-dark);
+      background: var(--pink-soft);
+      border: 1px solid #ffd1dd;
+    }
+
+    .tag.green {
+      color: #0a9466;
+      background: #e8fff5;
+      border: 1px solid #b8f0da;
+    }
+
+    .tag.gray {
+      color: #677282;
+      background: #f1f4f8;
+      border: 1px solid #e3e8f0;
+    }
+
+    .tag.blue {
+      color: var(--blue);
+      background: #edf4ff;
+      border: 1px solid #cbdcff;
+    }
+
+    .tag.orange {
+      color: #b45b00;
+      background: #fff3e8;
+      border: 1px solid #ffd8b5;
+    }
+
+    .goods-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 7px;
+      color: #8a94a2;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .price,
+    .goods-price {
+      color: var(--pink);
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .goods-price small,
+    .price small {
+      color: #a7afbb;
+      font-size: 10px;
+    }
+
+    .clickable {
+      cursor: pointer;
+    }
+
+    .clickable:hover {
+      filter: brightness(0.98);
+    }
+
+    .confirm-content,
+    .detail-content,
+    .complaint-content,
+    .coupon-main {
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .order-card,
+    .rent-card,
+    .detail-panel,
+    .complaint-card {
+      margin-bottom: 10px;
+      padding: 12px;
+    }
+
+    .order-goods {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+    }
+
+    .thumb {
+      height: 72px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #1e314d, #4960a8 48%, #ff7a9d);
+    }
+
+    .order-title {
+      color: #242832;
+      font-size: 13px;
+      line-height: 1.5;
+      font-weight: 900;
+    }
+
+    .service-row,
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 10px;
+      color: #697382;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .rent-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .rent-tab,
+    .plan {
+      min-height: 48px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: #3d4654;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .rent-tab.active,
+    .plan.active {
+      color: var(--pink-dark);
+      border-color: #ffb9ca;
+      background: var(--pink-soft);
+    }
+
+    .bottom-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      min-height: 64px;
+      display: grid;
+      grid-template-columns: 1fr 142px;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      box-shadow: 0 -10px 24px rgba(30, 39, 64, 0.08);
+    }
+
+    .pay-text {
+      color: #555f6f;
+      font-weight: 850;
+    }
+
+    .pay-text strong { color: var(--pink); font-size: 18px; }
+
+    .btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--pink);
+      box-shadow: 0 9px 20px rgba(255, 63, 114, 0.24);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 950;
+      text-decoration: none;
+    }
+
+    .btn.gray,
+    .btn.ghost {
+      color: #556070;
+      background: #f2f4f8;
+      box-shadow: none;
+    }
+
+    .btn.outline {
+      color: var(--pink-dark);
+      border: 1px solid #ffc7d5;
+      background: #fff;
+      box-shadow: none;
+    }
+
+    .notice-card {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ffd4df;
+      border-radius: 10px;
+      color: #b21f50;
+      background: #fff3f7;
+      font-size: 12px;
+      line-height: 1.6;
+      font-weight: 820;
+    }
+
+    .detail-hero {
+      height: 138px;
+      background: linear-gradient(135deg, #151b2c, #4d61ba 54%, #ff7a9c);
+    }
+
+    .detail-hero .m-nav {
+      color: #fff;
+      background: transparent;
+    }
+
+    .watch-pill {
+      width: fit-content;
+      margin: 52px auto 0;
+      padding: 6px 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(0, 0, 0, .28);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .order-info-card {
+      margin: -28px 10px 10px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 10px 26px rgba(30, 39, 64, 0.12);
+    }
+
+    .order-state {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-weight: 950;
+    }
+
+    .timer { color: var(--pink); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      color: #697382;
+      font-size: 12px;
+      line-height: 1.6;
+      font-weight: 760;
+    }
+
+    .complaint-card h3,
+    .detail-panel h4,
+    .coupon-heading h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .complaint-card p,
+    .detail-panel p {
+      margin: 0 0 10px;
+      color: #788292;
+      font-size: 12px;
+      line-height: 1.6;
+      font-weight: 720;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      min-height: 31px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #3c4655;
+      background: #f8fafc;
+      font-size: 12px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .pill.selected {
+      color: var(--pink-dark);
+      border-color: #ffc6d4;
+      background: var(--pink-soft);
+    }
+
+    .coupon-screen { background: #ffeff5; }
+
+    .coupon-top {
+      position: relative;
+      height: 230px;
+      color: #fff;
+      background: linear-gradient(180deg, #ff3f72 0%, #ff6d8f 100%);
+    }
+
+    .coupon-top .m-nav { color: #fff; background: transparent; }
+
+    .coupon-tools {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 850;
+      text-align: center;
+    }
+
+    .coupon-hero-title {
+      margin: 12px 0 0 22px;
+      font-size: 28px;
+      font-weight: 950;
+    }
+
+    .coupon-hero-sub {
+      margin: 4px 0 0 22px;
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .coupon-main {
+      margin-top: -32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .coupon-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .coupon-heading span {
+      color: #a35868;
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .coupon-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .coupon {
+      min-height: 122px;
+      padding: 10px 7px;
+      border-radius: 10px;
+      color: #b92733;
+      background: #fff7df;
+      text-align: center;
+      box-shadow: inset 0 0 0 1px #ffd79b;
+    }
+
+    .coupon strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .coupon span,
+    .coupon em {
+      display: block;
+      margin-top: 4px;
+      color: #8f4a24;
+      font-size: 10px;
+      font-style: normal;
+      font-weight: 760;
+    }
+
+    .coupon button {
+      min-height: 28px;
+      margin-top: 8px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--pink);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .store-panel {
+      margin-top: 10px;
+      padding: 12px;
+    }
+
+    .store-title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-weight: 950;
+    }
+
+    .store-coupons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .store-ticket {
+      min-height: 94px;
+      padding: 8px;
+      border-radius: 10px;
+      background: #fff4d8;
+      color: #9c3b1f;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .pc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .goods-card {
+      overflow: hidden;
+    }
+
+    .goods-card .goods-cover {
+      min-height: 150px;
+    }
+
+    .goods-card .goods-title {
+      height: 40px;
+      font-size: 13px;
+    }
+
+    .pc-detail {
+      display: grid;
+      grid-template-columns: 430px 1fr;
+      gap: 16px;
+    }
+
+    .pc-cover {
+      height: 300px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #14233c, #4960a8 52%, #ff7a9d);
+    }
+
+    .pc-card {
+      padding: 18px;
+    }
+
+    .pc-card h3,
+    .pc-card h2 {
+      margin: 0 0 12px;
+      line-height: 1.35;
+      font-weight: 950;
+    }
+
+    .pc-rent-plans {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .pc-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .pc-order {
+      display: grid;
+      gap: 14px;
+    }
+
+    .pc-order-summary {
+      display: grid;
+      grid-template-columns: 86px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+    }
+
+    .pc-form {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .pc-form-line {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 12px;
+      align-items: start;
+      color: #4d5766;
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .pc-bottom {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 18px;
+      padding: 16px;
+    }
+
+    .pc-order-detail {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 16px;
+    }
+
+    .pc-status-head {
+      padding: 18px;
+      border-radius: 12px 12px 0 0;
+      color: #fff;
+      background: linear-gradient(135deg, #ff3f72, #ff7d94);
+    }
+
+    .pc-status-body {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .pc-complaint-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .textarea {
+      min-height: 78px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: #8a94a2;
+      background: #fff;
+    }
+
+    .mask {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(13, 18, 29, 0.42);
+      z-index: 20;
+    }
+
+    .mask.active { display: grid; }
+
+    .modal {
+      width: min(328px, calc(100% - 24px));
+      overflow: hidden;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .28);
+    }
+
+    .pc-frame .modal { width: 420px; }
+
+    .modal-body {
+      padding: 24px 22px 18px;
+      text-align: center;
+    }
+
+    .modal-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      color: var(--pink);
+      background: var(--pink-soft);
+      font-size: 24px;
+      font-weight: 950;
+    }
+
+    .modal h3,
+    .sheet h3 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 950;
+    }
+
+    .modal p,
+    .sheet p {
+      margin: 10px 0 0;
+      color: #66707f;
+      font-size: 13px;
+      line-height: 1.65;
+      font-weight: 740;
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 0 18px 18px;
+    }
+
+    .modal-actions .btn {
+      width: 100%;
+      min-height: 42px;
+      font-size: 13px;
+    }
+
+    .sheet {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 10px 18px 18px;
+      border-radius: 18px 18px 0 0;
+      background: #fff;
+      box-shadow: 0 -18px 50px rgba(0, 0, 0, .22);
+    }
+
+    .pc-frame .sheet {
+      left: auto;
+      right: 28px;
+      bottom: 28px;
+      width: 430px;
+      border-radius: 14px;
+    }
+
+    .sheet-handle {
+      width: 42px;
+      height: 4px;
+      margin: 0 auto 14px;
+      border-radius: 999px;
+      background: #d7dce5;
+    }
+
+    .sheet-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .empty-state {
+      width: 420px;
+      padding: 28px;
+      border: 1px dashed #cfd8e6;
+      border-radius: 16px;
+      color: #697382;
+      background: #fff;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 760;
+    }
+
+    @media (max-width: 1100px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .side {
+        position: static;
+        height: auto;
+      }
+
+      .scenario-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        max-height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="side">
+      <div class="brand">
+        <a class="back-home" href="./index.html">← 返回原型首页</a>
+        <p class="kicker">Credit V3 Flow Prototype</p>
+        <h1>业务关键流程交互原型</h1>
+        <p class="desc">覆盖找号、下单、投诉撤单、投诉类型和领券中心的信誉分限制弹窗。点击页面内的业务按钮后触发对应提示。</p>
+      </div>
+      <div class="device-tabs" aria-label="端类型切换">
+        <button class="device-tab active" type="button" data-device="mobile">移动端</button>
+        <button class="device-tab" type="button" data-device="pc">PC端</button>
+      </div>
+      <div class="scenario-list" id="scenarioList"></div>
+      <div class="disabled-note">用户侧不展示历史累积分 / 近30天行为分，仅展示总信誉分、风险状态、限制原因和恢复入口。</div>
+    </aside>
+
+    <main class="stage-card">
+      <div class="toolbar">
+        <div>
+          <h2 id="stageTitle">找号环节：高信誉专享</h2>
+          <p id="stageDesc">货架列表展示高信誉专享标签，满足条件用户可继续查看并租用。</p>
+        </div>
+        <div class="toolbar-links">
+          <a class="link-chip" href="./mobile.html">移动端详情</a>
+          <a class="link-chip" href="./pc.html">PC详情</a>
+          <a class="link-chip" href="./backend.html">后台配置</a>
+        </div>
+      </div>
+      <div class="canvas">
+        <div class="preview-wrap">
+          <div id="preview"></div>
+          <div class="hint" id="hint">点击高信誉账号卡片继续</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const scenarios = [
+      {
+        id: "shelf",
+        title: "找号环节：高信誉专享",
+        desc: "货架列表展示高信誉专享标签，满足条件用户可继续查看并租用。",
+        hint: "点击高信誉账号卡片继续",
+        devices: ["mobile", "pc"],
+        popup: null
+      },
+      {
+        id: "detail",
+        title: "货架详情页：高信誉账号",
+        desc: "PC端高价值账号详情页展示高信誉专享标签，并从立即租用进入下单校验。",
+        hint: "点击立即租用进入下单校验",
+        devices: ["pc"],
+        popup: null
+      },
+      {
+        id: "orderCredit",
+        title: "下单环节：信誉积分不足",
+        desc: "点击租用或确认支付后，因总信誉积分未达要求而拦截。",
+        hint: "点击立即租用 / 确认支付触发弹窗",
+        devices: ["mobile", "pc"],
+        popup: {
+          icon: "!",
+          title: "暂不可租用",
+          text: "当前信誉积分未达到该账号租用要求，本次高价值账号租用暂不可继续。可进入信誉积分页查看限制原因、扣分有效期和恢复路径。",
+          primary: "查看信誉分",
+          secondary: "我知道了",
+          link: "./mobile.html"
+        }
+      },
+      {
+        id: "orderViolation",
+        title: "下单环节：近期违规限制",
+        desc: "点击下单后，因近期存在有效违规记录而限制租用。",
+        hint: "点击立即租用 / 确认支付触发弹窗",
+        devices: ["mobile", "pc"],
+        popup: {
+          icon: "!",
+          title: "近期违规限制租用",
+          text: "近期存在有效违规记录，该记录有效期内会限制租用部分高价值账号。扣分失效或申诉复核通过后，限制状态将同步刷新。",
+          primary: "查看详情",
+          secondary: "我知道了",
+          link: "./mobile.html#detail"
+        }
+      },
+      {
+        id: "complaintWarn",
+        title: "订单详情：投诉撤单提醒",
+        desc: "点击投诉撤单时，低信誉用户出现二次确认提醒，仍可继续投诉。",
+        hint: "点击投诉撤单触发二次确认",
+        devices: ["mobile", "pc"],
+        popup: {
+          sheet: true,
+          title: "投诉前请确认",
+          text: "当前信誉分较低，请确认是否需要继续投诉。继续投诉后将进入平台审核流程，恶意或虚假投诉会影响信誉状态。",
+          primary: "继续投诉",
+          secondary: "取消"
+        }
+      },
+      {
+        id: "complaintBlock",
+        title: "订单详情：投诉撤单拦截",
+        desc: "点击投诉撤单时，因当前信誉分较低而不可进行投诉。",
+        hint: "点击投诉撤单触发拦截弹窗",
+        devices: ["mobile", "pc"],
+        popup: {
+          icon: "×",
+          title: "不可进行投诉",
+          text: "当前信誉分较低，投诉撤单能力暂不可用。可进入信誉积分页查看限制原因、扣分有效期和恢复路径。",
+          primary: "查看信誉分",
+          secondary: "我知道了",
+          link: "./mobile.html"
+        }
+      },
+      {
+        id: "complaintType",
+        title: "投诉类型：次数上限拦截",
+        desc: "选择投诉类型后，因当日投诉次数达到上限而拦截。",
+        hint: "点击已选投诉类型触发弹窗",
+        devices: ["mobile", "pc"],
+        popup: {
+          icon: "!",
+          title: "该类型不可投诉",
+          text: "当日投诉次数达到上限，该类型不可进行投诉。明日或规则恢复后可再次尝试，也可查看信誉分规则了解限制说明。",
+          primary: "查看规则",
+          secondary: "我知道了",
+          link: "./mobile.html#rules"
+        }
+      },
+      {
+        id: "coupon",
+        title: "领券中心：低信誉限制",
+        desc: "点击领取优惠券后，因当前信誉状态受限而不可领取。",
+        hint: "点击立即领取触发弹窗",
+        devices: ["mobile"],
+        popup: {
+          icon: "券",
+          title: "暂不可领取",
+          text: "当前信誉状态暂不支持领取该券。低信誉限制期间，部分官方券和活动券领取能力会受到影响。",
+          primary: "查看信誉分",
+          secondary: "我知道了",
+          link: "./mobile.html"
+        }
+      }
+    ];
+
+    const state = {
+      device: "mobile",
+      scenario: "shelf",
+      modalOpen: false
+    };
+
+    const el = {
+      list: document.getElementById("scenarioList"),
+      preview: document.getElementById("preview"),
+      title: document.getElementById("stageTitle"),
+      desc: document.getElementById("stageDesc"),
+      hint: document.getElementById("hint")
+    };
+
+    function scenario() {
+      return scenarios.find((item) => item.id === state.scenario) || scenarios[0];
+    }
+
+    function setDevice(device) {
+      state.device = device;
+      const current = scenario();
+      if (!current.devices.includes(device)) {
+        const fallback = scenarios.find((item) => item.devices.includes(device));
+        state.scenario = fallback.id;
+      }
+      state.modalOpen = false;
+      render();
+    }
+
+    function setScenario(id) {
+      const target = scenarios.find((item) => item.id === id);
+      if (!target || !target.devices.includes(state.device)) return;
+      state.scenario = id;
+      state.modalOpen = false;
+      render();
+    }
+
+    function openModal() {
+      if (!scenario().popup) return;
+      state.modalOpen = true;
+      render();
+    }
+
+    function closeModal() {
+      state.modalOpen = false;
+      render();
+    }
+
+    function render() {
+      document.querySelectorAll(".device-tab").forEach((button) => {
+        button.classList.toggle("active", button.dataset.device === state.device);
+      });
+      renderScenarioList();
+      const current = scenario();
+      el.title.textContent = current.title;
+      el.desc.textContent = current.desc;
+      el.hint.textContent = current.hint;
+      el.preview.innerHTML = state.device === "mobile" ? renderMobile(current) : renderPc(current);
+      bindPreviewEvents();
+    }
+
+    function renderScenarioList() {
+      el.list.innerHTML = scenarios.map((item, index) => {
+        const disabled = !item.devices.includes(state.device);
+        return `
+          <button class="scenario ${item.id === state.scenario ? "active" : ""}" type="button" data-scenario="${item.id}" ${disabled ? "disabled" : ""} style="${disabled ? "opacity:.42;cursor:not-allowed;" : ""}">
+            <span class="scenario-num">${index + 1}</span>
+            <span>
+              <span class="scenario-title">${item.title}</span>
+              <span class="scenario-desc">${disabled ? "当前端暂未产出该场景" : item.desc}</span>
+            </span>
+          </button>
+        `;
+      }).join("");
+      el.list.querySelectorAll(".scenario").forEach((button) => {
+        button.addEventListener("click", () => setScenario(button.dataset.scenario));
+      });
+    }
+
+    function renderMobile(current) {
+      return `<div class="mobile-frame"><div class="screen">${mobileScene(current)}${modalHtml(current)}</div></div>`;
+    }
+
+    function renderPc(current) {
+      return `<div class="pc-frame"><div class="screen">${pcScene(current)}${modalHtml(current)}</div></div>`;
+    }
+
+    function mobileScene(current) {
+      if (current.id === "shelf") return mobileShelf();
+      if (current.id === "coupon") return mobileCoupon();
+      if (current.id === "complaintType") return mobileComplaintType();
+      if (current.id === "complaintWarn" || current.id === "complaintBlock") return mobileOrderDetail(current.id);
+      return mobileOrder(current.id);
+    }
+
+    function pcScene(current) {
+      if (current.id === "shelf") return pcShelf();
+      if (current.id === "detail") return pcDetail();
+      if (current.id === "complaintType") return pcComplaintType();
+      if (current.id === "complaintWarn" || current.id === "complaintBlock") return pcOrderDetail(current.id);
+      return pcOrder(current.id);
+    }
+
+    function mobileShelf() {
+      return `
+        <div class="home-top"><span class="active">首页</span><span>三角洲</span><span>代练陪玩</span><span>买号</span><span></span></div>
+        <div class="search-row"><div class="search-input">全能搜索：王者 / 穿越火线 / 三角洲</div><div class="search-button">搜</div></div>
+        <div class="recommend-tabs"><span class="active">推荐</span><span>王者荣耀</span><span>火影忍者</span><span>全部</span></div>
+        <div class="shelf-grid">
+          ${goods("安卓/QQ", "【V10 163皮】省标马超 豪华皮肤 高信誉账号", true, true)}
+          ${goods("网通一区", "【可排位】幻神 星神音效卡 裁决4皮肤", false, false, "alt")}
+          ${goods("安卓全区", "【10史诗大将军】动感皮肤 可快速上号", false, false, "green")}
+          ${goods("微信区", "【日租特惠】荣耀典藏 高胜率账号", false, false)}
+        </div>
+      `;
+    }
+
+    function goods(region, title, exclusive, clickable, tone = "") {
+      return `
+        <article class="goods ${clickable ? "clickable js-next-order" : ""}">
+          <div class="goods-cover ${tone}">
+            <span class="cover-title">${region}</span><span class="hot">热度100+</span>${exclusive ? '<span class="exclusive">高信誉专享</span>' : ""}
+          </div>
+          <div class="goods-body">
+            <div class="goods-title">${title}</div>
+            <div><span class="tag green">V10检测</span> ${exclusive ? '<span class="tag pink">高信誉可租</span>' : '<span class="tag gray">安全上号</span>'}</div>
+            <div class="goods-meta"><span class="goods-price">¥1.46<small>/时</small></span><span>300+人租过</span></div>
+          </div>
+        </article>
+      `;
+    }
+
+    function mobileOrder(type) {
+      const violation = type === "orderViolation";
+      return `
+        <div class="m-nav"><button class="m-back" type="button">‹</button><div>确认订单</div><div></div></div>
+        <div class="confirm-content">
+          <div class="order-card">
+            <div class="order-goods">
+              <div class="thumb"></div>
+              <div>
+                <div class="order-title">【V10 163皮】省标马超 豪华皮肤 高价值账号</div>
+                <div style="margin-top:6px;"><span class="tag gray">安卓 | QQ账号</span> <span class="tag green">V10检测</span></div>
+              </div>
+            </div>
+            <div class="service-row"><span>禁止排位</span><span>允许打字/语音</span></div>
+          </div>
+          <div class="rent-card">
+            <div class="rent-tabs">
+              <div class="rent-tab active">时租<br><strong>1.46元</strong></div>
+              <div class="rent-tab">包早<br><strong>3.69元</strong></div>
+              <div class="rent-tab">日租<br><strong>7.18元</strong></div>
+              <div class="rent-tab">周租<br><strong>暂不支持</strong></div>
+            </div>
+            <div class="form-row"><span>可租时间</span><span>0:00-24:00</span></div>
+            <div class="form-row"><span>租赁时长</span><span>1小时起租</span></div>
+            ${violation ? '<div class="notice-card">当前账号属于高价值账号，租用前会校验信誉积分和近期违规记录。</div>' : ""}
+          </div>
+        </div>
+        <div class="bottom-bar"><div class="pay-text">实付：<strong>¥0.0</strong></div><button class="btn js-open-modal" type="button">立即租用</button></div>
+      `;
+    }
+
+    function mobileOrderDetail(type) {
+      return `
+        <div class="detail-hero">
+          <div class="m-nav"><button class="m-back" type="button">‹</button><div>订单详情</div><div>⋯</div></div>
+          <div class="watch-pill">4人正在查看，再不下单就来不及了</div>
+        </div>
+        <div class="order-info-card">
+          <div class="order-state"><div>订单进行中</div><div class="timer">剩余 43:28</div></div>
+          <div class="order-title">【V10 163皮】省标马超 豪华皮肤账号</div>
+          <div style="margin-top:8px;"><span class="tag green">V10检测</span> <span class="tag orange">时租 1.46元</span></div>
+        </div>
+        <div class="detail-content">
+          <div class="detail-panel"><h4>上号信息</h4><div class="info-grid"><div>区服<br>安卓QQ</div><div>租期<br>1小时</div><div>方式<br>快速上号</div></div></div>
+          <div class="detail-panel"><h4>启动游戏须知</h4><p>请勿违规操作、恶意撤单或虚假投诉，平台会根据订单行为和投诉结果更新信誉状态。</p></div>
+        </div>
+        <div class="bottom-bar"><button class="btn outline js-open-modal" type="button">投诉撤单</button><button class="btn" type="button">联系客服</button></div>
+      `;
+    }
+
+    function mobileComplaintType() {
+      return `
+        <div class="m-nav"><button class="m-back" type="button">‹</button><div>我要投诉</div><div></div></div>
+        <div class="complaint-content">
+          <div class="complaint-card"><h3>账号问题</h3><p>请选择您遇到的账号问题，我们会根据投诉情况进行核实。</p><div class="pill-list"><span class="pill">被挤号</span><span class="pill">账号被冻结</span><span class="pill">触发人脸验证</span></div></div>
+          <div class="complaint-card"><h3>登录问题</h3><p>若上号过程中遇到困难，可联系在线客服。</p><div class="pill-list"><span class="pill">无法登录</span></div></div>
+          <div class="complaint-card"><h3>个人原因</h3><p>个人原因类投诉有次数限制，请尽量减少此类投诉。</p><div class="pill-list"><span class="pill selected js-open-modal">租错区服</span><span class="pill">选错时长</span><span class="pill">不想玩了</span></div></div>
+        </div>
+      `;
+    }
+
+    function mobileCoupon() {
+      return `
+        <div class="coupon-screen screen">
+          <div class="coupon-top">
+            <div class="m-nav"><button class="m-back" type="button">‹</button><div>领券中心</div><div></div></div>
+            <div class="coupon-tools"><div>我的奖品</div><div>我的红包</div><div>规则</div><div>分享</div></div>
+            <div class="coupon-hero-title">万券齐发</div><div class="coupon-hero-sub">限时补贴任性领</div>
+          </div>
+          <div class="coupon-main">
+            <div class="coupon-panel">
+              <div class="coupon-heading"><h3>限时抢券</h3><span>每人每天可领1张</span></div>
+              <div class="coupon-row">
+                <div class="coupon"><strong>¥10.00</strong><span>10元无门槛</span><em>240张</em><button class="js-open-modal" type="button">立即领取</button></div>
+                <div class="coupon"><strong>¥3.00</strong><span>满20减3</span><em>4000张</em><button class="js-open-modal" type="button">立即领取</button></div>
+                <div class="coupon"><strong>8折</strong><span>满10元8折</span><em>6400张</em><button class="js-open-modal" type="button">立即领取</button></div>
+              </div>
+            </div>
+            <div class="store-panel"><div class="store-title"><span>商家红包</span><span>优选店铺</span></div><div class="store-coupons"><div class="store-ticket">指定账号可用<br><b>¥1.00</b><br>满3.90可用</div><div class="store-ticket">指定账号可用<br><b>¥1.00</b><br>满5.90可用</div><div class="store-ticket">指定账号可用<br><b>¥1.00</b><br>满11.00可用</div></div></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function pcBase(content, active = "租号大厅") {
+      return `
+        <div class="app-pc">
+          <aside class="pc-side"><div class="pc-brand"><div class="pc-logo">租</div><div>租号玩</div></div><div class="pc-nav"><span class="${active === "首页" ? "active" : ""}">首页</span><span class="${active === "租号大厅" ? "active" : ""}">租号大厅</span><span>游戏分类</span><span class="${active === "我的订单" ? "active" : ""}">我的订单</span></div></aside>
+          <header class="pc-top"><div>← →</div><div class="pc-search"><span>全部游戏</span><span>王者荣耀</span><strong>搜索</strong></div><div></div><div>消息 31</div></header>
+          <main class="pc-content">${content}</main>
+        </div>
+      `;
+    }
+
+    function pcShelf() {
+      const cards = `
+        <div class="pc-grid">
+          ${pcGoods("【可排位】幻神白鲨电流 星神音效卡 裁决4皮肤", true, true)}
+          ${pcGoods("【不可排位】幻兽 幻影3皮幻神音效", false, false, "alt")}
+          ${pcGoods("【可排位】传说幻瞳 4防女帝", false, false, "green")}
+          ${pcGoods("【可排位】五套幻兽蝴蝶人物", false, false)}
+          ${pcGoods("【可排位】传说幽瞳 防女帝", false, false, "alt")}
+          ${pcGoods("【可排位】幻影白鲨 皮肤收藏账号", false, false)}
+          ${pcGoods("【可排位】圣魂 防纹 高价值号", false, false, "green")}
+          ${pcGoods("【日租特惠】荣耀典藏 高胜率账号", false, false)}
+        </div>
+      `;
+      return pcBase(cards);
+    }
+
+    function pcGoods(title, exclusive, clickable, tone = "") {
+      return `
+        <article class="goods-card ${clickable ? "clickable js-next-detail" : ""}">
+          <div class="goods-cover ${tone}"><span class="hot">热度1000+</span>${exclusive ? '<span class="exclusive">高信誉专享</span>' : ""}</div>
+          <div class="goods-body"><div class="goods-title">${title}</div><div><span class="tag blue">已验号</span> <span class="tag blue">免押金</span> ${exclusive ? '<span class="tag pink">高信誉可租</span>' : ""}</div><div class="goods-meta"><span class="price">¥2.42<small>/时</small></span><span>¥22.26/天</span></div></div>
+        </article>
+      `;
+    }
+
+    function pcDetail() {
+      const content = `
+        <div class="pc-detail">
+          <div class="pc-card"><div class="pc-cover"></div><p style="color:#66707f;font-weight:760;">热度 1000+　累计时长 1873h</p></div>
+          <div class="pc-card"><h2>【可排位】幻神白鲨电流 星神音效卡 裁决4皮肤 高信誉账号</h2><p><span class="tag pink">高信誉专享</span> <span class="tag blue">已验号</span> <span class="tag blue">免押金</span></p><div class="pc-rent-plans"><div class="plan active">时租<br><b>¥2.42</b></div><div class="plan">10小时<br><b>¥16.14</b></div><div class="plan">包早<br><b>¥7.06</b></div><div class="plan">日租<br><b>¥22.26</b></div><div class="plan">周租<br><b>¥124.14</b></div></div><p style="color:#66707f;font-weight:760;">该账号为高价值账号，下单前会校验信誉积分与近期违规记录。</p><div class="pc-actions"><button class="btn js-next-order" type="button">立即租用</button><button class="btn ghost" type="button">收藏</button></div></div>
+        </div>
+      `;
+      return pcBase(content);
+    }
+
+    function pcOrder(type) {
+      const warn = type === "orderViolation" ? '<div class="notice-card">该账号属于高价值账号，下单前会校验信誉积分和近期违规记录。</div>' : "";
+      const content = `
+        <div class="pc-order">
+          <div class="pc-card pc-order-summary"><div class="thumb"></div><div><h3>幻神白鲨电流+星神音效卡+裁决4皮肤 高价值账号</h3><span class="tag blue">1小时起租</span> <span class="tag pink">高信誉专享</span></div><div class="price">¥2.42<small>/时</small></div></div>
+          <div class="pc-card pc-form"><div class="pc-form-line"><div>租赁类型</div><div class="pc-rent-plans" style="margin:0;"><div class="plan active">时租<br><b>¥2.42</b></div><div class="plan">10小时<br><b>¥16.14</b></div><div class="plan">包早<br><b>¥7.06</b></div><div class="plan">日租<br><b>¥23.46</b></div><div class="plan">周租<br><b>¥124.14</b></div></div></div><div class="pc-form-line"><div>租赁方式</div><div><span class="pill selected">现在租</span></div></div><div class="pc-form-line"><div>租赁时间</div><div><span class="pill selected">1小时</span> <span class="pill">2小时</span> <span class="pill">3小时</span></div></div>${warn}</div>
+          <div class="pc-card pc-bottom"><span>实付总额：<b class="price">¥2.42</b></span><button class="btn js-open-modal" type="button">确认支付</button></div>
+        </div>
+      `;
+      return pcBase(content);
+    }
+
+    function pcOrderDetail(type) {
+      const content = `
+        <div class="pc-order-detail">
+          <section class="pc-card" style="padding:0;overflow:hidden;"><div class="pc-status-head"><h2>订单进行中</h2><div>剩余 43:28，请按页面提示上号</div></div><div class="pc-status-body"><div class="thumb"></div><div><h3>【V10 163皮】省标马超 豪华皮肤账号</h3><span class="tag green">V10检测</span> <span class="tag orange">时租 1.46元</span><div class="pc-actions"><button class="btn outline js-open-modal" type="button">投诉撤单</button><button class="btn" type="button">联系客服</button></div></div></div></section>
+          <aside class="pc-card"><h3>订单进度</h3><p style="color:#66707f;line-height:1.8;font-weight:760;">订单已支付，账号已保留。投诉撤单将进入平台审核流程，虚假投诉会影响信誉状态。</p></aside>
+        </div>
+      `;
+      return pcBase(content, "我的订单");
+    }
+
+    function pcComplaintType() {
+      const content = `
+        <div class="pc-card"><h2>我要投诉</h2><div class="pc-card" style="box-shadow:none;border:1px solid var(--line);margin-bottom:14px;"><h3>订单号：445996973588485</h3><p style="color:#66707f;font-weight:760;">爆破裁决4皮肤账号 / 穿越火线 / 网通区</p></div><div class="pc-complaint-form"><div class="pc-form-line"><div>问题类型</div><div><span class="pill">描述不符</span> <span class="pill">账号问题</span> <span class="pill">登录问题</span> <span class="pill selected js-open-modal">个人原因</span></div></div><div class="pc-form-line"><div>投诉原因</div><div><span class="pill selected js-open-modal">租错区服</span> <span class="pill">选错时长</span> <span class="pill">不想玩了</span></div></div><div class="pc-form-line"><div>投诉理由</div><div class="textarea">请填写投诉细节</div></div><div style="display:flex;justify-content:flex-end;"><button class="btn js-open-modal" type="button">立即投诉</button></div></div></div>
+      `;
+      return pcBase(content, "我的订单");
+    }
+
+    function modalHtml(current) {
+      const popup = current.popup;
+      if (!popup) return "";
+      const active = state.modalOpen ? "active" : "";
+      if (popup.sheet) {
+        return `<div class="mask ${active}" data-close="1"><div class="sheet" onclick="event.stopPropagation()"><div class="sheet-handle"></div><h3>${popup.title}</h3><p>${popup.text}</p><div class="sheet-actions"><button class="btn gray js-close-modal" type="button">${popup.secondary}</button><button class="btn js-close-modal" type="button">${popup.primary}</button></div></div></div>`;
+      }
+      return `
+        <div class="mask ${active}" data-close="1">
+          <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-body"><div class="modal-icon">${popup.icon}</div><h3>${popup.title}</h3><p>${popup.text}</p></div>
+            <div class="modal-actions"><button class="btn gray js-close-modal" type="button">${popup.secondary}</button><a class="btn" href="${popup.link || "#"}">${popup.primary}</a></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function bindPreviewEvents() {
+      document.querySelectorAll(".js-open-modal").forEach((node) => node.addEventListener("click", openModal));
+      document.querySelectorAll(".js-close-modal").forEach((node) => node.addEventListener("click", closeModal));
+      document.querySelectorAll(".mask[data-close='1']").forEach((node) => node.addEventListener("click", closeModal));
+      document.querySelectorAll(".js-next-order").forEach((node) => node.addEventListener("click", () => setScenario("orderCredit")));
+      document.querySelectorAll(".js-next-detail").forEach((node) => node.addEventListener("click", () => setScenario("detail")));
+    }
+
+    document.querySelectorAll(".device-tab").forEach((button) => {
+      button.addEventListener("click", () => setDevice(button.dataset.device));
+    });
+
+    render();
+  </script>
+</body>
+</html>
