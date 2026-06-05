@@ -1165,9 +1165,9 @@
 
       <section class="status-strip">
         <div class="metric">
-          <div class="label">历史累积分上限</div>
-          <div class="value">100 分</div>
-          <div class="hint">由有效履约分 - 历史违规分组成，默认封顶 100。</div>
+          <div class="label">历史行为分上限</div>
+          <div class="value">400 分</div>
+          <div class="hint">基于 2-12 个月行为数据加减分，新老用户默认 0，默认封顶 400。</div>
         </div>
         <div class="metric">
           <div class="label">近期行为分上限</div>
@@ -1176,8 +1176,8 @@
         </div>
         <div class="metric">
           <div class="label">总信誉积分上限</div>
-          <div class="value">200 分</div>
-          <div class="hint">用户侧只看总分，不展示双轨子分。</div>
+          <div class="value">500 分</div>
+          <div class="hint">由历史行为分 0-400 与近30天行为分 0-100 合成，用户侧只看总分。</div>
         </div>
         <div class="metric">
           <div class="label">当前待审核申诉</div>
@@ -1573,7 +1573,7 @@
                       <tbody>
                         <tr>
                           <td>高价值账号</td>
-                          <td class="left">总信誉积分 &lt; 80</td>
+                          <td class="left">总信誉积分 &lt; 200</td>
                           <td><span class="pill warn">提醒</span></td>
                           <td>当天</td>
                           <td><span class="pill on">开启</span></td>
@@ -1589,7 +1589,7 @@
                         </tr>
                         <tr>
                           <td>发布账号</td>
-                          <td class="left">总信誉积分 &lt; 70</td>
+                          <td class="left">总信誉积分 &lt; 175</td>
                           <td><span class="pill danger">拦截</span></td>
                           <td>30 天</td>
                           <td><span class="pill on">开启</span></td>
@@ -1597,7 +1597,7 @@
                         </tr>
                         <tr>
                           <td>领券中心</td>
-                          <td class="left">总信誉积分 &lt; 60</td>
+                          <td class="left">总信誉积分 &lt; 150</td>
                           <td><span class="pill danger">禁止领券</span></td>
                           <td>30 天</td>
                           <td><span class="pill on">开启</span></td>
@@ -1605,7 +1605,7 @@
                         </tr>
                         <tr>
                           <td>活动参与</td>
-                          <td class="left">总信誉积分 &lt; 90</td>
+                          <td class="left">总信誉积分 &lt; 225</td>
                           <td><span class="pill danger">禁止参与活动</span></td>
                           <td>7 天</td>
                           <td><span class="pill on">开启</span></td>
@@ -1862,7 +1862,7 @@
                         <tr>
                           <td>正常</td>
                           <td>1</td>
-                          <td>160 - 200</td>
+                          <td>400 - 500</td>
                           <td>80 - 100</td>
                           <td class="left">当前信誉状态正常</td>
                           <td>否</td>
@@ -1873,7 +1873,7 @@
                         <tr>
                           <td>预警</td>
                           <td>2</td>
-                          <td>120 - 159</td>
+                          <td>300 - 399</td>
                           <td>60 - 79</td>
                           <td class="left">当前信誉状态需要关注</td>
                           <td>部分</td>
@@ -1884,7 +1884,7 @@
                         <tr>
                           <td>部分受限</td>
                           <td>3</td>
-                          <td>80 - 119</td>
+                          <td>200 - 299</td>
                           <td>40 - 59</td>
                           <td class="left">部分能力当前受限</td>
                           <td>是</td>
@@ -1895,7 +1895,7 @@
                         <tr>
                           <td>限制</td>
                           <td>4</td>
-                          <td>40 - 79</td>
+                          <td>100 - 199</td>
                           <td>20 - 39</td>
                           <td class="left">当前功能不可用或需确认</td>
                           <td>是</td>
@@ -1906,7 +1906,7 @@
                         <tr>
                           <td>高风险</td>
                           <td>5</td>
-                          <td>0 - 39</td>
+                          <td>0 - 99</td>
                           <td>0 - 19</td>
                           <td class="left">当前为高风险状态</td>
                           <td>是</td>
@@ -2435,7 +2435,7 @@
             fields: [
               ["限制场景", "高价值账号 / 特价专区 / 热门游戏 / 下单租用 / 发布账号 / 领券中心 / 活动参与", true, "", "select"],
               ["策略名称", "请输入限制策略名称", true],
-              ["总信誉积分阈值", "低于或等于多少分触发", false],
+              ["总信誉积分阈值", "请输入 0-500 内阈值，例如 200", false],
               ["近期行为分阈值", "低于或等于多少分触发", false]
             ]
           },
@@ -2468,7 +2468,7 @@
             title: "信誉积分条件",
             fields: [
               ["历史累积分条件", "不限 / 小于 / 小于等于 / 大于等于", true, "", "select"],
-              ["历史累积分阈值", "请输入历史累积分阈值，例如 100", false],
+              ["历史累积分阈值", "请输入历史累积分阈值，例如 200", false],
               ["近期行为分条件", "不限 / 小于 / 小于等于 / 大于等于", true, "", "select"],
               ["近期行为分阈值", "请输入近期行为分阈值，例如 60", false]
             ],
@@ -2509,7 +2509,7 @@
             fields: [
               ["状态名称", "请输入状态名称，例如部分受限", true],
               ["状态等级", "数字越大风险越高", true],
-              ["总信誉积分区间", "例如 80 - 119", true],
+              ["总信誉积分区间", "例如 200 - 299", true],
               ["近期行为分区间", "例如 40 - 59", true]
             ]
           },
