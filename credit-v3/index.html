@@ -3,18 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>信誉积分 V3 原型</title>
+  <title>信誉积分 V3 原型版本入口</title>
   <style>
     :root {
-      --bg: #f5f7fb;
+      --page: #f4f7fb;
       --card: #ffffff;
       --text: #111827;
       --muted: #64748b;
-      --line: #e3e9f1;
+      --line: #dfe7f2;
       --blue: #2f6bff;
       --blue-soft: #edf4ff;
+      --green: #188f67;
+      --green-soft: #e8f7ef;
       --warn: #b97712;
       --warn-soft: #fff4dd;
+      --shadow: 0 22px 56px rgba(29, 45, 68, 0.13);
     }
 
     * { box-sizing: border-box; }
@@ -22,21 +25,29 @@
     body {
       margin: 0;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 32px;
+      padding: 36px;
       color: var(--text);
       font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      letter-spacing: 0;
       background: linear-gradient(180deg, #dfeaf7 0%, #f8fbff 100%);
     }
 
-    main {
-      width: min(1060px, 100%);
+    .wrap {
+      width: min(1180px, 100%);
+      margin: 0 auto;
       padding: 34px;
       border: 1px solid rgba(84, 107, 139, 0.18);
       border-radius: 12px;
-      background: var(--card);
-      box-shadow: 0 22px 56px rgba(29, 45, 68, 0.13);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: var(--shadow);
+    }
+
+    .head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 26px;
     }
 
     .kicker {
@@ -54,6 +65,7 @@
     }
 
     .desc {
+      max-width: 720px;
       margin: 12px 0 0;
       color: var(--muted);
       font-size: 15px;
@@ -61,42 +73,124 @@
       font-weight: 760;
     }
 
-    .links {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 28px;
+    .badge {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      height: 36px;
+      padding: 0 14px;
+      border: 1px solid rgba(47, 107, 255, .24);
+      border-radius: 999px;
+      color: var(--blue);
+      background: #fff;
+      font-size: 13px;
+      font-weight: 900;
     }
 
-    a {
-      min-height: 150px;
+    .versions {
       display: grid;
-      align-content: center;
-      gap: 8px;
-      padding: 22px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .version-card {
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 24px;
       border: 1px solid var(--line);
       border-radius: 10px;
-      color: inherit;
-      background: #fff;
-      text-decoration: none;
+      background: var(--card);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, .06);
     }
 
-    a:hover {
-      border-color: #aac7ff;
-      background: #f8fbff;
+    .version-card.primary {
+      border-color: rgba(47, 107, 255, .35);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
     }
 
-    strong {
-      font-size: 22px;
+    .version-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
       line-height: 1.25;
       font-weight: 950;
     }
 
-    span {
+    .version-tag {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .version-tag.green {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .version-desc {
+      margin: 0;
       color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .entry-link {
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--blue);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .entry-link.secondary {
+      color: var(--text);
+      background: #eef3fa;
+    }
+
+    .sub-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .sub-links a {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: #334155;
+      background: #fbfdff;
+      text-decoration: none;
       font-size: 13px;
-      line-height: 1.55;
-      font-weight: 760;
+      font-weight: 850;
+    }
+
+    .sub-links a:hover,
+    .entry-link:hover {
+      filter: brightness(.98);
+      border-color: rgba(47, 107, 255, .38);
     }
 
     .note {
@@ -111,36 +205,60 @@
       font-weight: 780;
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 820px) {
       body { padding: 16px; }
-      main { padding: 24px; }
-      .links { grid-template-columns: 1fr; }
+      .wrap { padding: 24px; }
+      .head { display: block; }
+      .badge { margin-top: 16px; }
+      .versions { grid-template-columns: 1fr; }
+      .sub-links { grid-template-columns: 1fr; }
+      h1 { font-size: 28px; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <p class="kicker">Credit V3 Prototype</p>
-    <h1>信誉积分 V3 原型入口</h1>
-    <p class="desc">用于在线预览信誉积分 V3 原型。当前版本包含移动端详情、PC 端详情、后台配置和业务关键流程四类页面。</p>
-    <section class="links" aria-label="原型入口">
-      <a href="./mobile.html">
-        <strong>移动端原型</strong>
-        <span>查看移动端首页、积分明细、申诉记录、申诉提交弹窗和规则说明。</span>
-      </a>
-      <a href="./pc.html">
-        <strong>PC 端原型</strong>
-        <span>查看 PC 端可交互信誉积分详情页、明细、申诉记录和规则说明。</span>
-      </a>
-      <a href="./backend.html">
-        <strong>后台配置原型</strong>
-        <span>查看系统配置下的信誉积分体系配置、减分配置、惩罚配置、申诉审核、规则日志和字典项配置。</span>
-      </a>
-      <a href="./flows.html">
-        <strong>业务关键流程</strong>
-        <span>查看找号、下单、投诉撤单、投诉类型和领券中心的限制弹窗交互。</span>
-      </a>
+  <main class="wrap">
+    <header class="head">
+      <div>
+        <p class="kicker">Credit V3 Prototype</p>
+        <h1>信誉积分 V3 原型版本入口</h1>
+        <p class="desc">用于在线预览信誉积分 V3 原型。当前保留原 500 分版，同时新增 200 分版，两套入口互相独立，便于汇报和对比。</p>
+      </div>
+      <div class="badge">500 分版 / 200 分版并行</div>
+    </header>
+
+    <section class="versions" aria-label="版本入口">
+      <article class="version-card">
+        <div class="version-top">
+          <h2>500 分版</h2>
+          <span class="version-tag green">原线上版本</span>
+        </div>
+        <p class="version-desc">保留当前 GitHub Pages 上已有的 V5 / V10 原型，不覆盖、不改名，适合回看原 500 分口径下的用户侧、后台侧和业务流程。</p>
+        <a class="entry-link secondary" href="./mobile.html">进入 500 分版移动端</a>
+        <div class="sub-links">
+          <a href="./mobile.html">移动端原型</a>
+          <a href="./pc.html">PC 端原型</a>
+          <a href="./backend.html">后台配置原型</a>
+          <a href="./flows.html">业务关键流程</a>
+        </div>
+      </article>
+
+      <article class="version-card primary">
+        <div class="version-top">
+          <h2>200 分版</h2>
+          <span class="version-tag">新版口径</span>
+        </div>
+        <p class="version-desc">按总分 0-200 的双轨模型重建原型，新增 PC / 移动端信誉积分前置入口，并保留用户侧只看总分、风险状态、能力限制与恢复路径。</p>
+        <a class="entry-link" href="./200/">进入 200 分版总入口</a>
+        <div class="sub-links">
+          <a href="./200/mobile.html">移动端原型</a>
+          <a href="./200/pc.html">PC 端原型</a>
+          <a href="./200/backend.html">后台配置原型</a>
+          <a href="./200/flows.html">业务关键流程</a>
+        </div>
+      </article>
     </section>
+
     <div class="note">当前页面仅作为原型预览入口，正式规则值和扣分项以后续 PRD 与后台配置为准。</div>
   </main>
 </body>

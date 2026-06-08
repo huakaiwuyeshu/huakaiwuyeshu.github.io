@@ -1,0 +1,2159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>信誉积分V3 PC端详情页申诉版 可交互 V6 200分版</title>
+  <style>
+    :root {
+      --page: #f5f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #64748b;
+      --soft: #8b98aa;
+      --line: #e3e9f1;
+      --line-strong: #d5deea;
+      --blue: #2f6bff;
+      --blue-soft: #edf4ff;
+      --warn: #b97712;
+      --warn-soft: #fff4dd;
+      --red: #d64b4b;
+      --red-soft: #fff0ef;
+      --green: #188f67;
+      --green-soft: #e8f7ef;
+      --shadow: 0 18px 48px rgba(29, 45, 68, 0.13);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      color: var(--text);
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      letter-spacing: 0;
+      background: linear-gradient(180deg, #dfeaf7 0%, #f8fbff 100%);
+    }
+
+    button {
+      border: 0;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      background: none;
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    body:not(.pc-detail-mode) .pc-detail-board {
+      display: none;
+    }
+
+    body.pc-detail-mode .pc-entry-board {
+      display: none;
+    }
+
+    .pc-entry-board {
+      width: 1280px;
+      height: 760px;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(84, 107, 139, 0.18);
+      background: #f2f4f7;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 220px 1fr;
+    }
+
+    .pc-entry-side {
+      padding: 22px 10px;
+      background: #f4f6f9;
+      border-right: 1px solid #e4e9f0;
+    }
+
+    .pc-entry-logo {
+      margin: 0 10px 24px;
+      color: #111827;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .pc-entry-logo small {
+      display: block;
+      margin-top: 6px;
+      color: #8b98aa;
+      font-size: 11px;
+      letter-spacing: 5px;
+      font-weight: 800;
+    }
+
+    .pc-menu {
+      display: grid;
+      gap: 10px;
+    }
+
+    .pc-menu-item {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 18px;
+      border-radius: 8px;
+      color: #263241;
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .pc-menu-item.active {
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(30, 41, 59, .05);
+    }
+
+    .pc-entry-main {
+      display: grid;
+      grid-template-rows: 58px 1fr;
+      min-width: 0;
+    }
+
+    .pc-entry-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 28px;
+      color: #4b5563;
+      background: #f7f9fc;
+    }
+
+    .pc-search {
+      width: 360px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      border: 2px solid #111827;
+      border-radius: 7px;
+      color: #111827;
+      background: #eef8fb;
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .pc-entry-icons {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: #667085;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .pc-entry-content {
+      padding: 16px 32px 28px;
+      overflow: hidden;
+    }
+
+    .pc-entry-title {
+      margin: 0 0 16px;
+      font-size: 22px;
+      font-weight: 850;
+    }
+
+    .pc-profile-card,
+    .pc-order-card,
+    .pc-more-card {
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 1px 0 rgba(15, 23, 42, .04);
+    }
+
+    .pc-profile-card {
+      position: relative;
+      min-height: 284px;
+      padding: 32px 42px 26px;
+      overflow: hidden;
+    }
+
+    .pc-profile-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 10%, rgba(245, 203, 120, .16), transparent 28%);
+      pointer-events: none;
+    }
+
+    .pc-profile-main {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+    }
+
+    .pc-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fff3c4, #f4ce83);
+      border: 2px solid #fff;
+      box-shadow: 0 8px 22px rgba(185, 119, 18, .18);
+    }
+
+    .pc-merchant {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .pc-wallet-row {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-top: 4px;
+      color: #374151;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .pc-mini-pill {
+      margin-left: 6px;
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: #ff3358;
+      background: #ffe8eb;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .pc-credit-entry {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 2px solid #ff4a34;
+      color: #374151;
+      text-decoration: none;
+      background: rgba(255, 255, 255, .72);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .pc-credit-entry strong {
+      color: #111827;
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .pc-stats {
+      position: relative;
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      text-align: center;
+    }
+
+    .pc-stat strong {
+      display: block;
+      color: #1f2937;
+      font-size: 21px;
+      font-weight: 600;
+    }
+
+    .pc-stat span {
+      display: block;
+      margin-top: 8px;
+      color: #6b7280;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .pc-order-card {
+      margin-top: 24px;
+      padding: 26px 24px 34px;
+    }
+
+    .pc-card-title {
+      margin: 0 0 26px;
+      padding-left: 12px;
+      border-left: 2px solid #ff2b35;
+      font-size: 16px;
+      font-weight: 850;
+    }
+
+    .pc-order-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      text-align: center;
+      color: #667085;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .pc-order-icon {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 10px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 950;
+      background: linear-gradient(135deg, #53b6ff, #3f7cff);
+    }
+
+    .pc-more-card {
+      margin-top: 24px;
+      padding: 22px 24px;
+    }
+
+    .board {
+      width: 1400px;
+      height: 1020px;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(84, 107, 139, 0.18);
+      background: #fbfdff;
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .browser {
+      height: 100%;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(17, 24, 39, 0.10);
+      background: var(--page);
+      box-shadow: 0 22px 56px rgba(29, 45, 68, 0.13);
+    }
+
+    .topbar {
+      height: 64px;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      border-bottom: 1px solid rgba(229, 235, 242, 0.92);
+      background: #fff;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 250px;
+    }
+
+    .logo,
+    .icon-box,
+    .drawer-icon {
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+    }
+
+    svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .brand-name {
+      color: var(--text);
+      font-size: 19px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .nav {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .nav button {
+      position: relative;
+      height: 64px;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .nav button.active {
+      color: var(--text);
+      font-weight: 950;
+    }
+
+    .nav button.active::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 42px;
+      height: 3px;
+      border-radius: 999px;
+      transform: translateX(-50%);
+      background: var(--blue);
+    }
+
+    .content {
+      height: calc(100% - 64px);
+      display: grid;
+      grid-template-columns: 306px 1fr;
+      gap: 16px;
+      padding: 18px;
+      overflow: hidden;
+      background: var(--page);
+    }
+
+    .panel,
+    .side-card,
+    .detail-drawer {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
+      box-shadow: 0 10px 24px rgba(31, 46, 71, 0.055);
+    }
+
+    .sidebar {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .score-card {
+      position: relative;
+      overflow: hidden;
+      padding: 18px;
+    }
+
+    .score-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--red) 0%, #ffb14f 38%, var(--blue) 100%);
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .score-number {
+      margin-top: 11px;
+      color: var(--text);
+      font-size: 62px;
+      line-height: 0.95;
+      font-weight: 950;
+    }
+
+    .score-number span {
+      margin-left: 3px;
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .score-caption {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .chip,
+    .tag {
+      min-height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .chip.warn,
+    .tag.warn { color: var(--warn); background: var(--warn-soft); }
+    .chip.blue,
+    .tag.blue { color: var(--blue); background: var(--blue-soft); }
+    .chip.green,
+    .tag.green { color: var(--green); background: var(--green-soft); }
+    .chip.red,
+    .tag.red { color: var(--red); background: var(--red-soft); }
+    .chip.gray,
+    .tag.gray { color: var(--muted); background: #eef2f7; }
+
+    .side-card {
+      padding: 14px;
+    }
+
+    .side-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .side-sub {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 740;
+    }
+
+    .limit-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .capability-group {
+      margin-top: 12px;
+    }
+
+    .capability-group + .capability-group {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--line);
+    }
+
+    .capability-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .limit-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      text-align: left;
+    }
+
+    .limit-item.normal {
+      background: #fbfffd;
+      border-color: #cfeee1;
+    }
+
+    .limit-item > span:first-child {
+      display: block;
+      min-width: 0;
+    }
+
+    .limit-name {
+      display: block;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .limit-desc {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 720;
+    }
+
+    .button {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 12px;
+      border-radius: 6px;
+      border: 1px solid var(--line-strong);
+      color: var(--blue);
+      background: #fff;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .button.primary {
+      border-color: var(--blue);
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .button.green { border-color: #bfead9; color: var(--green); background: var(--green-soft); }
+    .button.gray { border-color: #e2e8f0; color: var(--muted); background: #f2f5f8; }
+    .button.red { border-color: #f2cccc; color: var(--red); background: var(--red-soft); }
+    .button.warn { border-color: #f2dfbd; color: var(--warn); background: var(--warn-soft); }
+
+    .workspace {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 1fr 318px;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .main-panel {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .view {
+      display: none;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .panel {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .panel-head {
+      min-height: 86px;
+      padding: 18px 20px 14px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .panel-sub {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 750;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 18px 20px 0;
+    }
+
+    .metric {
+      min-height: 126px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      text-align: left;
+    }
+
+    .metric-value {
+      margin-top: 11px;
+      color: var(--text);
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .metric-desc {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 740;
+    }
+
+    .flow {
+      margin: 16px 20px 0;
+      padding: 16px;
+      border: 1px solid #cfe0ff;
+      border-radius: 8px;
+      background: #f6f9ff;
+    }
+
+    .flow-title {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .flow-step {
+      min-height: 72px;
+      padding: 10px;
+      border: 1px solid #d9e6ff;
+      border-radius: 8px;
+      background: #fff;
+      color: #40526d;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 800;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .flow-step:hover {
+      border-color: #aac7ff;
+      background: #f8fbff;
+    }
+
+    .flow-step.selected {
+      border-color: #aac7ff;
+      box-shadow: inset 3px 0 0 var(--blue);
+      background: #f7fbff;
+    }
+
+    .flow-step strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .filter {
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      background: #eef2f7;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .filter.active {
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .filter.warn {
+      color: var(--warn);
+      background: var(--warn-soft);
+    }
+
+    .table {
+      margin: 14px 20px 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .tr {
+      display: grid;
+      grid-template-columns: 62px 84px 120px 146px 84px 1fr 70px 88px;
+      align-items: center;
+      min-height: 68px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tr:last-child { border-bottom: 0; }
+    .tr.clickable { cursor: pointer; }
+    .tr.clickable:hover { background: #f8fbff; }
+    .tr.selected { box-shadow: inset 3px 0 0 var(--blue); background: #f7fbff; }
+
+    .th {
+      min-height: 40px;
+      color: var(--soft);
+      background: #f4f7fb;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .td {
+      padding: 0 8px;
+      color: #42526a;
+      font-size: 12px;
+      line-height: 1.38;
+      font-weight: 830;
+      text-align: left;
+      word-break: break-all;
+    }
+
+    .td.strong {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 950;
+      word-break: keep-all;
+    }
+
+    .score-change {
+      font-size: 20px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .score-change.plus { color: var(--green); }
+    .score-change.minus { color: var(--red); }
+
+    .record-list-pc {
+      display: grid;
+      gap: 10px;
+      padding: 14px 20px 20px;
+    }
+
+    .record-row-pc {
+      min-height: 88px;
+      display: grid;
+      grid-template-columns: 72px 1fr 68px 88px;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .record-row-pc:hover {
+      border-color: #cfe0ff;
+      background: #f9fbff;
+    }
+
+    .record-row-pc.selected {
+      border-color: #aac7ff;
+      box-shadow: inset 3px 0 0 var(--blue);
+      background: #f7fbff;
+    }
+
+    .record-time {
+      margin-top: 8px;
+      color: var(--soft);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 850;
+    }
+
+    .record-title {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.3;
+      font-weight: 950;
+    }
+
+    .record-meta {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .record-desc {
+      margin-top: 6px;
+      color: #4c5f78;
+      font-size: 12px;
+      line-height: 1.42;
+      font-weight: 820;
+    }
+
+    .inline-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 20px;
+      margin-right: 6px;
+      padding: 0 8px;
+      border-radius: 999px;
+      color: var(--warn);
+      background: var(--warn-soft);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 950;
+      vertical-align: 1px;
+    }
+
+    .appeal-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 18px 20px;
+    }
+
+    .appeal-card {
+      min-height: 146px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .appeal-card:hover {
+      border-color: #cfe0ff;
+      background: #f9fbff;
+    }
+
+    .appeal-card.selected {
+      border-color: #aac7ff;
+      box-shadow: inset 3px 0 0 var(--blue);
+    }
+
+    .appeal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .appeal-name {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.32;
+      font-weight: 950;
+    }
+
+    .appeal-desc {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 760;
+    }
+
+    .rule-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 18px 20px;
+    }
+
+    .rule-card {
+      min-height: 150px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .rule-card h3 {
+      margin: 0;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .rule-card p {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 740;
+    }
+
+    .detail-drawer {
+      min-width: 0;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .drawer-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .drawer-icon {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      border-radius: 8px;
+    }
+
+    .drawer-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .drawer-desc {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 760;
+    }
+
+    .drawer-meta {
+      display: grid;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eef2f7;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .meta-row strong {
+      color: #4c5f78;
+      font-weight: 950;
+    }
+
+    .drawer-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .drawer-note {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid #f2dfbd;
+      border-radius: 8px;
+      color: #76501d;
+      background: #fff8ec;
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 780;
+    }
+
+    .modal-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(15, 23, 42, 0.38);
+    }
+
+    .modal-layer[hidden] {
+      display: none;
+    }
+
+    .appeal-modal {
+      width: 540px;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid rgba(17, 24, 39, 0.12);
+      background: #fff;
+      box-shadow: 0 28px 80px rgba(15, 23, 42, 0.28);
+    }
+
+    .modal-head {
+      min-height: 72px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .modal-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .modal-desc {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 750;
+    }
+
+    .modal-close {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--muted);
+      background: #f2f5f8;
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .modal-body {
+      padding: 18px 22px 20px;
+    }
+
+    .appeal-context {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 13px;
+      border: 1px solid #f2dfbd;
+      border-radius: 8px;
+      background: #fffaf0;
+    }
+
+    .context-title {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 950;
+    }
+
+    .context-meta {
+      margin-top: 5px;
+      color: #76501d;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .form-field span {
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      color: var(--text);
+      background: #fff;
+      font: inherit;
+      font-size: 13px;
+      line-height: 1.45;
+      outline: none;
+    }
+
+    .form-field select {
+      height: 40px;
+      padding: 0 12px;
+    }
+
+    .form-field textarea {
+      min-height: 92px;
+      resize: none;
+      padding: 11px 12px;
+    }
+
+    .upload-box {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 13px;
+      border: 1px dashed #c9d7ea;
+      border-radius: 8px;
+      color: var(--muted);
+      background: #f8fafc;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 760;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .prototype-switch {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 60;
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      border: 1px solid rgba(84, 107, 139, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 16px 34px rgba(29, 45, 68, 0.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .prototype-switch a {
+      min-width: 72px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      border: 1px solid #d7e1ee;
+      border-radius: 999px;
+      color: var(--text);
+      background: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .prototype-switch a.active {
+      border-color: rgba(47, 107, 255, 0.25);
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+  </style>
+</head>
+<body>
+  <div class="prototype-switch" aria-label="原型切换">
+    <a href="#" data-link="entry">入口页</a>
+    <a href="#" data-link="mobile">移动端</a>
+  </div>
+
+  <main class="pc-entry-board" id="pcEntry">
+    <aside class="pc-entry-side">
+      <div class="pc-entry-logo">租号玩<small>正规租号平台</small></div>
+      <nav class="pc-menu" aria-label="个人中心导航">
+        <div class="pc-menu-item active">⌂ 首页</div>
+        <div class="pc-menu-item">▣ 租号大厅</div>
+        <div class="pc-menu-item">◉ 游戏分类</div>
+        <div class="pc-menu-item">△ Steam专区</div>
+        <div class="pc-menu-item">我的订单</div>
+        <div class="pc-menu-item">我的收藏</div>
+        <div class="pc-menu-item">我的足迹</div>
+      </nav>
+    </aside>
+
+    <section class="pc-entry-main">
+      <header class="pc-entry-top">
+        <div class="pc-search"><span>全部游戏⌄</span><span>超自然行动组（手游）</span><span>⌕</span></div>
+        <div class="pc-entry-icons"><span>签到红包</span><span>消息 90</span><span>窗口</span></div>
+      </header>
+
+      <div class="pc-entry-content">
+        <h1 class="pc-entry-title">个人中心</h1>
+        <section class="pc-profile-card">
+          <div class="pc-profile-main">
+            <div class="pc-avatar"></div>
+            <div class="pc-merchant">商户部门 <span class="tag gray">开通至尊VIP</span></div>
+            <div class="pc-wallet-row">
+              <span>我的红包：<strong>0</strong><span class="pc-mini-pill">查看</span></span>
+              <span>我的余额：<strong>4.41</strong><span class="pc-mini-pill">查看</span></span>
+              <a class="pc-credit-entry" href="#overview" data-open-credit>
+                <span>信誉积分：</span><strong>112</strong><span class="tag warn">查看</span>
+              </a>
+            </div>
+          </div>
+          <div class="pc-stats">
+            <div class="pc-stat"><strong>2603</strong><span>租号次数</span></div>
+            <div class="pc-stat"><strong>1169</strong><span>撤单次数</span></div>
+            <div class="pc-stat"><strong>30.99%</strong><span>撤单率</span></div>
+            <div class="pc-stat"><strong>173</strong><span>被拉黑</span></div>
+            <div class="pc-stat"><strong>0</strong><span>恶意投诉</span></div>
+          </div>
+        </section>
+
+        <section class="pc-order-card">
+          <h2 class="pc-card-title">我租的账号</h2>
+          <div class="pc-order-grid">
+            <div><div class="pc-order-icon">+</div><span>进行中 0</span></div>
+            <div><div class="pc-order-icon" style="background:linear-gradient(135deg,#ffd36a,#f6ad37)">≡</div><span>已预约 0</span></div>
+            <div><div class="pc-order-icon" style="background:linear-gradient(135deg,#8ee36b,#48b85a)">✓</div><span>已完成</span></div>
+            <div><div class="pc-order-icon" style="background:linear-gradient(135deg,#ff8b8b,#ff5964)">!</div><span>投诉/撤单</span></div>
+            <div><div class="pc-order-icon" style="background:linear-gradient(135deg,#7db8ff,#4d91f7)">□</div><span>全部订单</span></div>
+          </div>
+        </section>
+
+        <section class="pc-more-card">
+          <h2 class="pc-card-title">更多功能</h2>
+          <div class="pc-wallet-row"><strong>至尊VIP</strong><span>省钱租 安心玩 尊享10大权益</span><strong>成为号主</strong><span>成为租号玩家，更多权益给你更多可能</span></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <main class="board pc-detail-board" id="pcDetail">
+    <section class="browser" aria-label="PC端信誉积分详情页可交互版">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.47 6.03.88-4.36 4.25 1.03 6-5.4-2.84-5.4 2.84 1.03-6-4.36-4.25 6.03-.88L12 3Z"/></svg>
+          </div>
+          <div class="brand-name">租号玩 | 信誉体系</div>
+        </div>
+        <nav class="nav" aria-label="顶部导航">
+          <button class="active" data-tab="overview">信誉积分</button>
+          <button data-tab="detail">积分明细</button>
+          <button data-tab="appeal">申诉记录</button>
+          <button data-tab="rules">规则说明</button>
+        </nav>
+      </div>
+
+      <div class="content">
+        <aside class="sidebar" aria-label="信誉积分概览">
+          <section class="panel score-card">
+            <div class="label">当前总信誉积分</div>
+            <div class="score-number">112<span>分</span></div>
+            <div class="score-caption">
+              <span class="chip warn">部分受限</span>
+              <span class="chip warn">2 项能力受限</span>
+              <span>最近更新：2026-05-19 11:16</span>
+            </div>
+          </section>
+
+          <section class="side-card">
+            <h2 class="side-title">能力状态</h2>
+            <p class="side-sub">展示当前限制与仍可正常使用的能力。</p>
+            <div class="capability-group">
+              <div class="capability-label"><span>当前受限</span><span>2 项</span></div>
+              <div class="limit-list">
+                <button class="limit-item" data-record="limit-high-account">
+                  <span>
+                    <span class="limit-name">高价值账号租赁</span>
+                    <span class="limit-desc">未达准入要求</span>
+                  </span>
+                  <span class="tag warn">部分受限</span>
+                </button>
+                <button class="limit-item" data-record="limit-order">
+                  <span>
+                    <span class="limit-name">特价专区下单</span>
+                    <span class="limit-desc">近期违规时限制租用</span>
+                  </span>
+                  <span class="tag warn">部分受限</span>
+                </button>
+              </div>
+            </div>
+            <div class="capability-group">
+              <div class="capability-label"><span>正常可用</span><span>3 项</span></div>
+              <div class="limit-list">
+                <button class="limit-item normal" data-record="normal-complaint">
+                  <span>
+                    <span class="limit-name">投诉撤单能力</span>
+                    <span class="limit-desc">可正常发起投诉撤单</span>
+                  </span>
+                  <span class="tag green">正常</span>
+                </button>
+                <button class="limit-item normal" data-record="normal-coupon">
+                  <span>
+                    <span class="limit-name">领券与活动参与</span>
+                    <span class="limit-desc">当前未触发领取限制</span>
+                  </span>
+                  <span class="tag green">正常</span>
+                </button>
+                <button class="limit-item normal" data-record="normal-publish">
+                  <span>
+                    <span class="limit-name">账号发布</span>
+                    <span class="limit-desc">当前可正常发布账号</span>
+                  </span>
+                  <span class="tag green">正常</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+        </aside>
+
+        <section class="workspace">
+          <div class="main-panel">
+            <section class="view active" data-panel="overview">
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2 class="panel-title">信誉积分详情</h2>
+                    <p class="panel-sub">首页只承载状态摘要；明细、申诉、规则通过点击进入二级内容。</p>
+                  </div>
+                  <span class="chip blue">可交互版</span>
+                </div>
+
+                <div class="overview-grid">
+                  <button class="metric" data-record="recovery-path">
+                    <span class="label">恢复路径</span>
+                    <div class="metric-value">2 条</div>
+                    <div class="metric-desc">正常履约等待扣分失效，或从扣分记录发起申诉。</div>
+                  </button>
+                  <button class="metric" data-tab="appeal" data-record="appeal-processing">
+                    <span class="label">申诉处理中</span>
+                    <div class="metric-value">1 条</div>
+                    <div class="metric-desc">虚假投诉扣分正在审核中，完成后同步刷新明细。</div>
+                  </button>
+                  <button class="metric" data-tab="detail" data-record="deduct-pass">
+                    <span class="label">最近恢复</span>
+                    <div class="metric-value">+6</div>
+                    <div class="metric-desc">异常撤单申诉通过，已生成回滚明细并保留原扣分记录。</div>
+                  </button>
+                </div>
+
+                <div class="flow">
+                  <div class="flow-title">扣分申诉处理链路</div>
+                  <div class="flow-steps">
+                    <button class="flow-step" data-record="flow-view"><strong>1 查看扣分</strong>从积分明细进入扣分记录。</button>
+                    <button class="flow-step" data-record="flow-submit"><strong>2 发起申诉</strong>仅未过期扣分支持提交。</button>
+                    <button class="flow-step" data-record="flow-review"><strong>3 后台审核</strong>审核通过、驳回或补充说明。</button>
+                    <button class="flow-step" data-record="flow-rollback"><strong>4 扣分回滚</strong>通过后生成恢复/回滚明细。</button>
+                    <button class="flow-step" data-record="flow-refresh"><strong>5 状态刷新</strong>同步总分、限制状态和业务拦截。</button>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+            <section class="view" data-panel="detail">
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2 class="panel-title">分值变动明细</h2>
+                    <p class="panel-sub">扣分记录展示申诉入口；回滚记录展示关联申诉单与原扣分。</p>
+                    <div class="filters">
+                      <span class="filter active">全部</span>
+                      <span class="filter">扣分</span>
+                      <span class="filter warn">未申诉</span>
+                      <span class="filter">申诉中</span>
+                      <span class="filter">已回滚</span>
+                    </div>
+                  </div>
+                  <span class="chip blue">点击行查看详情</span>
+                </div>
+
+                <div class="record-list-pc" aria-label="分值变动明细列表">
+                  <button class="record-row-pc selected" data-record="deduct-pass">
+                    <div>
+                      <span class="tag red">扣分</span>
+                      <div class="record-time">05-13<br>09:18</div>
+                    </div>
+                    <div>
+                      <div class="record-title">异常撤单</div>
+                      <div class="record-meta">关联单号：ORDER202605130042 · 来源：风控系统</div>
+                      <div class="record-desc">申诉通过，已生成 +6 回滚明细，原扣分记录保留。</div>
+                    </div>
+                    <div class="score-change minus">-6</div>
+                    <span class="button green">已回滚</span>
+                  </button>
+
+                  <button class="record-row-pc" data-record="rollback">
+                    <div>
+                      <span class="tag blue">回滚</span>
+                      <div class="record-time">05-14<br>16:40</div>
+                    </div>
+                    <div>
+                      <div class="record-title">申诉通过回滚</div>
+                      <div class="record-meta">关联申诉单：APPEAL202605140018 · 来源：审核后台</div>
+                      <div class="record-desc">关联原扣分 ORDER202605130042，同步刷新总分和限制状态。</div>
+                    </div>
+                    <div class="score-change plus">+6</div>
+                    <span class="button gray">记录</span>
+                  </button>
+
+                  <button class="record-row-pc" data-record="deduct-unappealed">
+                    <div>
+                      <span class="tag red">扣分</span>
+                      <div class="record-time">05-12<br>11:07</div>
+                    </div>
+                    <div>
+                      <div class="record-title"><span class="inline-status">未申诉</span>账号异常使用</div>
+                      <div class="record-meta">关联单号：ORDER202605120066 · 来源：订单系统</div>
+                      <div class="record-desc">当前扣分仍在有效期内，尚未提交申诉。</div>
+                    </div>
+                    <div class="score-change minus">-4</div>
+                    <span class="button primary" data-appeal-record="deduct-unappealed">申诉</span>
+                  </button>
+
+                  <button class="record-row-pc" data-record="deduct-processing">
+                    <div>
+                      <span class="tag red">扣分</span>
+                      <div class="record-time">05-10<br>14:26</div>
+                    </div>
+                    <div>
+                      <div class="record-title">虚假投诉</div>
+                      <div class="record-meta">关联单号：COMPLAINT202605100032 · 来源：投诉系统</div>
+                      <div class="record-desc">已提交申诉，预计 1-3 个工作日内完成审核。</div>
+                    </div>
+                    <div class="score-change minus">-8</div>
+                    <span class="button">处理中</span>
+                  </button>
+
+                  <button class="record-row-pc" data-record="deduct-reject">
+                    <div>
+                      <span class="tag red">扣分</span>
+                      <div class="record-time">05-08<br>18:05</div>
+                    </div>
+                    <div>
+                      <div class="record-title">恶意撤单</div>
+                      <div class="record-meta">关联单号：ORDER202605080027 · 来源：风控系统</div>
+                      <div class="record-desc">申诉驳回，平台记录与用户说明不一致，原扣分继续生效。</div>
+                    </div>
+                    <div class="score-change minus">-5</div>
+                    <span class="button gray">已驳回</span>
+                  </button>
+                </div>
+              </article>
+            </section>
+
+            <section class="view" data-panel="appeal">
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2 class="panel-title">扣分申诉记录</h2>
+                    <p class="panel-sub">展示申诉时间、关联扣分、审核结果、处理来源和是否回滚。</p>
+                  </div>
+                  <span class="chip blue">仅扣分申诉</span>
+                </div>
+
+                <div class="appeal-list">
+                  <button class="appeal-card selected" data-record="appeal-pass">
+                    <div class="appeal-head">
+                      <div class="appeal-name">异常撤单 · 申诉通过</div>
+                      <span class="chip green">已回滚</span>
+                    </div>
+                    <div class="appeal-desc">申诉单：APPEAL202605140018<br>提交时间：2026-05-14 10:18<br>审核说明：订单责任改判，撤销本次扣分。</div>
+                  </button>
+
+                  <button class="appeal-card" data-record="appeal-processing">
+                    <div class="appeal-head">
+                      <div class="appeal-name">虚假投诉 · 审核中</div>
+                      <span class="chip blue">处理中</span>
+                    </div>
+                    <div class="appeal-desc">申诉单：APPEAL202605160052<br>预计 1-3 个工作日内完成审核。审核中不可重复提交。</div>
+                  </button>
+
+                  <button class="appeal-card" data-record="appeal-reject">
+                    <div class="appeal-head">
+                      <div class="appeal-name">恶意撤单 · 申诉驳回</div>
+                      <span class="chip red">未通过</span>
+                    </div>
+                    <div class="appeal-desc">申诉单：APPEAL202605090031<br>审核说明：平台记录与用户说明不一致，原扣分继续生效。</div>
+                  </button>
+
+                  <button class="appeal-card" data-record="rollback">
+                    <div class="appeal-head">
+                      <div class="appeal-name">扣分回滚明细</div>
+                      <span class="chip green">+6</span>
+                    </div>
+                    <div class="appeal-desc">关联原扣分：ORDER202605130042<br>处理来源：审核后台<br>已同步刷新总分和限制状态。</div>
+                  </button>
+                </div>
+              </article>
+            </section>
+
+            <section class="view" data-panel="rules">
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2 class="panel-title">规则说明（占位）</h2>
+                    <p class="panel-sub">先展示总分口径、扣分规则和恢复方式，后续再补正式规则值。</p>
+                  </div>
+                  <span class="chip blue">初稿占位</span>
+                </div>
+
+                <div class="rule-grid">
+                  <section class="rule-card">
+                    <h3>分值区间</h3>
+                    <p>总信誉积分区间为 0 - 200，由近期行为分（近30天，基准100）与历史累积分（前2-12个月，0-100）合成；新用户默认为 100+0，老用户按有效履约分与违规行为分滚动计算。</p>
+                  </section>
+                  <section class="rule-card">
+                    <h3>分值含义</h3>
+                    <p>分值越高，表示用户当前履约越稳定、近期风险越低，受到的业务限制越少。</p>
+                  </section>
+                  <section class="rule-card">
+                    <h3>扣分规则</h3>
+                    <p>异常撤单、虚假投诉、账号异常、恶意操作等行为会按规则扣分；不同行为对应不同扣分值和有效期。</p>
+                  </section>
+                  <section class="rule-card">
+                    <h3>恢复与申诉</h3>
+                    <p>扣分到期后自动恢复，或申诉审核通过后回滚；原扣分记录保留，不做物理删除。</p>
+                  </section>
+                </div>
+              </article>
+            </section>
+          </div>
+
+          <aside class="detail-drawer" aria-label="点击详情">
+            <div class="drawer-head">
+              <div class="drawer-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
+              </div>
+              <div>
+                <h2 class="drawer-title" id="drawerTitle">下一步处理路径</h2>
+                <p class="drawer-desc" id="drawerDesc">优先确认扣分原因；如有异议，从积分明细发起申诉。</p>
+              </div>
+            </div>
+            <div class="drawer-meta" id="drawerMeta"></div>
+            <div class="drawer-actions">
+              <button class="button primary" data-tab="detail">查看明细</button>
+              <button class="button" data-tab="appeal">查看申诉</button>
+            </div>
+            <div class="drawer-note" id="drawerNote">提示：扣分申诉通过后，回滚明细会与原扣分记录同时展示，避免用户看不到分值恢复来源。</div>
+          </aside>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-layer" id="appealModal" hidden>
+    <section class="appeal-modal" role="dialog" aria-modal="true" aria-labelledby="appealModalTitle">
+      <header class="modal-head">
+        <div>
+          <h2 class="modal-title" id="appealModalTitle">提交扣分申诉</h2>
+          <p class="modal-desc">请说明对本次扣分有异议的原因，提交后进入审核中。</p>
+        </div>
+        <button class="modal-close" type="button" data-close-appeal aria-label="关闭">×</button>
+      </header>
+
+      <div class="modal-body">
+        <div class="appeal-context">
+          <span class="tag red">扣分</span>
+          <div>
+            <div class="context-title" id="appealRecordName">账号异常使用</div>
+            <div class="context-meta" id="appealRecordMeta">关联单号：ORDER202605120066 · 扣分：-4 · 来源：订单系统</div>
+          </div>
+          <span class="tag warn">未申诉</span>
+        </div>
+
+        <label class="form-field">
+          <span>申诉原因</span>
+          <select id="appealReason">
+            <option>订单责任判定有误</option>
+            <option>扣分规则命中异常</option>
+            <option>已完成沟通处理</option>
+            <option>其他原因</option>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span>补充说明</span>
+          <textarea id="appealRemark">请补充说明本次扣分存在异议的原因。</textarea>
+        </label>
+
+        <div class="form-field">
+          <span>申诉凭证</span>
+          <div class="upload-box">
+            <span>可上传订单截图、沟通记录等凭证</span>
+            <span class="button gray">选择文件</span>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="button gray" type="button" data-close-appeal>取消</button>
+          <button class="button primary" type="button" id="submitAppeal">提交申诉</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const navTargets = location.protocol === "file:"
+      ? {
+          entry: "./index.html",
+          mobile: "./mobile.html"
+        }
+      : {
+          entry: "./index.html",
+          mobile: "./mobile.html"
+        };
+
+    document.querySelectorAll("[data-link]").forEach((link) => {
+      const key = link.getAttribute("data-link");
+      if (key && navTargets[key]) link.href = navTargets[key];
+    });
+
+    const details = {
+      "overview-default": {
+        title: "下一步处理路径",
+        desc: "当前已有 2 项能力部分受限，优先确认扣分原因；如有异议，从积分明细发起申诉。",
+        note: "点击左侧能力项、中间指标卡或处理链路步骤后，这里会切换为对应详情。",
+        meta: [
+          ["当前总分", "112 分"],
+          ["风险状态", "部分受限"],
+          ["当前受限", "高价值账号租赁、特价专区下单"],
+          ["正常可用", "投诉撤单、领券与活动参与、账号发布"],
+          ["处理中申诉", "1 条"],
+          ["建议动作", "查看积分明细，确认扣分原因；如有异议，从扣分记录发起申诉"]
+        ]
+      },
+      "detail-default": {
+        title: "积分明细说明",
+        desc: "展示加分、扣分、恢复、系统调整等分值变动记录，并提供扣分申诉入口。",
+        note: "点击任意一条明细记录后，右侧会展示该记录的来源、关联单号、申诉状态和处理结果。",
+        meta: [
+          ["展示内容", "变动类型、时间、规则名称、关联单号、来源系统、分值"],
+          ["扣分记录", "可展示未申诉、处理中、已回滚、已驳回等状态"],
+          ["回滚记录", "展示关联申诉单和原扣分记录"],
+          ["用户动作", "查看详情或进入申诉记录"],
+          ["展示限制", "不展示历史累积分、近30天行为分等双轨分值"]
+        ]
+      },
+      "appeal-default": {
+        title: "扣分申诉记录说明",
+        desc: "集中展示扣分申诉的提交时间、审核状态、审核结果、处理来源和回滚关系。",
+        note: "申诉只面向扣分记录；审核通过后生成回滚明细，原扣分记录保留。",
+        meta: [
+          ["申诉范围", "仅扣分记录"],
+          ["状态类型", "审核中、通过、驳回、已回滚"],
+          ["通过结果", "生成恢复/回滚明细并刷新限制状态"],
+          ["驳回结果", "原扣分继续生效"],
+          ["点击反馈", "点击申诉卡片后查看申诉单详情"]
+        ]
+      },
+      "rules-default": {
+        title: "规则说明摘要",
+        desc: "先展示总分区间、分值含义、扣分规则和恢复方式，作为规则说明初稿占位。",
+        note: "当前仅为占位初稿，后续会根据后台配置补齐正式阈值和扣分值。",
+        meta: [
+          ["分值区间", "总信誉积分为 0 - 200"],
+          ["分值含义", "分值越高，风险越低、限制越少"],
+          ["扣分规则", "异常撤单、虚假投诉、账号异常、恶意操作等按规则扣分"],
+          ["恢复方式", "扣分到期恢复或申诉通过回滚"],
+          ["留痕原则", "原扣分记录保留，不做物理删除"]
+        ]
+      },
+      "flow-view": {
+        title: "步骤 1：查看扣分",
+        desc: "用户先在积分明细中确认扣分原因、关联业务单号、来源系统和有效期。",
+        note: "这一步要帮助用户理解为什么扣分，避免直接进入申诉但不知道申诉对象。",
+        meta: [
+          ["入口", "积分明细"],
+          ["可见字段", "扣分时间、规则名称、关联单号、来源系统、有效期"],
+          ["支持动作", "查看详情、发起申诉"],
+          ["不支持", "恢复记录、系统调整记录不发起扣分申诉"],
+          ["下一步", "确认有异议后发起申诉"]
+        ]
+      },
+      "flow-submit": {
+        title: "步骤 2：发起申诉",
+        desc: "仅未过期且符合条件的扣分记录支持发起申诉。",
+        note: "同一扣分记录审核中不可重复提交，避免重复申诉单。",
+        meta: [
+          ["申诉对象", "单条扣分记录"],
+          ["提交内容", "申诉原因、补充说明、关联凭证"],
+          ["状态变化", "可申诉变为审核中"],
+          ["重复提交", "审核中禁止重复提交"],
+          ["下一步", "等待后台审核"]
+        ]
+      },
+      "flow-review": {
+        title: "步骤 3：后台审核",
+        desc: "后台对申诉单进行审核，结果包括通过、驳回或补充说明。",
+        note: "审核结果需要回传给用户，并在申诉记录中保留处理说明。",
+        meta: [
+          ["处理对象", "申诉单"],
+          ["处理结果", "通过、驳回、补充说明"],
+          ["处理来源", "人工审核或系统审核"],
+          ["用户可见", "审核结果、处理时间、审核说明"],
+          ["下一步", "通过后进入扣分回滚"]
+        ]
+      },
+      "flow-rollback": {
+        title: "步骤 4：扣分回滚",
+        desc: "申诉通过后生成恢复/回滚明细，补回对应扣分。",
+        note: "原扣分记录不能删除，需要标记已回滚，并与回滚记录互相关联。",
+        meta: [
+          ["触发条件", "申诉审核通过"],
+          ["回滚方式", "生成 +分 恢复/回滚流水"],
+          ["原记录", "保留并标记已回滚"],
+          ["关联关系", "申诉单、原扣分单、回滚流水"],
+          ["下一步", "刷新总分和限制状态"]
+        ]
+      },
+      "flow-refresh": {
+        title: "步骤 5：状态刷新",
+        desc: "回滚完成后，同步刷新总信誉积分、受限能力和业务拦截判断。",
+        note: "用户最终感知不是奖励权益，而是限制是否解除、业务能力是否恢复。",
+        meta: [
+          ["刷新对象", "总分、风险状态、受限能力"],
+          ["业务环节", "找号、下单、投诉、活动"],
+          ["用户可见", "分值恢复明细与限制状态变化"],
+          ["系统要求", "业务校验使用最新结果"],
+          ["完成状态", "申诉闭环结束"]
+        ]
+      },
+      "deduct-unappealed": {
+        title: "账号异常使用扣分",
+        desc: "该扣分记录尚未提交申诉，仍在可申诉窗口内。",
+        note: "当前状态：未申诉。点击明细行右侧的“申诉”按钮，可弹窗提交扣分申诉。",
+        meta: [
+          ["变动类型", "扣分"],
+          ["变动分值", "-4"],
+          ["关联单号", "ORDER202605120066"],
+          ["来源系统", "订单系统"],
+          ["申诉状态", "未申诉，可提交申诉"]
+        ]
+      },
+      "deduct-new-processing": {
+        title: "账号异常使用申诉处理中",
+        desc: "该扣分已提交申诉，当前处于审核中状态。",
+        note: "审核中不可重复提交，审核完成后会同步更新申诉记录、积分明细和限制状态。",
+        meta: [
+          ["变动类型", "扣分"],
+          ["变动分值", "-4"],
+          ["关联单号", "ORDER202605120066"],
+          ["来源系统", "订单系统"],
+          ["申诉状态", "审核中，预计 1-3 个工作日"]
+        ]
+      },
+      "deduct-pass": {
+        title: "异常撤单扣分",
+        desc: "申诉通过后，该扣分已生成回滚明细，原记录保留用于追溯。",
+        note: "当前状态：已回滚。该记录不再重复发起申诉。",
+        meta: [
+          ["变动类型", "扣分"],
+          ["变动分值", "-6"],
+          ["关联单号", "ORDER202605130042"],
+          ["来源系统", "风控系统"],
+          ["申诉结果", "申诉通过，已生成 +6 回滚明细"]
+        ]
+      },
+      rollback: {
+        title: "扣分回滚明细",
+        desc: "审核通过后由系统生成恢复/回滚流水，并关联原扣分记录。",
+        note: "回滚记录用于解释分值恢复来源，不支持再次申诉。",
+        meta: [
+          ["变动类型", "恢复/回滚"],
+          ["变动分值", "+6"],
+          ["关联申诉单", "APPEAL202605140018"],
+          ["关联原扣分", "ORDER202605130042"],
+          ["处理来源", "审核后台"]
+        ]
+      },
+      "deduct-processing": {
+        title: "虚假投诉扣分",
+        desc: "该扣分已提交申诉，目前处于审核中状态。",
+        note: "审核中不可重复提交，完成后会在申诉记录和积分明细中同步展示结果。",
+        meta: [
+          ["变动类型", "扣分"],
+          ["变动分值", "-8"],
+          ["关联单号", "COMPLAINT202605100032"],
+          ["来源系统", "投诉系统"],
+          ["申诉状态", "审核中"]
+        ]
+      },
+      "deduct-reject": {
+        title: "恶意撤单扣分",
+        desc: "申诉已驳回，原扣分继续生效。",
+        note: "驳回原因需要展示给用户，避免只看到状态但不知道原因。",
+        meta: [
+          ["变动类型", "扣分"],
+          ["变动分值", "-5"],
+          ["关联单号", "ORDER202605080027"],
+          ["来源系统", "风控系统"],
+          ["审核说明", "平台记录与用户说明不一致"]
+        ]
+      },
+      "appeal-pass": {
+        title: "异常撤单申诉通过",
+        desc: "订单责任改判，撤销本次扣分并完成回滚。",
+        note: "申诉通过后要闭环到：扣分状态、回滚明细、总分刷新、限制刷新。",
+        meta: [
+          ["申诉单号", "APPEAL202605140018"],
+          ["提交时间", "2026-05-14 10:18"],
+          ["处理时间", "2026-05-14 16:40"],
+          ["审核结果", "通过"],
+          ["是否回滚", "已回滚 +6"]
+        ]
+      },
+      "appeal-processing": {
+        title: "虚假投诉申诉处理中",
+        desc: "审核中状态需要明确预期，并禁止重复提交。",
+        note: "建议提示预计处理时效，并保留审核中的状态入口。",
+        meta: [
+          ["申诉单号", "APPEAL202605160052"],
+          ["提交时间", "2026-05-16 18:05"],
+          ["关联扣分", "COMPLAINT202605100032"],
+          ["当前状态", "审核中"],
+          ["预计时效", "1-3 个工作日"]
+        ]
+      },
+      "appeal-reject": {
+        title: "恶意撤单申诉驳回",
+        desc: "申诉未通过，原扣分和对应限制继续生效。",
+        note: "驳回记录需展示审核说明，避免用户重复寻找入口。",
+        meta: [
+          ["申诉单号", "APPEAL202605090031"],
+          ["关联扣分", "ORDER202605080027"],
+          ["审核结果", "驳回"],
+          ["审核说明", "平台记录与用户说明不一致"],
+          ["是否回滚", "否"]
+        ]
+      },
+      "limit-high-account": {
+        title: "高价值账号租赁限制",
+        desc: "当前信誉状态未达高价值账号准入要求，找号和下单环节会前置判断。",
+        note: "限制提示需要包含原因、当前影响和恢复/申诉入口。",
+        meta: [
+          ["限制状态", "部分受限"],
+          ["影响环节", "找号、下单"],
+          ["用户可见", "高信誉专享账号不可租用"],
+          ["恢复方式", "等待扣分失效或申诉通过回滚"],
+          ["下一步", "查看明细或申诉记录"]
+        ]
+      },
+      "limit-order": {
+        title: "特价专区下单限制",
+        desc: "近期存在有效违规记录时，下单前校验可能被限制。",
+        note: "下单拦截不展示双轨分值，只展示总分、原因和下一步入口。",
+        meta: [
+          ["限制状态", "部分受限"],
+          ["影响环节", "下单"],
+          ["校验条件", "总分与近期有效违规"],
+          ["下一步", "查看信誉积分明细"],
+          ["恢复方式", "正常履约、等待失效或扣分申诉通过"]
+        ]
+      },
+      "normal-complaint": {
+        title: "投诉撤单能力正常",
+        desc: "当前未触发投诉撤单限制，用户可按正常流程发起投诉撤单。",
+        note: "若后续总分或有效违规命中限制策略，该能力会从正常可用切换到当前受限。",
+        meta: [
+          ["能力状态", "正常"],
+          ["影响环节", "订单详情、投诉类型选择"],
+          ["当前处理", "可正常发起"],
+          ["风险提示", "恶意或虚假投诉仍会触发扣分"],
+          ["申诉范围", "仅关联扣分可申诉"]
+        ]
+      },
+      "normal-coupon": {
+        title: "领券与活动参与正常",
+        desc: "当前未触发低信誉限制，领券和活动参与能力可正常使用。",
+        note: "该区只展示当前可用状态，不包装成奖励权益。",
+        meta: [
+          ["能力状态", "正常"],
+          ["影响环节", "领券中心、活动页"],
+          ["当前处理", "可正常领取或参与"],
+          ["限制触发", "命中低信誉策略后切换为受限"],
+          ["用户可见", "仅展示总分、状态和限制原因"]
+        ]
+      },
+      "normal-publish": {
+        title: "账号发布能力正常",
+        desc: "当前未触发发布限制，用户可正常发布账号。",
+        note: "发布限制由后台惩罚配置统一判断，不在用户侧展示双轨拆分分。",
+        meta: [
+          ["能力状态", "正常"],
+          ["影响环节", "账号发布"],
+          ["当前处理", "可正常发布"],
+          ["限制触发", "总分或有效违规命中策略"],
+          ["恢复方式", "限制解除后自动恢复"]
+        ]
+      },
+      "recovery-path": {
+        title: "恢复路径",
+        desc: "保持正常履约，等待有效扣分失效；如对扣分有异议，可从明细进入申诉。",
+        note: "恢复不是奖励权益模块，只解释限制如何解除。",
+        meta: [
+          ["路径一", "正常履约，等待扣分有效期结束"],
+          ["路径二", "扣分申诉通过后生成回滚"],
+          ["同步刷新", "总分、限制状态、业务校验"],
+          ["用户入口", "积分明细、申诉记录"],
+          ["不展示", "红包、折扣、会员、免押金"]
+        ]
+      }
+    };
+
+    const tabs = document.querySelectorAll("[data-tab]");
+    const panels = document.querySelectorAll("[data-panel]");
+    const titleEl = document.getElementById("drawerTitle");
+    const descEl = document.getElementById("drawerDesc");
+    const metaEl = document.getElementById("drawerMeta");
+    const noteEl = document.getElementById("drawerNote");
+    const appealModal = document.getElementById("appealModal");
+    const appealRecordName = document.getElementById("appealRecordName");
+    const appealRecordMeta = document.getElementById("appealRecordMeta");
+    const submitAppeal = document.getElementById("submitAppeal");
+    let currentAppealRecord = "";
+    const defaultDetailByTab = {
+      overview: "overview-default",
+      detail: "detail-default",
+      appeal: "appeal-default",
+      rules: "rules-default"
+    };
+
+    function activateTab(name, options = {}) {
+      document.body.classList.add("pc-detail-mode");
+      tabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.tab === name));
+      panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.panel === name));
+      if (location.hash !== `#${name}`) {
+        history.replaceState(null, "", `#${name}`);
+      }
+      if (options.updateDetail !== false) {
+        setDetail(defaultDetailByTab[name] || "overview-default");
+      }
+    }
+
+    function setDetail(key) {
+      const detail = details[key];
+      if (!detail) return;
+      titleEl.textContent = detail.title;
+      descEl.textContent = detail.desc;
+      noteEl.textContent = detail.note;
+      metaEl.innerHTML = detail.meta.map(([label, value]) => (
+        `<div class="meta-row"><strong>${label}</strong><span>${value}</span></div>`
+      )).join("");
+      document.querySelectorAll("[data-record]").forEach((item) => {
+        item.classList.toggle("selected", item.dataset.record === key);
+      });
+    }
+
+    function openAppealModal(key) {
+      currentAppealRecord = key;
+      const detail = details[key] || details["deduct-unappealed"];
+      const metaMap = Object.fromEntries(detail.meta || []);
+      setDetail(key);
+      appealRecordName.textContent = detail.title;
+      appealRecordMeta.textContent = `关联单号：${metaMap["关联单号"] || "—"} · 扣分：${metaMap["变动分值"] || "—"} · 来源：${metaMap["来源系统"] || "—"}`;
+      appealModal.hidden = false;
+    }
+
+    function closeAppealModal() {
+      appealModal.hidden = true;
+    }
+
+    function submitAppealForm() {
+      const row = document.querySelector('[data-record="deduct-unappealed"]');
+      if (row) {
+        row.dataset.record = "deduct-new-processing";
+        const title = row.querySelector(".record-title");
+        const desc = row.querySelector(".record-desc");
+        const action = row.querySelector("[data-appeal-record]");
+        if (title) title.innerHTML = "账号异常使用";
+        if (desc) desc.textContent = "已提交申诉，预计 1-3 个工作日内完成审核。";
+        if (action) {
+          action.textContent = "处理中";
+          action.classList.remove("primary");
+          action.removeAttribute("data-appeal-record");
+        }
+      }
+      closeAppealModal();
+      setDetail("deduct-new-processing");
+    }
+
+    document.addEventListener("click", (event) => {
+      const appealButton = event.target.closest("[data-appeal-record]");
+      const closeButton = event.target.closest("[data-close-appeal]");
+      const tabButton = event.target.closest("[data-tab]");
+      const recordButton = event.target.closest("[data-record]");
+      if (appealButton) {
+        event.preventDefault();
+        openAppealModal(appealButton.dataset.appealRecord);
+        return;
+      }
+      if (closeButton || event.target === appealModal) {
+        closeAppealModal();
+        return;
+      }
+      if (tabButton) activateTab(tabButton.dataset.tab);
+      if (recordButton) setDetail(recordButton.dataset.record);
+    });
+
+    document.querySelectorAll("[data-open-credit]").forEach((entry) => {
+      entry.addEventListener("click", (event) => {
+        event.preventDefault();
+        activateTab("overview");
+      });
+    });
+
+    submitAppeal.addEventListener("click", submitAppealForm);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeAppealModal();
+    });
+
+    const initialTab = location.hash.replace("#", "");
+    if (document.querySelector(`[data-panel="${initialTab}"]`)) {
+      activateTab(initialTab);
+    } else {
+      setDetail("overview-default");
+    }
+    if (new URLSearchParams(location.search).get("modal") === "appeal") {
+      activateTab("detail", { updateDetail: false });
+      openAppealModal("deduct-unappealed");
+    }
+  </script>
+</body>
+</html>

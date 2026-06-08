@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>信誉积分V3 200分版交互原型入口</title>
+  <style>
+    :root {
+      --page: #f4f7fb;
+      --ink: #111827;
+      --muted: #667085;
+      --line: #d9e1ec;
+      --blue: #2f67f1;
+      --green: #16a36b;
+      --orange: #f59e0b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(47, 103, 241, .12), transparent 28%),
+        linear-gradient(180deg, #ffffff 0%, var(--page) 100%);
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 56px 0;
+    }
+
+    .head {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-end;
+      margin-bottom: 28px;
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.18;
+    }
+
+    .desc {
+      max-width: 620px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      border: 1px solid rgba(47, 103, 241, .24);
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: var(--blue);
+      background: #fff;
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, .06);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      display: grid;
+      gap: 14px;
+      min-height: 188px;
+      padding: 22px;
+      color: inherit;
+      text-decoration: none;
+      background: rgba(255, 255, 255, .92);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 18px 36px rgba(15, 23, 42, .07);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(47, 103, 241, .42);
+      box-shadow: 0 22px 42px rgba(15, 23, 42, .11);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.3;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 5px 9px;
+      color: var(--blue);
+      background: #eff5ff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .tag.green {
+      color: var(--green);
+      background: #eafaf1;
+    }
+
+    .tag.orange {
+      color: #b45309;
+      background: #fff7e6;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 650;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .meta span {
+      border: 1px solid #e5eaf2;
+      border-radius: 999px;
+      padding: 6px 9px;
+      color: #475467;
+      background: #fbfcff;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .note {
+      margin-top: 18px;
+      border: 1px solid rgba(245, 158, 11, .28);
+      border-radius: 10px;
+      padding: 14px 16px;
+      color: #8a5b00;
+      background: #fffbeb;
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 750;
+    }
+
+    @media (max-width: 780px) {
+      .wrap { width: min(100% - 28px, 560px); padding: 32px 0; }
+      .head { display: block; }
+      .badge { display: inline-block; margin-top: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="head">
+      <div>
+        <p class="kicker">Credit V3 Prototype</p>
+        <h1>信誉积分 200 分版交互原型</h1>
+        <p class="desc">本入口用于查看 200 分双轨模型版本。原 V5 / V10 的 500 分版本已保留不覆盖，本套文件用于后续基于 200 分口径继续修改。</p>
+      </div>
+      <div class="badge">总分 0 - 200</div>
+    </header>
+
+    <section class="grid" aria-label="原型入口">
+      <a class="card" href="./mobile.html">
+        <div class="card-top">
+          <h2>移动端可交互 V6</h2>
+          <span class="tag">用户侧</span>
+        </div>
+        <p>查看信誉积分首页、积分明细、申诉记录和规则说明。用户侧只展示总分、风险状态、受限能力和恢复入口。</p>
+        <div class="meta"><span>0-200 总分</span><span>规则说明</span><span>申诉弹窗</span></div>
+      </a>
+
+      <a class="card" href="./pc.html">
+        <div class="card-top">
+          <h2>PC 端可交互 V6</h2>
+          <span class="tag">用户侧</span>
+        </div>
+        <p>查看 PC 端详情页、分值明细、申诉记录和规则说明，保留抽屉式解释与 Tab 切换交互。</p>
+        <div class="meta"><span>0-200 总分</span><span>Tab 切换</span><span>申诉链路</span></div>
+      </a>
+
+      <a class="card" href="./flows.html">
+        <div class="card-top">
+          <h2>业务关键流程</h2>
+          <span class="tag green">场景联动</span>
+        </div>
+        <p>覆盖找号、下单、投诉撤单、投诉类型和领券中心限制弹窗，并已跳转到 200 分版移动端原型。</p>
+        <div class="meta"><span>限制弹窗</span><span>移动 / PC</span><span>业务拦截</span></div>
+      </a>
+
+      <a class="card" href="./backend.html">
+        <div class="card-top">
+          <h2>后台配置 V11</h2>
+          <span class="tag orange">运营侧</span>
+        </div>
+        <p>查看体系配置、减分配置、惩罚配置、等级配置、明细查询、申诉审核和规则日志的 200 分口径版本。</p>
+        <div class="meta"><span>历史累积分 100</span><span>近期行为分 100</span><span>总分 200</span></div>
+      </a>
+    </section>
+
+    <div class="note">计算口径：新用户 = 近期行为分 100 + 历史累积分 0；老用户 = 近期行为分（100 + 有效履约分 - 违规行为分）+ 历史累积分（有效履约分 - 违规行为分）。</div>
+  </main>
+</body>
+</html>

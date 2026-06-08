@@ -1,0 +1,1928 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>信誉积分V3移动端首页明细申诉原型图 可交互 V6 200分版</title>
+  <style>
+    :root {
+      --bg: #eef3fa;
+      --screen: #f5f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #66758a;
+      --soft: #8a99ad;
+      --line: #e5ebf2;
+      --blue: #2f6bff;
+      --blue-soft: #edf4ff;
+      --warn: #b97712;
+      --warn-soft: #fff4dd;
+      --red: #d64b4b;
+      --red-soft: #fff0ef;
+      --green: #188f67;
+      --green-soft: #e8f7ef;
+      --shadow: 0 18px 42px rgba(29, 45, 68, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--text);
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      letter-spacing: 0;
+      background: linear-gradient(180deg, #dfeaf7 0%, #f8fbff 100%);
+    }
+
+    .scene {
+      width: 760px;
+      height: 1120px;
+      position: relative;
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(84, 107, 139, 0.18);
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, rgba(47, 107, 255, 0.08) 0%, transparent 38%),
+        linear-gradient(315deg, rgba(185, 119, 18, 0.06) 0%, transparent 30%),
+        #fbfdff;
+      box-shadow: var(--shadow);
+    }
+
+    .scene:target { display: block; }
+    body:not(:has(.scene:target)) #mobileEntry { display: block; }
+
+    .scene-head {
+      position: absolute;
+      left: 46px;
+      right: 46px;
+      top: 34px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .scene-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 26px;
+      line-height: 1.1;
+      font-weight: 950;
+    }
+
+    .scene-sub {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 700;
+      max-width: 405px;
+    }
+
+    .scene-mark {
+      flex: 0 0 auto;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .phone {
+      position: absolute;
+      left: 50%;
+      top: 118px;
+      width: 420px;
+      height: 960px;
+      transform: translateX(-50%);
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid rgba(17, 24, 39, 0.10);
+      background: var(--screen);
+      box-shadow: 0 26px 68px rgba(29, 45, 68, 0.18);
+    }
+
+    .phone.entry-phone {
+      background:
+        linear-gradient(135deg, #fff1f5 0%, #e8f9ff 45%, #f8f9ff 100%);
+    }
+
+    .mobile-statusbar {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      color: #202633;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .mobile-entry-content {
+      height: calc(100% - 28px);
+      overflow: hidden;
+      padding: 16px 12px 76px;
+    }
+
+    .mobile-profile {
+      position: relative;
+      min-height: 208px;
+      padding: 18px 8px 0;
+    }
+
+    .mobile-avatar {
+      width: 72px;
+      height: 72px;
+      border: 1px solid #111827;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fff0ba, #f7d48d);
+      box-shadow: 0 10px 22px rgba(190, 130, 38, .14);
+    }
+
+    .mobile-user-name {
+      position: absolute;
+      left: 88px;
+      top: 46px;
+      color: #111827;
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .mobile-credit-entry {
+      position: absolute;
+      left: 86px;
+      top: 78px;
+      width: auto;
+      min-width: 116px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 6px;
+      border: 2px solid #f04a36;
+      border-radius: 4px;
+      color: #2d3748;
+      text-decoration: none;
+      background: rgba(255, 255, 255, .34);
+    }
+
+    .mobile-credit-entry span {
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: #2f6bff;
+      background: #cde9ff;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .mobile-balance {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      text-align: center;
+      color: #111827;
+    }
+
+    .mobile-balance strong {
+      display: block;
+      font-size: 20px;
+      font-weight: 650;
+    }
+
+    .mobile-balance span {
+      display: block;
+      margin-top: 8px;
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .vip-strip {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 12px;
+      padding: 0 16px;
+      border-radius: 8px;
+      color: #fff7d7;
+      background: linear-gradient(90deg, #341864, #6d3ba4);
+      box-shadow: 0 10px 18px rgba(49, 24, 100, .18);
+    }
+
+    .vip-strip strong {
+      display: block;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .vip-strip button {
+      height: 34px;
+      padding: 0 16px;
+      border-radius: 999px;
+      color: #5f2a3c;
+      background: #fff3ee;
+      font-weight: 950;
+    }
+
+    .mobile-tabs-card,
+    .mobile-feature-grid {
+      border-radius: 9px;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(29, 45, 68, .06);
+    }
+
+    .mobile-tabs-card {
+      padding: 16px 14px 18px;
+    }
+
+    .mobile-rent-tabs {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: #9aa3b2;
+      font-size: 18px;
+      font-weight: 850;
+    }
+
+    .mobile-rent-tabs .active {
+      color: #111827;
+      position: relative;
+    }
+
+    .mobile-rent-tabs .active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      width: 28px;
+      height: 3px;
+      border-radius: 999px;
+      background: #ff3856;
+    }
+
+    .mobile-order-status {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      text-align: center;
+      color: #4b5563;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .mobile-order-status strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #1f2937;
+      font-size: 22px;
+    }
+
+    .mobile-feature-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .mobile-feature {
+      min-height: 72px;
+      padding: 16px;
+      border-right: 1px solid #edf0f4;
+      border-bottom: 1px solid #edf0f4;
+    }
+
+    .mobile-feature strong {
+      display: block;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .mobile-feature span {
+      display: block;
+      margin-top: 6px;
+      color: #9aa3b2;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .mobile-bottom-nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 62px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: center;
+      text-align: center;
+      color: #374151;
+      background: #fff;
+      border-top: 1px solid #edf0f4;
+      font-size: 12px;
+      font-weight: 820;
+    }
+
+    .mobile-bottom-nav strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 18px;
+    }
+
+    .topbar {
+      height: 56px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border-bottom: 1px solid rgba(229, 235, 242, 0.84);
+    }
+
+    .topbar svg,
+    .icon svg,
+    .mini-icon svg,
+    .entry-icon svg,
+    .status-icon svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-title {
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .nav-side {
+      width: 52px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 950;
+      text-align: right;
+      text-decoration: none;
+    }
+
+    .nav-back {
+      width: 52px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .content {
+      height: calc(100% - 56px);
+      overflow: hidden;
+      padding: 14px;
+      background: var(--screen);
+    }
+
+    .score-card,
+    .limit-card,
+    .path-card,
+    .entry-card,
+    .detail-intro,
+    .record-card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: 0 9px 24px rgba(31, 46, 71, 0.055);
+    }
+
+    .score-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .score-card::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 0;
+      height: 4px;
+      border-radius: 0 0 999px 999px;
+      background: linear-gradient(90deg, #ff477b 0%, #ffb14f 42%, var(--blue) 100%);
+    }
+
+    .score-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--warn);
+      background: var(--warn-soft);
+      font-size: 13px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .score-number {
+      margin-top: 10px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      color: var(--text);
+      font-size: 74px;
+      line-height: 0.92;
+      font-weight: 950;
+    }
+
+    .score-number small {
+      padding-bottom: 8px;
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .summary {
+      margin-top: 10px;
+      color: #526276;
+      font-size: 13px;
+      line-height: 1.48;
+      font-weight: 800;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .meta-box {
+      min-width: 0;
+      border-radius: 14px;
+      background: #f4f7fb;
+      padding: 11px 12px;
+    }
+
+    .meta-box span {
+      display: block;
+      color: var(--soft);
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .meta-box strong {
+      display: block;
+      margin-top: 7px;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .quick-action {
+      min-width: 0;
+      height: 60px;
+      display: grid;
+      place-items: center;
+      gap: 4px;
+      border-radius: 15px;
+      border: 1px solid #dde8fa;
+      background: #fff;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 950;
+      text-decoration: none;
+    }
+
+    .quick-action svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .section {
+      margin-top: 15px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 9px;
+      gap: 12px;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .link {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .limit-card {
+      overflow: hidden;
+      border-radius: 18px;
+    }
+
+    .limit-row {
+      min-height: 70px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(229, 235, 242, 0.86);
+    }
+
+    .limit-row:last-child {
+      border-bottom: 0;
+    }
+
+    .limit-title {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .limit-desc {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 68px;
+      height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .tag.warn { color: var(--warn); background: var(--warn-soft); }
+    .tag.gray { color: var(--muted); background: #edf1f6; }
+    .tag.green { color: var(--green); background: var(--green-soft); }
+    .tag.red { color: var(--red); background: var(--red-soft); }
+
+    .path-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 84px;
+      padding: 13px 14px;
+      border-radius: 18px;
+    }
+
+    .status-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .path-title {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.22;
+      font-weight: 950;
+    }
+
+    .path-desc {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.36;
+      font-weight: 700;
+    }
+
+    .primary-btn {
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 13px;
+      border-radius: 999px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .entries {
+      display: grid;
+      gap: 9px;
+    }
+
+    .entry-card {
+      min-height: 66px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 18px;
+    }
+
+    .entry-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .entry-title {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .entry-desc {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 250px;
+    }
+
+    .chev {
+      color: #a4b0c2;
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .detail-intro {
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .detail-intro h2 {
+      margin: 0;
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1.15;
+      font-weight: 950;
+    }
+
+    .detail-intro p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 750;
+    }
+
+    .filters {
+      margin-top: 13px;
+      display: flex;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .filters span {
+      flex: 0 0 auto;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      background: #edf1f6;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .filters .active {
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .record-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .record-card {
+      border-radius: 18px;
+      padding: 13px;
+    }
+
+    .record-top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(229, 235, 242, 0.86);
+    }
+
+    .type-badge {
+      min-width: 40px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .type-badge.plus { color: var(--green); background: var(--green-soft); }
+    .type-badge.minus { color: var(--red); background: var(--red-soft); }
+    .type-badge.recover { color: var(--blue); background: var(--blue-soft); }
+    .type-badge.system { color: var(--muted); background: #edf1f6; }
+
+    .record-name {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .record-time {
+      margin-top: 4px;
+      color: var(--soft);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 850;
+    }
+
+    .delta {
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .delta.plus { color: var(--green); }
+    .delta.minus { color: var(--red); }
+    .delta.gray {
+      color: var(--muted);
+      font-size: 14px;
+      padding-top: 3px;
+    }
+
+    .record-info {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 5px 10px;
+      padding-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.38;
+      font-weight: 760;
+    }
+
+    .record-info strong {
+      color: #4e5f74;
+      font-weight: 950;
+    }
+
+    .record-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 11px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(229, 235, 242, 0.86);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.42;
+      font-weight: 760;
+    }
+
+    .button {
+      min-width: 70px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 13px;
+      border-radius: 999px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .button.primary {
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .button.gray {
+      color: var(--muted);
+      background: #eef2f7;
+    }
+
+    .button.green {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .button.warn {
+      color: var(--warn);
+      background: var(--warn-soft);
+    }
+
+    button.button {
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .status-chip.blue {
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .status-chip.green {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .status-chip.red {
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .type-badge.warn {
+      color: var(--warn);
+      background: var(--warn-soft);
+    }
+
+    .appeal-card,
+    .rollback-card,
+    .summary-card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: 0 9px 24px rgba(31, 46, 71, 0.055);
+    }
+
+    .appeal-card {
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .section-desc {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .appeal-item {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .step-dot.green {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .step-dot.red {
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .appeal-box {
+      min-height: 78px;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .appeal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .appeal-title {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 950;
+    }
+
+    .appeal-info {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .rollback-card {
+      margin-top: 12px;
+      border-radius: 18px;
+      padding: 14px;
+      background: linear-gradient(180deg, #ffffff, #f7fbff);
+    }
+
+    .rollback-row {
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .rollback-icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .score-change {
+      flex: 0 0 auto;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .score-change.plus { color: var(--green); }
+
+    .summary-card {
+      margin-top: 12px;
+      border-radius: 18px;
+      padding: 14px;
+      background: #fffaf0;
+      border-color: #f6dfb4;
+    }
+
+    .summary-card strong {
+      display: block;
+      color: var(--warn);
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 950;
+    }
+
+    .summary-card p {
+      margin: 5px 0 0;
+      color: #7a6140;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .rule-panel,
+    .rule-section,
+    .rule-note-card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: 0 9px 24px rgba(31, 46, 71, 0.055);
+    }
+
+    .rule-panel {
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .rule-grid-mobile {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .rule-metric {
+      min-height: 78px;
+      padding: 12px;
+      border-radius: 16px;
+      background: #f4f7fb;
+    }
+
+    .rule-metric span {
+      color: var(--soft);
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .rule-metric strong {
+      display: block;
+      margin-top: 7px;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .rule-metric p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+      font-weight: 760;
+    }
+
+    .rule-section {
+      margin-top: 12px;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .rule-row {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 10px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(229, 235, 242, 0.86);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 760;
+    }
+
+    .rule-row:last-child {
+      border-bottom: 0;
+    }
+
+    .rule-row strong {
+      color: var(--text);
+      font-weight: 950;
+    }
+
+    .rule-note-card {
+      margin-top: 12px;
+      border-radius: 18px;
+      padding: 13px 14px;
+      background: #fffaf0;
+      border-color: #f6dfb4;
+      color: #76501d;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .notice {
+      margin-top: 12px;
+      padding: 12px 13px;
+      border-radius: 16px;
+      border: 1px solid #f2dfbd;
+      color: #76501d;
+      background: #fff8ec;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .modal-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(15, 23, 42, 0.38);
+    }
+
+    .modal-layer[hidden] {
+      display: none;
+    }
+
+    .appeal-modal {
+      width: 370px;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid rgba(17, 24, 39, 0.12);
+      background: #fff;
+      box-shadow: 0 26px 78px rgba(15, 23, 42, 0.28);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .modal-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .modal-desc {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .modal-close {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 12px;
+      color: var(--muted);
+      background: #eef2f7;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 15px 18px 18px;
+    }
+
+    .appeal-context {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 9px;
+      padding: 12px;
+      border: 1px solid #f2dfbd;
+      border-radius: 16px;
+      background: #fffaf0;
+    }
+
+    .context-title {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 950;
+    }
+
+    .context-meta {
+      margin-top: 4px;
+      color: #76501d;
+      font-size: 11px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .form-field span {
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      color: var(--text);
+      background: #fff;
+      font-family: inherit;
+      font-size: 12px;
+      line-height: 1.45;
+      outline: none;
+    }
+
+    .form-field select {
+      height: 38px;
+      padding: 0 11px;
+    }
+
+    .form-field textarea {
+      min-height: 78px;
+      resize: none;
+      padding: 10px 11px;
+    }
+
+    .upload-box {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 12px;
+      border: 1px dashed #c9d7ea;
+      border-radius: 14px;
+      color: var(--muted);
+      background: #f8fafc;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 760;
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .prototype-switch {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 60;
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      border: 1px solid rgba(84, 107, 139, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 16px 34px rgba(29, 45, 68, 0.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .prototype-switch a {
+      min-width: 72px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      border: 1px solid #d7e1ee;
+      border-radius: 999px;
+      color: var(--text);
+      background: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .prototype-switch a.active {
+      border-color: rgba(47, 107, 255, 0.25);
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+  </style>
+</head>
+<body>
+  <div class="prototype-switch" aria-label="原型切换">
+    <a href="#" data-link="entry">入口页</a>
+    <a href="#" data-link="pc">PC端</a>
+  </div>
+
+  <section class="scene" id="mobileEntry">
+    <div class="scene-head">
+      <div>
+        <h1 class="scene-title">我的页信誉积分入口</h1>
+        <p class="scene-sub">从个人中心的信誉分标识进入信誉积分详情，补齐前置入口流程。</p>
+      </div>
+      <div class="scene-mark">移动端入口页</div>
+    </div>
+
+    <div class="phone entry-phone">
+      <div class="mobile-statusbar"><span>11:11</span><span>◆ ◼</span></div>
+      <main class="mobile-entry-content">
+        <section class="mobile-profile">
+          <div class="mobile-avatar"></div>
+          <div class="mobile-user-name">商户部门</div>
+          <a href="#home" class="mobile-credit-entry" data-open-mobile-credit>
+            <span>信誉分 112</span>
+          </a>
+          <div class="mobile-balance">
+            <div><strong>4.41</strong><span>余额(元)</span></div>
+            <div><strong>0</strong><span>红包(个)</span></div>
+          </div>
+        </section>
+
+        <section class="vip-strip">
+          <div><strong>至尊卡</strong><span>尊享9大权益,最低可省43元</span></div>
+          <button type="button">开通</button>
+        </section>
+
+        <section class="mobile-tabs-card">
+          <div class="mobile-rent-tabs"><span class="active">租号</span><span>拼单</span><span>代练陪玩</span><span>买号</span></div>
+          <div class="mobile-order-status">
+            <div><strong>◷</strong><span>已预约</span></div>
+            <div><strong>↔</strong><span>进行中</span></div>
+            <div><strong>☞</strong><span>待评价</span></div>
+            <div><strong>▣</strong><span>投诉/撤单</span></div>
+          </div>
+        </section>
+
+        <section class="mobile-feature-grid">
+          <div class="mobile-feature"><strong>官方特价群</strong><span>预抢5毛号</span></div>
+          <div class="mobile-feature"><strong>天天免费玩</strong><span>新老用户均可助力</span></div>
+          <div class="mobile-feature"><strong>领券中心</strong><span>大额红包</span></div>
+          <div class="mobile-feature"><strong>日租专区</strong><span>全场1折起</span></div>
+        </section>
+      </main>
+      <nav class="mobile-bottom-nav" aria-label="底部导航">
+        <div><strong>⌂</strong>首页</div>
+        <div><strong>▧</strong>超值会场</div>
+        <div><strong>▣</strong>消息</div>
+        <div><strong>♡</strong>收藏</div>
+        <div><strong>♙</strong>我的</div>
+      </nav>
+    </div>
+  </section>
+
+  <section class="scene" id="home">
+    <div class="scene-head">
+      <div>
+        <h1 class="scene-title">信誉积分首页 V6 · 200分版</h1>
+        <p class="scene-sub">首屏回答：当前多少分、哪些能力受限、怎么恢复，以及申诉记录从哪里进入。</p>
+      </div>
+      <div class="scene-mark">移动端一级页</div>
+    </div>
+
+    <div class="phone">
+      <div class="topbar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/><path d="M9 12h10"/></svg>
+        <div class="nav-title">信誉积分</div>
+        <a href="#rules" class="nav-side">规则</a>
+      </div>
+
+      <main class="content">
+        <section class="score-card">
+          <div class="score-top">
+            <div class="label">当前总信誉积分</div>
+            <div class="status-chip">部分受限 · 2项受限</div>
+          </div>
+          <div class="score-number">112<small>分</small></div>
+          <div class="summary">当前部分能力处于观察或限制状态。保持正常履约后，可随扣分失效逐步恢复。</div>
+          <div class="meta-grid">
+            <div class="meta-box">
+              <span>最近更新时间</span>
+              <strong>2026-05-15 12:30</strong>
+            </div>
+            <div class="meta-box">
+              <span>当前处理建议</span>
+              <strong>查看恢复路径</strong>
+            </div>
+          </div>
+          <div class="quick-actions">
+            <a href="#detail" class="quick-action">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg>
+              <span>积分明细</span>
+            </a>
+            <a href="#appeal" class="quick-action">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H7l-3 3z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
+              <span>申诉记录</span>
+            </a>
+            <a href="#rules" class="quick-action">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span>规则说明</span>
+            </a>
+            <a href="#home" class="quick-action">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M6 21v-4h4"/></svg>
+              <span>恢复路径</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">能力状态</h2>
+            <div class="link">2项受限 · 1项正常</div>
+          </div>
+          <div class="limit-card">
+            <div class="limit-row">
+              <div>
+                <div class="limit-title">高价值账号租赁</div>
+              <div class="limit-desc">当前信誉状态未达高价值账号准入要求</div>
+              </div>
+              <span class="tag warn">部分受限</span>
+            </div>
+            <div class="limit-row">
+              <div>
+                <div class="limit-title">特价专区下单</div>
+                <div class="limit-desc">近期存在有效违规记录时可能限制租用</div>
+              </div>
+              <span class="tag warn">部分受限</span>
+            </div>
+            <div class="limit-row">
+              <div>
+              <div class="limit-title">投诉撤单能力</div>
+              <div class="limit-desc">当前未触发投诉撤单限制，可正常发起投诉撤单</div>
+              </div>
+              <span class="tag green">正常</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">恢复路径</h2>
+          </div>
+          <div class="path-card">
+            <div class="status-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M6 21v-4h4"/></svg>
+            </div>
+            <div>
+              <div class="path-title">保持正常履约，等待有效扣分失效</div>
+              <div class="path-desc">如对扣分有异议，可先进入积分明细，再查看申诉记录与审核结果。</div>
+            </div>
+            <div class="primary-btn">查看</div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </section>
+
+  <section class="scene" id="detail">
+    <div class="scene-head">
+      <div>
+        <h1 class="scene-title">积分明细页 V6 · 200分版</h1>
+        <p class="scene-sub">明细页补齐未申诉、申诉提交、处理中和回滚状态。</p>
+      </div>
+      <div class="scene-mark">移动端二级页</div>
+    </div>
+
+    <div class="phone">
+      <div class="topbar">
+        <a href="#home" class="nav-back" aria-label="返回首页">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/><path d="M9 12h10"/></svg>
+        </a>
+        <div class="nav-title">积分明细</div>
+        <div class="nav-side"></div>
+      </div>
+
+      <main class="content">
+        <section class="detail-intro">
+          <h2>分值变动记录</h2>
+          <p>展示变动时间、类型、分值、规则名称、关联业务单号、来源系统和扣分有效期。</p>
+          <div class="filters">
+            <span class="active">全部</span>
+            <span>扣分</span>
+            <span>未申诉</span>
+            <span>申诉中</span>
+            <span>已回滚</span>
+          </div>
+        </section>
+
+        <section class="record-list">
+          <article class="record-card">
+            <div class="record-top">
+              <span class="type-badge minus">扣分</span>
+              <div>
+                <div class="record-name">账号异常使用</div>
+                <div class="record-time">2026-05-12 11:07</div>
+              </div>
+              <div class="delta minus">-4</div>
+            </div>
+            <div class="record-info">
+              <strong>规则名称</strong><span>账号异常使用命中规则</span>
+              <strong>关联单号</strong><span>ORDER202605120066</span>
+              <strong>来源系统</strong><span>订单系统</span>
+              <strong>申诉状态</strong><span class="status-value">未申诉，可提交申诉</span>
+            </div>
+            <div class="record-actions">
+              <span class="note">当前仍在可申诉窗口内。</span>
+              <button class="button primary" data-open-appeal>申诉</button>
+            </div>
+          </article>
+
+          <article class="record-card">
+            <div class="record-top">
+              <span class="type-badge minus">扣分</span>
+              <div>
+                <div class="record-name">虚假投诉</div>
+                <div class="record-time">2026-05-10 14:26</div>
+              </div>
+              <div class="delta minus">-8</div>
+            </div>
+            <div class="record-info">
+              <strong>规则名称</strong><span>虚假投诉命中规则</span>
+              <strong>关联单号</strong><span>COMPLAINT202605100032</span>
+              <strong>来源系统</strong><span>投诉系统</span>
+              <strong>申诉状态</strong><span>审核中，预计 1-3 个工作日</span>
+            </div>
+            <div class="record-actions">
+              <span class="note">已提交申诉，审核完成后同步通知。</span>
+              <span class="button gray">处理中</span>
+            </div>
+          </article>
+
+          <article class="record-card">
+            <div class="record-top">
+              <span class="type-badge recover">恢复</span>
+              <div>
+                <div class="record-name">申诉通过回滚</div>
+                <div class="record-time">2026-05-14 16:40</div>
+              </div>
+              <div class="delta plus">+6</div>
+            </div>
+            <div class="record-info">
+              <strong>规则名称</strong><span>申诉通过回滚</span>
+              <strong>关联单号</strong><span>APPEAL202605140018</span>
+              <strong>来源系统</strong><span>审核后台</span>
+              <strong>恢复说明</strong><span>关联原扣分 ORDER202605130042</span>
+            </div>
+            <div class="record-actions">
+              <span class="note">已同步刷新总分和限制状态。</span>
+              <span class="button green">已回滚</span>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </section>
+
+  <section class="scene" id="appeal">
+    <div class="scene-head">
+      <div>
+        <h1 class="scene-title">申诉记录页 V6 · 200分版</h1>
+        <p class="scene-sub">从首页二级入口或扣分明细进入，展示申诉状态、审核结果和扣分回滚关系。</p>
+      </div>
+      <div class="scene-mark">移动端二级页</div>
+    </div>
+
+    <div class="phone">
+      <div class="topbar">
+        <a href="#home" class="nav-back" aria-label="返回首页">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/><path d="M9 12h10"/></svg>
+        </a>
+        <div class="nav-title">申诉记录</div>
+        <a href="#rules" class="nav-side">规则</a>
+      </div>
+
+      <main class="content">
+        <section class="appeal-card">
+          <h2 class="section-title">扣分申诉记录</h2>
+          <p class="section-desc">仅展示扣分记录相关申诉；审核通过后会生成恢复/回滚明细，原扣分记录保留。</p>
+          <div class="timeline">
+            <div class="appeal-item">
+              <div class="step-dot green">✓</div>
+              <div class="appeal-box">
+                <div class="appeal-top">
+                  <div class="appeal-title">异常撤单 · 申诉通过</div>
+                  <span class="status-chip green">已回滚</span>
+                </div>
+                <div class="appeal-info">提交时间：2026-05-14 10:18<br>关联扣分：ORDER202605130042<br>审核说明：订单责任改判，撤销本次扣分。</div>
+              </div>
+            </div>
+
+            <div class="appeal-item">
+              <div class="step-dot">…</div>
+              <div class="appeal-box">
+                <div class="appeal-top">
+                  <div class="appeal-title">虚假投诉 · 审核中</div>
+                  <span class="status-chip blue">处理中</span>
+                </div>
+                <div class="appeal-info">提交时间：2026-05-16 18:05<br>关联扣分：COMPLAINT202605100032<br>预计 1-3 个工作日内完成审核。</div>
+              </div>
+            </div>
+
+            <div class="appeal-item">
+              <div class="step-dot red">×</div>
+              <div class="appeal-box">
+                <div class="appeal-top">
+                  <div class="appeal-title">恶意撤单 · 申诉驳回</div>
+                  <span class="status-chip red">未通过</span>
+                </div>
+                <div class="appeal-info">审核说明：平台记录与用户说明不一致，原扣分继续生效。</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="rollback-card">
+          <div class="rollback-row">
+            <div class="rollback-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v6h6"/></svg>
+            </div>
+            <div>
+              <div class="appeal-title">扣分回滚明细</div>
+              <div class="appeal-info">原扣分：-6；回滚后补回：+6<br>关联申诉单：APPEAL202605140018</div>
+            </div>
+            <div class="score-change plus">+6</div>
+          </div>
+        </section>
+
+        <section class="summary-card">
+          <strong>限制状态同步刷新</strong>
+          <p>申诉通过并回滚后，系统会同步刷新总信誉积分、当前受限能力和相关业务限制状态。</p>
+        </section>
+      </main>
+    </div>
+  </section>
+
+  <section class="scene" id="rules">
+    <div class="scene-head">
+      <div>
+        <h1 class="scene-title">规则说明页 V6 · 200分版</h1>
+        <p class="scene-sub">规则说明初稿占位：先讲清总信誉积分怎么看、哪些行为会扣分、扣分后怎么恢复。</p>
+      </div>
+      <div class="scene-mark">移动端二级页</div>
+    </div>
+
+    <div class="phone">
+      <div class="topbar">
+        <a href="#home" class="nav-back" aria-label="返回首页">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/><path d="M9 12h10"/></svg>
+        </a>
+        <div class="nav-title">规则说明</div>
+        <a href="#home" class="nav-side">首页</a>
+      </div>
+
+      <main class="content">
+        <section class="rule-panel">
+          <div class="score-top">
+            <div class="label">规则版本</div>
+            <div class="status-chip blue">初稿占位</div>
+          </div>
+          <div class="summary" style="margin-top:8px;">
+            当前规则页先展示信誉分的分值口径、扣分规则和恢复方式，后续以后台配置为准。
+          </div>
+          <div class="rule-grid-mobile">
+            <div class="rule-metric">
+              <span>总信誉积分</span>
+              <strong>0 - 200</strong>
+              <p>近期行为分（近30天，基准100）+ 历史累积分（前2-12个月，0-100）。新用户默认为 100+0，老用户按履约与违规滚动计算。</p>
+            </div>
+            <div class="rule-metric">
+              <span>分值含义</span>
+              <strong>越高越稳</strong>
+              <p>分值越高，表示用户当前风险更低、限制更少。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rule-section">
+          <div class="rule-row">
+            <strong>扣分规则</strong>
+            <span>异常撤单、虚假投诉、账号异常、恶意操作等行为会按规则扣分；不同行为对应不同扣分值和有效期。</span>
+          </div>
+          <div class="rule-row">
+            <strong>扣分示例</strong>
+            <span>账号异常使用 -4，异常撤单 -6，虚假投诉 -8，恶意撤单 -5。以上为初稿占位，后续以后台配置为准。</span>
+          </div>
+          <div class="rule-row">
+            <strong>有效期</strong>
+            <span>扣分支持设置有效期，过期后按规则恢复，不再影响当前限制判断。</span>
+          </div>
+          <div class="rule-row">
+            <strong>恢复方式</strong>
+            <span>扣分到期恢复，或申诉审核通过后回滚；原扣分记录保留，用于追溯。</span>
+          </div>
+          <div class="rule-row">
+            <strong>申诉说明</strong>
+            <span>仅扣分记录支持申诉，审核通过后生成回滚明细并刷新总分和限制状态。</span>
+          </div>
+        </section>
+
+        <div class="rule-note-card">当前规则说明仅作为占位初稿，后续会根据后台配置补齐正式分值区间、扣分项和有效期。</div>
+      </main>
+    </div>
+  </section>
+
+  <div class="modal-layer" id="appealModal" hidden>
+    <section class="appeal-modal" role="dialog" aria-modal="true" aria-labelledby="appealModalTitle">
+      <header class="modal-head">
+        <div>
+          <h2 class="modal-title" id="appealModalTitle">提交扣分申诉</h2>
+          <div class="modal-desc">请说明对本次扣分有异议的原因，提交后进入审核中。</div>
+        </div>
+        <button class="modal-close" type="button" data-close-appeal aria-label="关闭">×</button>
+      </header>
+
+      <div class="modal-body">
+        <div class="appeal-context">
+          <span class="type-badge minus">扣分</span>
+          <div>
+            <div class="context-title">账号异常使用</div>
+            <div class="context-meta">ORDER202605120066 · 扣分 -4 · 订单系统</div>
+          </div>
+          <span class="type-badge warn">未申诉</span>
+        </div>
+
+        <label class="form-field">
+          <span>申诉原因</span>
+          <select>
+            <option>订单责任判定有误</option>
+            <option>扣分规则命中异常</option>
+            <option>已完成沟通处理</option>
+            <option>其他原因</option>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span>补充说明</span>
+          <textarea>请补充说明本次扣分存在异议的原因。</textarea>
+        </label>
+
+        <div class="form-field">
+          <span>申诉凭证</span>
+          <div class="upload-box">
+            <span>可上传订单截图、沟通记录等凭证</span>
+            <span class="button gray">选择文件</span>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="button gray" type="button" data-close-appeal>取消</button>
+          <button class="button primary" type="button" id="submitAppeal">提交申诉</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const navTargets = location.protocol === "file:"
+      ? {
+          entry: "./index.html",
+          pc: "./pc.html"
+        }
+      : {
+          entry: "./index.html",
+          pc: "./pc.html"
+        };
+
+    document.querySelectorAll("[data-link]").forEach((link) => {
+      const key = link.getAttribute("data-link");
+      if (key && navTargets[key]) link.href = navTargets[key];
+    });
+
+    const appealModal = document.getElementById("appealModal");
+    const submitAppeal = document.getElementById("submitAppeal");
+
+    function openAppealModal() {
+      appealModal.hidden = false;
+    }
+
+    function closeAppealModal() {
+      appealModal.hidden = true;
+    }
+
+    function submitAppealForm() {
+      const action = document.querySelector("[data-open-appeal]");
+      const firstCard = action ? action.closest(".record-card") : null;
+      if (firstCard) {
+        const status = firstCard.querySelector(".status-value");
+        const note = firstCard.querySelector(".note");
+        if (status) status.textContent = "审核中，预计 1-3 个工作日";
+        if (note) note.textContent = "已提交申诉，审核完成后同步通知。";
+        action.textContent = "处理中";
+        action.classList.remove("primary");
+        action.classList.add("gray");
+        action.removeAttribute("data-open-appeal");
+      }
+      closeAppealModal();
+    }
+
+    document.addEventListener("click", (event) => {
+      const backButton = event.target.closest(".nav-back");
+      if (backButton) {
+        event.preventDefault();
+        location.hash = "home";
+        document.getElementById("home")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      if (event.target.closest("#home .topbar > svg")) {
+        location.hash = "mobileEntry";
+        document.getElementById("mobileEntry")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      if (event.target.closest("[data-open-appeal]")) {
+        openAppealModal();
+        return;
+      }
+      if (event.target.closest("[data-close-appeal]") || event.target === appealModal) {
+        closeAppealModal();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeAppealModal();
+    });
+
+    submitAppeal.addEventListener("click", submitAppealForm);
+
+    const search = new URLSearchParams(location.search);
+    if (search.get("modal") === "appeal") {
+      location.hash = "detail";
+      openAppealModal();
+    } else if (search.get("submitted") === "1") {
+      location.hash = "detail";
+      submitAppealForm();
+    }
+  </script>
+</body>
+</html>
