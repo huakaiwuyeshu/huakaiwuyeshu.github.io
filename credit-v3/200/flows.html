@@ -819,6 +819,105 @@
       font-weight: 820;
     }
 
+    .credit-gate {
+      margin: 12px 0;
+      padding: 12px;
+      border: 1px solid #ffd4df;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #fff7fa 0%, #fff 100%);
+    }
+
+    .credit-gate-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #242832;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .credit-gate-head strong {
+      color: var(--pink-dark);
+      font-size: 16px;
+    }
+
+    .credit-gate p {
+      margin: 6px 0 0;
+      color: #66707f;
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 760;
+    }
+
+    .mobile-detail-cover {
+      height: 218px;
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(18, 24, 38, .18), rgba(18, 24, 38, .72)),
+        linear-gradient(135deg, #14233c, #4960a8 52%, #ff7a9d);
+    }
+
+    .mobile-detail-cover .m-nav {
+      color: #fff;
+      background: transparent;
+    }
+
+    .mobile-detail-cover .m-back { color: #fff; }
+
+    .detail-cover-tags {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .mobile-detail-main {
+      padding: 10px;
+      padding-bottom: 82px;
+    }
+
+    .mobile-detail-title {
+      margin: 0 0 8px;
+      color: #242832;
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 950;
+    }
+
+    .detail-price-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 8px 0 10px;
+      color: #8a94a2;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .detail-price-row strong {
+      color: var(--pink);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .detail-rule-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .detail-rule-list div {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #66707f;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
     .detail-hero {
       height: 138px;
       background: linear-gradient(135deg, #151b2c, #4d61ba 54%, #ff7a9c);
@@ -1084,6 +1183,49 @@
       margin: 14px 0;
     }
 
+    .pc-credit-gate {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      margin: 14px 0;
+      padding: 14px 16px;
+      border: 1px solid #ffd4df;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fff4f8, #ffffff);
+    }
+
+    .pc-credit-gate .gate-title {
+      color: #242832;
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .pc-credit-gate p {
+      margin: 6px 0 0;
+      color: #66707f;
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 760;
+    }
+
+    .pc-credit-gate .gate-score {
+      min-width: 118px;
+      text-align: right;
+      color: var(--pink-dark);
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .pc-credit-gate .gate-score span {
+      display: block;
+      margin-top: 4px;
+      color: #8a94a2;
+      font-size: 12px;
+      font-weight: 820;
+    }
+
     .pc-actions {
       display: flex;
       align-items: center;
@@ -1342,17 +1484,17 @@
       {
         id: "shelf",
         title: "找号环节：高信誉专享",
-        desc: "货架列表展示高信誉专享标签，满足条件用户可继续查看并租用。",
-        hint: "点击高信誉账号卡片继续",
+        desc: "货架列表展示高信誉专享标签，引导用户进入货架详情查看租用门槛。",
+        hint: "点击高信誉账号卡片进入货架详情",
         devices: ["mobile", "pc"],
         popup: null
       },
       {
         id: "detail",
         title: "货架详情页：高信誉账号",
-        desc: "PC端高价值账号详情页展示高信誉专享标签，并从立即租用进入下单校验。",
+        desc: "货架详情页明确展示信誉积分准入门槛，提示信誉积分大于 XX 分才可租用。",
         hint: "点击立即租用进入下单校验",
-        devices: ["pc"],
+        devices: ["mobile", "pc"],
         popup: null
       },
       {
@@ -1535,6 +1677,7 @@
 
     function mobileScene(current) {
       if (current.id === "shelf") return mobileShelf();
+      if (current.id === "detail") return mobileDetail();
       if (current.id === "coupon") return mobileCoupon();
       if (current.id === "complaintType") return mobileComplaintType();
       if (current.id === "complaintWarn" || current.id === "complaintBlock") return mobileOrderDetail(current.id);
@@ -1565,16 +1708,50 @@
 
     function goods(region, title, exclusive, clickable, tone = "") {
       return `
-        <article class="goods ${clickable ? "clickable js-next-order" : ""}">
+        <article class="goods ${clickable ? "clickable js-next-detail" : ""}">
           <div class="goods-cover ${tone}">
             <span class="cover-title">${region}</span><span class="hot">热度100+</span>${exclusive ? '<span class="exclusive">高信誉专享</span>' : ""}
           </div>
           <div class="goods-body">
             <div class="goods-title">${title}</div>
-            <div><span class="tag green">V10检测</span> ${exclusive ? '<span class="tag pink">高信誉可租</span>' : '<span class="tag gray">安全上号</span>'}</div>
+            <div><span class="tag green">V10检测</span> ${exclusive ? '<span class="tag pink">需信誉分 > XX</span>' : '<span class="tag gray">安全上号</span>'}</div>
             <div class="goods-meta"><span class="goods-price">¥1.46<small>/时</small></span><span>300+人租过</span></div>
           </div>
         </article>
+      `;
+    }
+
+    function mobileDetail() {
+      return `
+        <div class="mobile-detail-cover">
+          <div class="m-nav"><button class="m-back" type="button">‹</button><div>账号详情</div><div>⋯</div></div>
+          <div class="detail-cover-tags"><span class="tag pink">高信誉专享</span><span class="tag green">V10检测</span><span class="tag blue">免押金</span></div>
+        </div>
+        <div class="mobile-detail-main">
+          <div class="order-card">
+            <h3 class="mobile-detail-title">【V10 163皮】省标马超 豪华皮肤 高信誉账号</h3>
+            <div class="detail-price-row"><span><strong>¥1.46</strong> / 时</span><span>300+人租过</span></div>
+            <div><span class="tag gray">安卓 | QQ账号</span> <span class="tag orange">1小时起租</span></div>
+            <div class="credit-gate">
+              <div class="credit-gate-head"><span>信誉积分准入</span><strong>&gt; XX 分</strong></div>
+              <p>该账号为高价值账号，仅信誉积分大于后台配置门槛的用户可租用；未达标时点击租用将进入限制提示。</p>
+            </div>
+          </div>
+          <div class="rent-card">
+            <div class="rent-tabs">
+              <div class="rent-tab active">时租<br><strong>1.46元</strong></div>
+              <div class="rent-tab">包早<br><strong>3.69元</strong></div>
+              <div class="rent-tab">日租<br><strong>7.18元</strong></div>
+              <div class="rent-tab">周租<br><strong>暂不支持</strong></div>
+            </div>
+            <div class="detail-rule-list">
+              <div><span>可租时间</span><strong>0:00-24:00</strong></div>
+              <div><span>租赁时长</span><strong>1小时起租</strong></div>
+              <div><span>租用限制</span><strong>校验信誉积分与近期违规</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-bar"><div class="pay-text">实付：<strong>¥0.0</strong></div><button class="btn js-next-order" type="button">立即租用</button></div>
       `;
     }
 
@@ -1692,7 +1869,7 @@
       return `
         <article class="goods-card ${clickable ? "clickable js-next-detail" : ""}">
           <div class="goods-cover ${tone}"><span class="hot">热度1000+</span>${exclusive ? '<span class="exclusive">高信誉专享</span>' : ""}</div>
-          <div class="goods-body"><div class="goods-title">${title}</div><div><span class="tag blue">已验号</span> <span class="tag blue">免押金</span> ${exclusive ? '<span class="tag pink">高信誉可租</span>' : ""}</div><div class="goods-meta"><span class="price">¥2.42<small>/时</small></span><span>¥22.26/天</span></div></div>
+          <div class="goods-body"><div class="goods-title">${title}</div><div><span class="tag blue">已验号</span> <span class="tag blue">免押金</span> ${exclusive ? '<span class="tag pink">需信誉分 > XX</span>' : ""}</div><div class="goods-meta"><span class="price">¥2.42<small>/时</small></span><span>¥22.26/天</span></div></div>
         </article>
       `;
     }
@@ -1701,7 +1878,7 @@
       const content = `
         <div class="pc-detail">
           <div class="pc-card"><div class="pc-cover"></div><p style="color:#66707f;font-weight:760;">热度 1000+　累计时长 1873h</p></div>
-          <div class="pc-card"><h2>【可排位】幻神白鲨电流 星神音效卡 裁决4皮肤 高信誉账号</h2><p><span class="tag pink">高信誉专享</span> <span class="tag blue">已验号</span> <span class="tag blue">免押金</span></p><div class="pc-rent-plans"><div class="plan active">时租<br><b>¥2.42</b></div><div class="plan">10小时<br><b>¥16.14</b></div><div class="plan">包早<br><b>¥7.06</b></div><div class="plan">日租<br><b>¥22.26</b></div><div class="plan">周租<br><b>¥124.14</b></div></div><p style="color:#66707f;font-weight:760;">该账号为高价值账号，下单前会校验信誉积分与近期违规记录。</p><div class="pc-actions"><button class="btn js-next-order" type="button">立即租用</button><button class="btn ghost" type="button">收藏</button></div></div>
+          <div class="pc-card"><h2>【可排位】幻神白鲨电流 星神音效卡 裁决4皮肤 高信誉账号</h2><p><span class="tag pink">高信誉专享</span> <span class="tag blue">已验号</span> <span class="tag blue">免押金</span></p><div class="pc-credit-gate"><div><div class="gate-title">信誉积分准入</div><p>该账号为高价值账号，仅信誉积分大于后台配置门槛的用户可租用；未达标时会在下单环节拦截并引导查看信誉分。</p></div><div class="gate-score">&gt; XX<span>才可租用</span></div></div><div class="pc-rent-plans"><div class="plan active">时租<br><b>¥2.42</b></div><div class="plan">10小时<br><b>¥16.14</b></div><div class="plan">包早<br><b>¥7.06</b></div><div class="plan">日租<br><b>¥22.26</b></div><div class="plan">周租<br><b>¥124.14</b></div></div><p style="color:#66707f;font-weight:760;">租用前同时校验信誉积分与近期违规记录，门槛分值以后台配置为准。</p><div class="pc-actions"><button class="btn js-next-order" type="button">立即租用</button><button class="btn ghost" type="button">收藏</button></div></div>
         </div>
       `;
       return pcBase(content);
