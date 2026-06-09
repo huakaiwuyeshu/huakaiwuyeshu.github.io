@@ -819,34 +819,58 @@
       font-weight: 820;
     }
 
-    .credit-gate {
-      margin: 12px 0;
-      padding: 12px;
-      border: 1px solid #ffd4df;
-      border-radius: 12px;
-      background: linear-gradient(180deg, #fff7fa 0%, #fff 100%);
-    }
-
-    .credit-gate-head {
+    .detail-tags-row {
       display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      color: #242832;
-      font-size: 13px;
-      font-weight: 950;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
     }
 
-    .credit-gate-head strong {
+    .credit-require-pill {
+      min-height: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 7px 0 5px;
+      border: 1px solid #ffc4d4;
+      border-radius: 999px;
       color: var(--pink-dark);
-      font-size: 16px;
+      background: #fff2f6;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 950;
+      white-space: nowrap;
+      vertical-align: middle;
     }
 
-    .credit-gate p {
-      margin: 6px 0 0;
-      color: #66707f;
+    .credit-require-pill.large {
+      min-height: 24px;
+      padding-right: 9px;
       font-size: 12px;
-      line-height: 1.55;
-      font-weight: 760;
+    }
+
+    .credit-icon {
+      width: 14px;
+      height: 14px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--pink);
+      font-size: 9px;
+      line-height: 1;
+      font-weight: 950;
+      flex: 0 0 auto;
+    }
+
+    .credit-require-row {
+      color: #b21f50;
+    }
+
+    .credit-require-row span:last-child,
+    .credit-require-inline {
+      color: var(--pink-dark);
+      font-weight: 950;
     }
 
     .mobile-detail-cover {
@@ -1183,47 +1207,12 @@
       margin: 14px 0;
     }
 
-    .pc-credit-gate {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
+    .pc-detail-tags {
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      margin: 14px 0;
-      padding: 14px 16px;
-      border: 1px solid #ffd4df;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #fff4f8, #ffffff);
-    }
-
-    .pc-credit-gate .gate-title {
-      color: #242832;
-      font-size: 15px;
-      font-weight: 950;
-    }
-
-    .pc-credit-gate p {
-      margin: 6px 0 0;
-      color: #66707f;
-      font-size: 13px;
-      line-height: 1.55;
-      font-weight: 760;
-    }
-
-    .pc-credit-gate .gate-score {
-      min-width: 118px;
-      text-align: right;
-      color: var(--pink-dark);
-      font-size: 28px;
-      line-height: 1;
-      font-weight: 950;
-    }
-
-    .pc-credit-gate .gate-score span {
-      display: block;
-      margin-top: 4px;
-      color: #8a94a2;
-      font-size: 12px;
-      font-weight: 820;
+      gap: 7px;
+      margin: 0 0 12px;
     }
 
     .pc-actions {
@@ -1731,10 +1720,10 @@
           <div class="order-card">
             <h3 class="mobile-detail-title">【V10 163皮】省标马超 豪华皮肤 高信誉账号</h3>
             <div class="detail-price-row"><span><strong>¥1.46</strong> / 时</span><span>300+人租过</span></div>
-            <div><span class="tag gray">安卓 | QQ账号</span> <span class="tag orange">1小时起租</span></div>
-            <div class="credit-gate">
-              <div class="credit-gate-head"><span>信誉积分准入</span><strong>&gt; XX 分</strong></div>
-              <p>该账号为高价值账号，仅信誉积分大于后台配置门槛的用户可租用；未达标时点击租用将进入限制提示。</p>
+            <div class="detail-tags-row">
+              <span class="tag gray">安卓 | QQ账号</span>
+              <span class="tag orange">1小时起租</span>
+              <span class="credit-require-pill"><span class="credit-icon">信</span>信誉积分&gt;XX分才可租用</span>
             </div>
           </div>
           <div class="rent-card">
@@ -1779,6 +1768,7 @@
             </div>
             <div class="form-row"><span>可租时间</span><span>0:00-24:00</span></div>
             <div class="form-row"><span>租赁时长</span><span>1小时起租</span></div>
+            <div class="form-row credit-require-row"><span>信誉积分</span><span>&gt;XX分</span></div>
             ${violation ? '<div class="notice-card">当前账号属于高价值账号，租用前会校验信誉积分和近期违规记录。</div>' : ""}
           </div>
         </div>
@@ -1878,7 +1868,7 @@
       const content = `
         <div class="pc-detail">
           <div class="pc-card"><div class="pc-cover"></div><p style="color:#66707f;font-weight:760;">热度 1000+　累计时长 1873h</p></div>
-          <div class="pc-card"><h2>【可排位】幻神白鲨电流 星神音效卡 裁决4皮肤 高信誉账号</h2><p><span class="tag pink">高信誉专享</span> <span class="tag blue">已验号</span> <span class="tag blue">免押金</span></p><div class="pc-credit-gate"><div><div class="gate-title">信誉积分准入</div><p>该账号为高价值账号，仅信誉积分大于后台配置门槛的用户可租用；未达标时会在下单环节拦截并引导查看信誉分。</p></div><div class="gate-score">&gt; XX<span>才可租用</span></div></div><div class="pc-rent-plans"><div class="plan active">时租<br><b>¥2.42</b></div><div class="plan">10小时<br><b>¥16.14</b></div><div class="plan">包早<br><b>¥7.06</b></div><div class="plan">日租<br><b>¥22.26</b></div><div class="plan">周租<br><b>¥124.14</b></div></div><p style="color:#66707f;font-weight:760;">租用前同时校验信誉积分与近期违规记录，门槛分值以后台配置为准。</p><div class="pc-actions"><button class="btn js-next-order" type="button">立即租用</button><button class="btn ghost" type="button">收藏</button></div></div>
+          <div class="pc-card"><h2>【可排位】幻神白鲨电流 星神音效卡 裁决4皮肤 高信誉账号</h2><p class="pc-detail-tags"><span class="tag pink">高信誉专享</span> <span class="tag blue">已验号</span> <span class="tag blue">免押金</span> <span class="tag orange">1小时起租</span> <span class="credit-require-pill large"><span class="credit-icon">信</span>信誉积分&gt;XX分才可租用</span></p><div class="pc-rent-plans"><div class="plan active">时租<br><b>¥2.42</b></div><div class="plan">10小时<br><b>¥16.14</b></div><div class="plan">包早<br><b>¥7.06</b></div><div class="plan">日租<br><b>¥22.26</b></div><div class="plan">周租<br><b>¥124.14</b></div></div><p style="color:#66707f;font-weight:760;">租用前同时校验信誉积分与近期违规记录，门槛分值以后台配置为准。</p><div class="pc-actions"><button class="btn js-next-order" type="button">立即租用</button><button class="btn ghost" type="button">收藏</button></div></div>
         </div>
       `;
       return pcBase(content);
@@ -1889,7 +1879,7 @@
       const content = `
         <div class="pc-order">
           <div class="pc-card pc-order-summary"><div class="thumb"></div><div><h3>幻神白鲨电流+星神音效卡+裁决4皮肤 高价值账号</h3><span class="tag blue">1小时起租</span> <span class="tag pink">高信誉专享</span></div><div class="price">¥2.42<small>/时</small></div></div>
-          <div class="pc-card pc-form"><div class="pc-form-line"><div>租赁类型</div><div class="pc-rent-plans" style="margin:0;"><div class="plan active">时租<br><b>¥2.42</b></div><div class="plan">10小时<br><b>¥16.14</b></div><div class="plan">包早<br><b>¥7.06</b></div><div class="plan">日租<br><b>¥23.46</b></div><div class="plan">周租<br><b>¥124.14</b></div></div></div><div class="pc-form-line"><div>租赁方式</div><div><span class="pill selected">现在租</span></div></div><div class="pc-form-line"><div>租赁时间</div><div><span class="pill selected">1小时</span> <span class="pill">2小时</span> <span class="pill">3小时</span></div></div>${warn}</div>
+          <div class="pc-card pc-form"><div class="pc-form-line"><div>租赁类型</div><div class="pc-rent-plans" style="margin:0;"><div class="plan active">时租<br><b>¥2.42</b></div><div class="plan">10小时<br><b>¥16.14</b></div><div class="plan">包早<br><b>¥7.06</b></div><div class="plan">日租<br><b>¥23.46</b></div><div class="plan">周租<br><b>¥124.14</b></div></div></div><div class="pc-form-line"><div>租赁方式</div><div><span class="pill selected">现在租</span></div></div><div class="pc-form-line"><div>租赁时间</div><div><span class="pill selected">1小时</span> <span class="pill">2小时</span> <span class="pill">3小时</span></div></div><div class="pc-form-line credit-require-row"><div>信誉积分</div><div class="credit-require-inline">&gt;XX分</div></div>${warn}</div>
           <div class="pc-card pc-bottom"><span>实付总额：<b class="price">¥2.42</b></span><button class="btn js-open-modal" type="button">确认支付</button></div>
         </div>
       `;
