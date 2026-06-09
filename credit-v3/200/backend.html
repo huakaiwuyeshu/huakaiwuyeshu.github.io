@@ -1158,6 +1158,7 @@
           <button class="tab" data-tab="deduct">减分配置</button>
           <button class="tab" data-tab="punish">惩罚配置</button>
           <button class="tab" data-tab="grade">等级配置</button>
+          <button class="tab" data-tab="special">特殊配置</button>
           <button class="tab" data-tab="detail">信誉积分明细</button>
           <button class="tab" data-tab="appeal">申诉审核</button>
           <button class="tab" data-tab="log">规则日志</button>
@@ -1900,7 +1901,7 @@
                           <td>4</td>
                           <td>40 - 79</td>
                           <td>20 - 39</td>
-                          <td class="left">当前功能不可用或需确认</td>
+                          <td class="left">当前功能不可用</td>
                           <td>是</td>
                           <td class="left">发布账号限制</td>
                           <td><span class="pill on">开启</span></td>
@@ -1934,6 +1935,211 @@
                         <div class="item">不再使用<small>红包 / 券 / VIP 等权益配置</small></div>
                       </div>
                     </div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="special">
+            <div class="panel-shell">
+              <div class="panel-head">
+                <h1 class="panel-title">特殊配置 / 信用修复配置</h1>
+                <p class="panel-desc">用于配置“历史信誉表现较好，但近期行为分突然下降较多”的用户是否展示信用修复入口，以及答题通过后可恢复的近期行为分。</p>
+              </div>
+              <div class="toolbar">
+                <div class="group">
+                  <button class="btn primary" data-dialog="repairRule">新增修复规则</button>
+                  <button class="btn" data-dialog="repairQuestion">新增题目</button>
+                  <button class="btn">导出记录</button>
+                </div>
+                <div class="group">
+                  <span class="badge blue">用户命中后展示入口</span>
+                  <span class="badge orange">只修复近期行为分</span>
+                  <span class="badge green">答题通过生效</span>
+                </div>
+              </div>
+              <div class="note-bar">
+                信用修复不是奖励任务，也不替代申诉：修复记录进入用户积分明细和规则日志；原扣分记录继续保留，用于客服、运营、风控追溯。
+              </div>
+              <div class="kpi-grid">
+                <div class="kpi-card">
+                  <div class="k-label">当前启用规则</div>
+                  <div class="k-value">1 条</div>
+                  <div class="k-desc">命中后用户侧展示信用修复入口。</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="k-label">今日完成修复</div>
+                  <div class="k-value">36 人</div>
+                  <div class="k-desc">答题通过后恢复近期行为分。</div>
+                </div>
+                <div class="kpi-card">
+                  <div class="k-label">不可修复排除</div>
+                  <div class="k-value">18 人</div>
+                  <div class="k-desc">红线、清零、永久限制不展示入口。</div>
+                </div>
+              </div>
+
+              <div class="two-col">
+                <div>
+                  <div class="card">
+                    <div class="card-head">
+                      <div>
+                        <h3 class="card-title">信用修复触发规则</h3>
+                        <div class="card-sub">控制哪些用户可以在详情页看到信用修复入口。</div>
+                      </div>
+                      <span class="chip green">启用中</span>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-wrap">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th style="width: 16%;">规则名称</th>
+                              <th style="width: 13%;">历史信誉积分门槛</th>
+                              <th style="width: 14%;">近30天扣分突降</th>
+                              <th style="width: 12%;">当前总分区间</th>
+                              <th style="width: 13%;">近期行为分区间</th>
+                              <th style="width: 14%;">排除用户</th>
+                              <th style="width: 8%;">状态</th>
+                              <th style="width: 10%;">操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="left">优质用户近期突降修复</td>
+                              <td>≥ 80</td>
+                              <td>累计扣分 ≥ 30</td>
+                              <td>70 - 119</td>
+                              <td>≤ 75</td>
+                              <td class="left">红线 / 清零 / 永久限制</td>
+                              <td><span class="pill on">开启</span></td>
+                              <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-head">
+                      <div>
+                        <h3 class="card-title">修复规则</h3>
+                        <div class="card-sub">答题通过后只恢复近期行为分，不改写原扣分记录。</div>
+                      </div>
+                      <span class="chip orange">近期行为分</span>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-wrap">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th style="width: 20%;">答题通过标准</th>
+                              <th style="width: 16%;">单次恢复分值</th>
+                              <th style="width: 18%;">修复后总分上限</th>
+                              <th style="width: 18%;">用户频次限制</th>
+                              <th style="width: 16%;">失败冷却时间</th>
+                              <th style="width: 12%;">操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>5 题全对</td>
+                              <td>+10</td>
+                              <td>不超过 120</td>
+                              <td>30 天 1 次</td>
+                              <td>24 小时后重试</td>
+                              <td><span class="op secondary">修改</span></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-head">
+                      <div>
+                        <h3 class="card-title">题库配置</h3>
+                        <div class="card-sub">围绕租号玩基础业务行为维护题目：不能开挂、环境异常处理、投诉撤单规范等。</div>
+                      </div>
+                      <span class="chip gray">按业务分类维护</span>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-wrap">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th style="width: 14%;">题目分类</th>
+                              <th style="width: 28%;">题目示例</th>
+                              <th style="width: 26%;">正确答案方向</th>
+                              <th style="width: 12%;">适用业务</th>
+                              <th style="width: 8%;">状态</th>
+                              <th style="width: 12%;">操作</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>账号安全</td>
+                              <td class="left">租用账号时能否使用外挂、脚本或其他作弊工具？</td>
+                              <td class="left">不能使用，发现异常应停止操作并联系平台。</td>
+                              <td>租号</td>
+                              <td><span class="pill on">启用</span></td>
+                              <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                            </tr>
+                            <tr>
+                              <td>环境异常</td>
+                              <td class="left">游戏环境异常或无法启动时，用户应该如何处理？</td>
+                              <td class="left">保留截图，联系平台或提交订单问题，不自行绕过。</td>
+                              <td>租号</td>
+                              <td><span class="pill on">启用</span></td>
+                              <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                            </tr>
+                            <tr>
+                              <td>投诉撤单</td>
+                              <td class="left">遇到订单问题时，是否可以虚假投诉来快速退款？</td>
+                              <td class="left">不可以，需按真实问题提交说明与凭证。</td>
+                              <td>租号 / 交易</td>
+                              <td><span class="pill on">启用</span></td>
+                              <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <aside class="sidebar">
+                  <div class="side-box">
+                    <div class="hd">
+                      <strong>用户侧展示口径</strong>
+                      <span>只给符合条件的用户展示入口</span>
+                    </div>
+                    <div class="bd">
+                      <div class="side-list">
+                        <div class="item">展示位置<small>信誉积分详情页恢复路径下方</small></div>
+                        <div class="item">入口文案<small>信用修复任务 / 可修复 +10</small></div>
+                        <div class="item">完成结果<small>近期行为分修复，原扣分记录保留</small></div>
+                        <div class="item">不可展示<small>红线、重度违规、恶意行为清零、永久限制</small></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="side-box">
+                    <div class="hd">
+                      <strong>修复记录</strong>
+                      <span>需要进入明细和日志</span>
+                    </div>
+                    <div class="bd">
+                      <div class="mini-list">
+                        <div class="mini-item"><div><strong>用户 1554400038</strong><span>历史信誉积分 88，近30天扣分 34，答题通过</span></div><span class="chip green">+10</span></div>
+                        <div class="mini-item"><div><strong>用户 1554400029</strong><span>命中平台级恶意行为，不展示修复入口</span></div><span class="chip red">排除</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="footer-info">
+                    建议产品口径：信用修复是“教育型、一次性、可配置”的近期行为分恢复机制，不是奖励任务，不改变违规事实。
                   </div>
                 </aside>
               </div>
@@ -2528,6 +2734,60 @@
           }
         ]
       },
+      repairRule: {
+        title: "新增信用修复规则",
+        desc: "用于配置哪些用户可以在前端看到信用修复入口，以及答题通过后可恢复的近期行为分。",
+        sections: [
+          {
+            title: "触发条件",
+            fields: [
+              ["规则名称", "例如优质用户近期突降修复", true],
+              ["历史信誉积分门槛", "请输入门槛，例如 80", true],
+              ["近30天扣分突降门槛", "请输入累计扣分，例如 30", true],
+              ["当前总分区间", "例如 70 - 119", true],
+              ["近期行为分区间", "例如 ≤ 75", true],
+              ["排除用户", "红线 / 清零 / 永久限制", true, "", "select"]
+            ]
+          },
+          {
+            title: "修复规则",
+            fields: [
+              ["答题通过标准", "5题全对 / 允许错1题", true, "", "select"],
+              ["单次恢复分值", "请输入正分，例如 +10", true],
+              ["修复后总分上限", "请输入上限，例如 120", true],
+              ["用户频次限制", "7天1次 / 30天1次 / 90天1次", true, "", "select"],
+              ["失败冷却时间", "24小时后重试 / 48小时后重试", true, "", "select"],
+              ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
+            ],
+            tip: "信用修复只恢复近期行为分，不抹除违规记录，也不替代申诉；红线、清零、永久限制用户不展示入口。"
+          }
+        ]
+      },
+      repairQuestion: {
+        title: "新增信用修复题目",
+        desc: "用于维护租号玩业务安全答题题库，题目围绕基础行为规范，避免再次违规。",
+        sections: [
+          {
+            title: "题目基础",
+            fields: [
+              ["题目分类", "账号安全 / 环境异常 / 投诉撤单 / 私下交易", true, "", "select"],
+              ["适用业务", "租号 / 交易 / 全业务", true, "", "select"],
+              ["题干", "请输入题目内容", true, "wide"],
+              ["正确答案方向", "说明正确处理方式，用户端不直接展示", true, "wide"]
+            ]
+          },
+          {
+            title: "答案与状态",
+            fields: [
+              ["正确选项", "请输入正确选项文案", true, "wide"],
+              ["错误选项一", "请输入错误选项文案", true, "wide"],
+              ["错误选项二", "请输入错误选项文案", true, "wide"],
+              ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
+            ],
+            tip: "题目表达避免奖励感，重点强调平台基础规范：不能开挂、环境异常要联系平台、不可虚假投诉、不可绕过平台。"
+          }
+        ]
+      },
       manualAdjust: {
         title: "手动加减分",
         desc: "用于后台人工修正用户积分，所有调整必须生成系统调整明细并记录审计日志。",
@@ -2773,6 +3033,7 @@
           punish: "limitRule",
           legacy: "legacyRule",
           grade: "statusRule",
+          special: "repairRule",
           detail: tableAction.textContent.includes("调整") ? "manualAdjust" : "logQuery",
           appeal: "appealAudit",
           log: "logQuery"
