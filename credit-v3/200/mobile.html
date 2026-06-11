@@ -1378,6 +1378,437 @@
       color: var(--blue);
       background: var(--blue-soft);
     }
+
+
+    /* mobile overview redesign start */
+    #home .content {
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scrollbar-width: none;
+    }
+
+    #home .content::-webkit-scrollbar {
+      display: none;
+    }
+
+    #home .home-topbar {
+      display: grid;
+      grid-template-columns: 52px 1fr 52px;
+      padding: 0 18px;
+    }
+
+    #home .home-topbar > svg {
+      width: 44px;
+      height: 44px;
+      padding: 12px;
+      color: #273247;
+    }
+
+    #home .home-card {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: 0 9px 24px rgba(31, 46, 71, 0.055);
+    }
+
+    #home .home-card-pad {
+      padding: 16px;
+    }
+
+    #home .home-section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    #home .home-section-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 950;
+    }
+
+    #home .home-section-sub {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 760;
+    }
+
+    #home .home-chip {
+      min-height: 28px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 950;
+    }
+
+    #home .home-chip.warn {
+      color: var(--warn);
+      background: var(--warn-soft);
+      border: 1px solid #f3d39b;
+    }
+
+    #home .home-chip.blue {
+      color: var(--blue);
+      background: var(--blue-soft);
+      border: 1px solid #cfe0ff;
+    }
+
+    #home .home-chip.green {
+      color: var(--green);
+      background: var(--green-soft);
+      border: 1px solid #c8edd7;
+    }
+
+    #home .home-chip.red {
+      color: var(--red);
+      background: var(--red-soft);
+      border: 1px solid #f5cbc6;
+    }
+
+    #home .home-score-card {
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    #home .home-score-main {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    #home .home-score-num {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    #home .home-score-num strong {
+      color: var(--text);
+      font-size: 58px;
+      line-height: 58px;
+      font-weight: 950;
+    }
+
+    #home .home-score-num span {
+      color: #384359;
+      font-size: 17px;
+      font-weight: 950;
+    }
+
+    #home .home-score-meta {
+      display: grid;
+      gap: 8px;
+    }
+
+    #home .home-meta-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 780;
+    }
+
+    #home .home-meta-row strong {
+      color: #263147;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    #home .home-score-scale {
+      margin-top: 16px;
+    }
+
+    #home .home-scale-track {
+      position: relative;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f06a60 0%, #f06a60 45%, #f2ae42 45%, #f2ae42 60%, #4f8df5 60%, #4f8df5 78%, #36b37e 78%, #36b37e 100%);
+      box-shadow: inset 0 1px 2px rgba(23, 32, 51, 0.12);
+    }
+
+    #home .home-marker {
+      position: absolute;
+      left: 56%;
+      top: -6px;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      border: 6px solid #f2ae42;
+      box-shadow: 0 4px 12px rgba(182, 106, 0, 0.26);
+    }
+
+    #home .home-marker-label {
+      position: absolute;
+      left: 56%;
+      top: 20px;
+      transform: translateX(-50%);
+      color: var(--warn);
+      font-size: 11px;
+      line-height: 15px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    #home .home-scale-labels {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      color: var(--soft);
+      font-size: 11px;
+      line-height: 16px;
+      font-weight: 850;
+      text-align: center;
+    }
+
+    #home .home-scale-labels span:nth-child(2) {
+      color: var(--warn);
+      font-weight: 950;
+    }
+
+    #home .home-cap-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 2px 0 8px;
+      color: #344158;
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 950;
+    }
+
+    #home .home-cap-list,
+    #home .home-appeal-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    #home .home-cap-row,
+    #home .home-appeal-row {
+      min-height: 46px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 1px solid #eef2f7;
+    }
+
+    #home .home-cap-row:first-child,
+    #home .home-appeal-row:first-child {
+      border-top: 0;
+    }
+
+    #home .home-cap-title,
+    #home .home-appeal-title,
+    #home .home-detail-title {
+      color: #182238;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 950;
+    }
+
+    #home .home-cap-desc,
+    #home .home-appeal-desc,
+    #home .home-detail-desc {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 760;
+    }
+
+    #home .home-normal-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 2px;
+    }
+
+    #home .home-normal-chip {
+      min-height: 30px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f7faf8;
+      border: 1px solid #dcece2;
+      color: var(--green);
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 950;
+    }
+
+    #home .home-trend-card {
+      padding: 16px 14px 12px;
+    }
+
+    #home .home-trend-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    #home .home-trend-summary {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 780;
+    }
+
+    #home .home-trend-chart {
+      width: 100%;
+      height: 150px;
+      display: block;
+      margin-top: 8px;
+      overflow: visible;
+    }
+
+    #home .home-chart-label {
+      fill: #8a95a8;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    #home .home-chart-score {
+      fill: #263147;
+      font-size: 11px;
+      font-weight: 950;
+    }
+
+    #home .home-link-btn {
+      min-width: 82px;
+      min-height: 34px;
+      padding: 0 10px 0 12px;
+      border: 1px solid #cfe0ff;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: var(--blue);
+      background: #f6f9ff;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 950;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    #home .home-link-btn svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #home .home-detail-card {
+      padding: 16px 14px 10px;
+    }
+
+    #home .home-detail-list {
+      display: grid;
+      gap: 0;
+    }
+
+    #home .home-detail-row {
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 0;
+      color: inherit;
+      text-decoration: none;
+      border-top: 1px solid #eef2f7;
+    }
+
+    #home .home-detail-row:first-child {
+      border-top: 0;
+    }
+
+    #home .home-detail-time {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 17px;
+      font-weight: 950;
+      text-align: left;
+    }
+
+    #home .home-delta {
+      min-width: 42px;
+      text-align: right;
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: 950;
+    }
+
+    #home .home-delta.minus { color: var(--red); }
+    #home .home-delta.plus { color: var(--green); }
+
+    #home .home-order-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 5px;
+      color: #66748b;
+      font-size: 11px;
+      line-height: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #home .home-order-badge {
+      flex: 0 0 auto;
+      padding: 1px 5px;
+      border-radius: 5px;
+      background: #f2f5f9;
+      color: #6c7789;
+      font-weight: 950;
+    }
+
+    #home .home-appeal-card {
+      padding: 16px 14px 14px;
+    }
+
+    #home .home-appeal-row {
+      min-height: 52px;
+    }
+
+    #home .home-bottom-safe {
+      height: 10px;
+      flex: 0 0 auto;
+    }
+    /* mobile overview redesign end */
   </style>
 </head>
 <body>
@@ -1445,103 +1876,202 @@
   <section class="scene" id="home">
     <div class="scene-head">
       <div>
-        <h1 class="scene-title">信誉积分首页 V6 · 200分版</h1>
-        <p class="scene-sub">首屏回答：当前多少分、哪些能力受限、怎么恢复，以及申诉记录从哪里进入。</p>
+        <h1 class="scene-title">信誉积分首页 V7 · 200分版</h1>
+        <p class="scene-sub">移动端保持与PC端一致的信息口径，但采用单列模块展示：先看状态，再看影响、变化、明细和申诉。</p>
       </div>
       <div class="scene-mark">移动端一级页</div>
     </div>
 
     <div class="phone">
-      <div class="topbar">
+      <div class="topbar home-topbar">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/><path d="M9 12h10"/></svg>
         <div class="nav-title">信誉积分</div>
-        <a href="#rules" class="nav-side">规则</a>
+        <div class="nav-side" aria-hidden="true"></div>
       </div>
 
       <main class="content">
-        <section class="score-card">
-          <div class="score-top">
-            <div class="label">当前总信誉积分</div>
-            <div class="status-chip">部分受限 · 2项受限</div>
-          </div>
-          <div class="score-number">112<small>分</small></div>
-          <div class="summary">当前部分能力处于观察或限制状态。保持正常履约后，可随扣分失效逐步恢复。</div>
-          <div class="meta-grid">
-            <div class="meta-box">
-              <span>最近更新时间</span>
-              <strong>2026-05-15 12:30</strong>
-            </div>
-            <div class="meta-box">
-              <span>当前处理建议</span>
-              <strong>查看恢复路径</strong>
-            </div>
-          </div>
-          <div class="quick-actions">
-            <a href="#detail" class="quick-action">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg>
-              <span>积分明细</span>
-            </a>
-            <a href="#appeal" class="quick-action">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H7l-3 3z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg>
-              <span>申诉记录</span>
-            </a>
-            <a href="#rules" class="quick-action">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7z"/><path d="M9 12l2 2 4-4"/></svg>
-              <span>规则说明</span>
-            </a>
-            <a href="#home" class="quick-action">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M6 21v-4h4"/></svg>
-              <span>恢复路径</span>
-            </a>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <h2 class="section-title">能力状态</h2>
-            <div class="link">2项受限 · 1项正常</div>
-          </div>
-          <div class="limit-card">
-            <div class="limit-row">
-              <div>
-                <div class="limit-title">高价值账号租赁</div>
-              <div class="limit-desc">当前信誉状态未达高价值账号准入要求</div>
-              </div>
-              <span class="tag warn">部分受限</span>
-            </div>
-            <div class="limit-row">
-              <div>
-                <div class="limit-title">特价专区下单</div>
-                <div class="limit-desc">近期存在有效违规记录时可能限制租用</div>
-              </div>
-              <span class="tag warn">部分受限</span>
-            </div>
-            <div class="limit-row">
-              <div>
-              <div class="limit-title">投诉撤单能力</div>
-              <div class="limit-desc">当前未触发投诉撤单限制，可正常发起投诉撤单</div>
-              </div>
-              <span class="tag green">正常</span>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <h2 class="section-title">恢复路径</h2>
-          </div>
-          <div class="path-card">
-            <div class="status-icon">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M6 21v-4h4"/></svg>
-            </div>
+        <section class="home-card home-score-card">
+          <div class="home-section-head">
             <div>
-              <div class="path-title">保持正常履约，等待有效扣分失效</div>
-              <div class="path-desc">如对扣分有异议，可先进入积分明细，再查看申诉记录与审核结果。</div>
+              <h2 class="home-section-title">状态总览</h2>
+              <p class="home-section-sub">当前总分、风险状态与最近更新时间</p>
             </div>
-            <div class="primary-btn">查看</div>
+            <span class="home-chip warn">部分受限</span>
+          </div>
+
+          <div class="home-score-main">
+            <div class="home-score-num"><strong>112</strong><span>分</span></div>
+            <div class="home-score-meta">
+              <div class="home-meta-row"><span>受限能力</span><strong>2 项</strong></div>
+              <div class="home-meta-row"><span>正常可用</span><strong>3 项</strong></div>
+              <div class="home-meta-row"><span>最近更新</span><strong>05-19 11:16</strong></div>
+            </div>
+          </div>
+
+          <div class="home-score-scale" aria-label="当前分数位于受限区间">
+            <div class="home-scale-track">
+              <span class="home-marker"></span>
+              <span class="home-marker-label">112分</span>
+            </div>
+            <div class="home-scale-labels">
+              <span>高风险</span>
+              <span>受限区间</span>
+              <span>正常区间</span>
+              <span>优质区间</span>
+            </div>
           </div>
         </section>
 
+        <section class="home-card home-card-pad">
+          <div class="home-section-head">
+            <div>
+              <h2 class="home-section-title">能力影响</h2>
+              <p class="home-section-sub">优先告诉用户哪些能力受影响，哪些仍可正常使用</p>
+            </div>
+          </div>
+
+          <div class="home-cap-title-row"><span>当前受限</span><span>2 项</span></div>
+          <div class="home-cap-list">
+            <div class="home-cap-row">
+              <div>
+                <div class="home-cap-title">高价值账号租赁</div>
+                <div class="home-cap-desc">需达到配置分值后可租用</div>
+              </div>
+              <span class="home-chip red">受限</span>
+            </div>
+            <div class="home-cap-row">
+              <div>
+                <div class="home-cap-title">特价专区下单</div>
+                <div class="home-cap-desc">当前分值未满足活动准入要求</div>
+              </div>
+              <span class="home-chip red">受限</span>
+            </div>
+          </div>
+
+          <div class="home-cap-title-row" style="margin-top:12px;"><span>正常可用</span><span>3 项</span></div>
+          <div class="home-normal-chips">
+            <span class="home-normal-chip">投诉撤单能力</span>
+            <span class="home-normal-chip">领券与活动参与</span>
+            <span class="home-normal-chip">账号发布</span>
+          </div>
+        </section>
+
+        <section class="home-card home-trend-card">
+          <div class="home-trend-topline">
+            <div>
+              <h2 class="home-section-title">近15天信誉积分变化</h2>
+              <p class="home-section-sub">先看趋势，再从下方明细追溯原因</p>
+            </div>
+            <span class="home-chip blue">总分趋势</span>
+          </div>
+          <div class="home-trend-summary">
+            <span>近15天净变动</span>
+            <strong style="color:#c2413b;">-4分</strong>
+            <span>扣分 2 次，加分/回滚 2 次</span>
+          </div>
+          <svg class="home-trend-chart" viewBox="0 0 382 150" role="img" aria-label="近15天信誉积分变化折线图">
+            <defs>
+              <linearGradient id="homeTrendFillMobile" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2f6bff" stop-opacity=".18"/>
+                <stop offset="100%" stop-color="#2f6bff" stop-opacity=".02"/>
+              </linearGradient>
+            </defs>
+            <path d="M22 22 H360 M22 57 H360 M22 92 H360 M22 127 H360" stroke="#edf1f6" stroke-width="1"/>
+            <path d="M28 60 C70 54 90 54 116 65 C148 78 162 78 184 74 C216 66 226 45 254 54 C288 64 306 104 346 114 L346 127 L28 127 Z" fill="url(#homeTrendFillMobile)"/>
+            <path d="M28 60 C70 54 90 54 116 65 C148 78 162 78 184 74 C216 66 226 45 254 54 C288 64 306 104 346 114" fill="none" stroke="#2f6bff" stroke-width="3.2" stroke-linecap="round"/>
+            <circle cx="28" cy="60" r="4.5" fill="#fff" stroke="#2f6bff" stroke-width="3"/>
+            <circle cx="116" cy="65" r="4.5" fill="#fff" stroke="#2f6bff" stroke-width="3"/>
+            <circle cx="184" cy="74" r="4.5" fill="#fff" stroke="#2f6bff" stroke-width="3"/>
+            <circle cx="254" cy="54" r="4.5" fill="#fff" stroke="#2f6bff" stroke-width="3"/>
+            <circle cx="346" cy="114" r="5.5" fill="#fff" stroke="#f2ae42" stroke-width="4"/>
+            <text class="home-chart-score" x="320" y="100">112</text>
+            <text class="home-chart-label" x="20" y="146">05-05</text>
+            <text class="home-chart-label" x="105" y="146">05-09</text>
+            <text class="home-chart-label" x="192" y="146">05-13</text>
+            <text class="home-chart-label" x="320" y="146">05-19</text>
+          </svg>
+        </section>
+
+        <section class="home-card home-detail-card">
+          <div class="home-section-head">
+            <div>
+              <h2 class="home-section-title">积分明细</h2>
+              <p class="home-section-sub">展示最近变动、关联订单和分值</p>
+            </div>
+            <a class="home-link-btn" href="#detail" aria-label="查看全部积分明细">
+              查看全部
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          </div>
+
+          <div class="home-detail-list">
+            <a class="home-detail-row" href="#detail">
+              <div class="home-detail-time">05-19<br>11:16</div>
+              <div>
+                <div class="home-detail-title">异常撤单扣分</div>
+                <div class="home-detail-desc">影响高价值账号租用准入</div>
+                <div class="home-order-line"><span class="home-order-badge">订单</span><span>202605190831 · 王者荣耀租号 · 2小时</span></div>
+              </div>
+              <div class="home-delta minus">-12</div>
+            </a>
+            <a class="home-detail-row" href="#detail">
+              <div class="home-detail-time">05-18<br>22:04</div>
+              <div>
+                <div class="home-detail-title">正常完单加分</div>
+                <div class="home-detail-desc">履约行为计入积分变动</div>
+                <div class="home-order-line"><span class="home-order-badge">订单</span><span>202605180274 · 和平精英租号 · 1小时</span></div>
+              </div>
+              <div class="home-delta plus">+2</div>
+            </a>
+            <a class="home-detail-row" href="#detail">
+              <div class="home-detail-time">05-14<br>10:18</div>
+              <div>
+                <div class="home-detail-title">申诉通过回滚</div>
+                <div class="home-detail-desc">审核通过后返还扣除积分</div>
+                <div class="home-order-line"><span class="home-order-badge">订单</span><span>202605140918 · 英雄联盟租号 · 3小时</span></div>
+              </div>
+              <div class="home-delta plus">+6</div>
+            </a>
+          </div>
+        </section>
+
+        <section class="home-card home-appeal-card">
+          <div class="home-section-head">
+            <div>
+              <h2 class="home-section-title">申诉状态</h2>
+              <p class="home-section-sub">只保留处理进度和历史结果入口</p>
+            </div>
+            <a class="home-link-btn" href="#appeal" aria-label="查看申诉记录">
+              申诉记录
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+          </div>
+
+          <div class="home-appeal-list">
+            <div class="home-appeal-row">
+              <div>
+                <div class="home-appeal-title">处理中</div>
+                <div class="home-appeal-desc">异常撤单扣分申诉</div>
+              </div>
+              <span class="home-chip blue">1 条</span>
+            </div>
+            <div class="home-appeal-row">
+              <div>
+                <div class="home-appeal-title">已通过</div>
+                <div class="home-appeal-desc">已生成积分回滚记录</div>
+              </div>
+              <span class="home-chip green">+6分</span>
+            </div>
+            <div class="home-appeal-row">
+              <div>
+                <div class="home-appeal-title">未提交</div>
+                <div class="home-appeal-desc">可从扣分明细发起申诉</div>
+              </div>
+              <span class="home-chip warn">1 条</span>
+            </div>
+          </div>
+        </section>
+        <div class="home-bottom-safe"></div>
       </main>
     </div>
   </section>
