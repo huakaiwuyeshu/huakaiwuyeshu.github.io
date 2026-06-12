@@ -1219,7 +1219,6 @@
           <button class="tab" data-tab="detail">信誉积分明细</button>
           <button class="tab" data-tab="appeal">申诉审核</button>
           <button class="tab" data-tab="log">规则日志</button>
-          <button class="tab" data-tab="dictionary">字典项配置</button>
           <button class="tab" data-tab="legacy">历史功能拓展</button>
         </div>
       </section>
@@ -1235,7 +1234,6 @@
               <div class="toolbar">
                 <div class="group">
                   <button class="btn primary" data-dialog="systemRule">新增体系规则</button>
-                  <button class="btn" data-go-tab="dictionary">查看字典项</button>
                   <button class="btn" data-go-tab="deduct">查看减分配置</button>
                 </div>
                 <div class="group">
@@ -1404,116 +1402,6 @@
                         <div class="item">体系配置<small>维护一级分类、二级场景、加分上限、统计窗口、申诉口径。</small></div>
                         <div class="item">减分配置<small>维护具体扣分项、扣分值、触发来源、适用业务和状态。</small></div>
                         <div class="item">惩罚配置<small>只负责分数命中后的权益限制或业务拦截。</small></div>
-                      </div>
-                    </div>
-                  </div>
-                </aside>
-              </div>
-            </div>
-          </section>
-
-          <section class="panel" data-panel="dictionary">
-            <div class="panel-shell">
-              <div class="panel-head">
-                <h1 class="panel-title">字典项配置 / 行为字典</h1>
-                <p class="panel-desc">新增行为先进入字典项配置，只维护行为名称、一级分类、二级分类、行为类型、适用业务和备注；申诉、分值、限制策略不在字典层配置。</p>
-              </div>
-              <div class="toolbar">
-                <div class="group">
-                  <button class="btn primary" data-dialog="dictionaryItem">新增字典项</button>
-                  <button class="btn">导出字典</button>
-                </div>
-                <div class="group">
-                  <span class="badge blue">行为定义</span>
-                  <span class="badge gray">规则引用</span>
-                  <span class="badge orange">默认可选</span>
-                </div>
-              </div>
-              <div class="note-bar">
-                字典项不直接产生加减分，只作为“行为标准库”。新增分类规则或扣分规则时从这里选择行为项，系统再按统计窗口生成对应分值结果。
-              </div>
-              <div class="two-col">
-                <div>
-                  <div class="table-wrap">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th style="width: 20%;">行为名称</th>
-                          <th style="width: 15%;">一级分类</th>
-                          <th style="width: 20%;">二级场景</th>
-                          <th style="width: 17%;">行为类型</th>
-                          <th style="width: 20%;">适用业务</th>
-                          <th style="width: 8%;">操作</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td class="left">正常结算</td>
-                          <td>履约行为</td>
-                          <td>订单结算</td>
-                          <td><span class="pill on">履约加分</span></td>
-                          <td>租号 / 陪玩 / 代练 / 交易</td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                        </tr>
-                        <tr>
-                          <td class="left">连续正常结算</td>
-                          <td>订单行为</td>
-                          <td>连续履约</td>
-                          <td><span class="pill on">订单加分</span></td>
-                          <td>租号 / 陪玩 / 代练 / 交易</td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                        </tr>
-                        <tr>
-                          <td class="left">异常撤单</td>
-                          <td>守约行为</td>
-                          <td>投诉撤单</td>
-                          <td><span class="pill danger">违规扣分</span></td>
-                          <td>租号</td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                        </tr>
-                        <tr>
-                          <td class="left">虚假投诉</td>
-                          <td>守约行为</td>
-                          <td>投诉核实</td>
-                          <td><span class="pill danger">违规扣分</span></td>
-                          <td>租号 / 交易</td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                        </tr>
-                        <tr>
-                          <td class="left">账号异常使用</td>
-                          <td>守约行为</td>
-                          <td>风控命中</td>
-                          <td><span class="pill danger">违规扣分</span></td>
-                          <td>租号</td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                        </tr>
-                        <tr>
-                          <td class="left">实名认证</td>
-                          <td>基础信息</td>
-                          <td>身份资料</td>
-                          <td><span class="pill off">不计分</span></td>
-                          <td>全业务</td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="footer-info">
-                    字典项解决“先定义行为，再引用规则”的问题；分值模型归属不放在字典层，也不放在规则层，由计算任务按统计周期自动产出。
-                  </div>
-                </div>
-                <aside class="sidebar">
-                  <div class="side-box">
-                    <div class="hd">
-                      <strong>配置边界</strong>
-                      <span>字典只管行为，不管分值</span>
-                    </div>
-                    <div class="bd">
-                      <div class="side-list">
-                        <div class="item">字典项<small>行为名称、分类、场景、业务和备注</small></div>
-                        <div class="item">体系配置<small>一级分类、二级分类、申诉开关</small></div>
-                        <div class="item">扣分规则<small>具体扣分行为和分值</small></div>
-                        <div class="item">计算任务<small>按统计窗口进入近期行为分或历史累积分</small></div>
                       </div>
                     </div>
                   </div>
@@ -2767,7 +2655,7 @@
             <div class="bd">
               <div class="side-list">
                 <div class="item">老系统感保留<small>蓝色 Tab + 表格 + 保存按钮</small></div>
-                <div class="item">能力补齐<small>字典项配置、申诉审核、日志追溯</small></div>
+                <div class="item">能力补齐<small>申诉审核、规则日志、明细追溯</small></div>
                 <div class="item">删除奖励配置<small>不再出现红包 / 券 / VIP / 免押</small></div>
                 <div class="item">字段口径统一<small>申诉状态、统计窗口、回滚状态</small></div>
               </div>
@@ -2853,29 +2741,6 @@
               ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
             ],
             tip: "近30天行为进入近期行为分，历史2-12个月行为进入历史累积分；规则归属不在用户端展示双轨分。"
-          }
-        ]
-      },
-      dictionaryItem: {
-        title: "新增字典项",
-        desc: "用于维护行为标准库。字典项只定义行为基础信息，创建后默认可在体系配置和扣分规则中选择。",
-        sections: [
-          {
-            title: "字典基础",
-            fields: [
-              ["行为名称", "请输入行为名称，例如账号异常使用", true],
-              ["一级分类", "履约行为 / 订单行为 / 守约行为 / 处罚行为 / 基础信息", true, "", "select"],
-              ["二级场景", "订单结算 / 投诉撤单 / 风控命中 / 身份资料", true, "", "select"],
-              ["行为类型", "履约加分 / 订单加分 / 违规扣分 / 不计分", true, "", "select"]
-            ]
-          },
-          {
-            title: "适用与备注",
-            fields: [
-              ["适用业务", "租号 / 陪玩 / 代练 / 交易 / 全业务", true, "", "select"],
-              ["备注", "说明该行为的触发口径", false, "wide"]
-            ],
-            tip: "字典项不配置分值、申诉和限制策略；实名认证、绑定手机、支付宝绑定等基础信息不参与加分。"
           }
         ]
       },
@@ -3150,7 +3015,7 @@
       const [label, placeholder, required, span, type] = field;
       const className = span === "full" ? "modal-field full" : span === "wide" ? "modal-field wide" : "modal-field";
       const selectLabels = new Set([
-        "行为字典项", "一级分类", "二级场景", "二级分类", "适用业务", "行为类型", "行为范围",
+        "一级分类", "二级场景", "二级分类", "适用业务", "行为类型", "行为范围",
         "分值配置方式",
         "是否允许申诉", "状态", "投诉类型", "投诉选项", "核实结果",
         "限制场景", "处理方式", "限制时长", "源策略", "目标场景",
@@ -3305,7 +3170,6 @@
         const activePanel = document.querySelector(".panel.active")?.dataset.panel || "system";
         const actionMap = {
           system: "systemRule",
-          dictionary: "dictionaryItem",
           deduct: "deductRule",
           punish: "limitRule",
           legacy: "legacyRule",
