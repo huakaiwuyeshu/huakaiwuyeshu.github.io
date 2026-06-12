@@ -302,44 +302,6 @@
       display: block;
     }
 
-    .status-strip {
-      margin: 14px 22px 0;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .metric {
-      padding: 16px 18px 15px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #fff;
-      box-shadow: var(--shadow);
-    }
-
-    .metric .label {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.2;
-      font-weight: 700;
-    }
-
-    .metric .value {
-      margin-top: 8px;
-      color: var(--ink);
-      font-size: 24px;
-      line-height: 1.1;
-      font-weight: 950;
-    }
-
-    .metric .hint {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-      font-weight: 700;
-    }
-
     .workspace {
       display: block;
       padding: 14px 16px 18px;
@@ -1109,10 +1071,6 @@
       display: none !important;
     }
 
-    .status-strip {
-      display: grid !important;
-    }
-
     .aside,
     .two-col > aside.sidebar,
     .log-grid > aside.sidebar {
@@ -1130,7 +1088,6 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .status-strip,
       .kpi-grid,
       .form-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1264,29 +1221,6 @@
           <button class="tab" data-tab="log">规则日志</button>
           <button class="tab" data-tab="dictionary">字典项配置</button>
           <button class="tab" data-tab="legacy">历史功能拓展</button>
-        </div>
-      </section>
-
-      <section class="status-strip">
-        <div class="metric">
-          <div class="label">历史累积分上限</div>
-          <div class="value">100 分</div>
-          <div class="hint">基于前 2-12 个月行为数据加减分，新用户默认 0，默认封顶 100。</div>
-        </div>
-        <div class="metric">
-          <div class="label">近期行为分上限</div>
-          <div class="value">100 分</div>
-          <div class="hint">按 100 - 违规扣分 + 订单行为加分计算。</div>
-        </div>
-        <div class="metric">
-          <div class="label">总信誉积分上限</div>
-          <div class="value">200 分</div>
-          <div class="hint">由近期行为分（近30天，基准100）与历史累积分 0-100 合成；新用户 100+0，老用户按履约和违规滚动计算。</div>
-        </div>
-        <div class="metric">
-          <div class="label">当前待审核申诉</div>
-          <div class="value">18 单</div>
-          <div class="hint">审核通过后同步生成回滚明细。</div>
         </div>
       </section>
 
