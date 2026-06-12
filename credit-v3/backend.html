@@ -2072,34 +2072,7 @@
               </div>
               <div class="toolbar">
                 <div class="group">
-                  <button class="btn primary" data-dialog="repairRule">新增修复规则</button>
-                  <button class="btn" data-dialog="repairQuestion">新增题目</button>
                   <button class="btn">导出记录</button>
-                </div>
-                <div class="group">
-                  <span class="badge blue">用户命中后展示入口</span>
-                  <span class="badge orange">只修复近期行为分</span>
-                  <span class="badge green">答题通过生效</span>
-                </div>
-              </div>
-              <div class="note-bar">
-                信用修复不是奖励任务，也不替代申诉：修复记录进入用户积分明细和规则日志；原扣分记录继续保留，用于客服、运营、风控追溯。
-              </div>
-              <div class="kpi-grid">
-                <div class="kpi-card">
-                  <div class="k-label">当前启用规则</div>
-                  <div class="k-value">1 条</div>
-                  <div class="k-desc">命中后用户侧展示信用修复入口。</div>
-                </div>
-                <div class="kpi-card">
-                  <div class="k-label">今日完成修复</div>
-                  <div class="k-value">36 人</div>
-                  <div class="k-desc">答题通过后恢复近期行为分。</div>
-                </div>
-                <div class="kpi-card">
-                  <div class="k-label">不可修复排除</div>
-                  <div class="k-value">18 人</div>
-                  <div class="k-desc">红线、清零、永久限制不展示入口。</div>
                 </div>
               </div>
 
@@ -2111,7 +2084,7 @@
                         <h3 class="card-title">信用修复触发规则</h3>
                         <div class="card-sub">控制哪些用户可以在详情页看到信用修复入口。</div>
                       </div>
-                      <span class="chip green">启用中</span>
+                      <button class="btn primary" data-dialog="repairTriggerRule">新增触发规则</button>
                     </div>
                     <div class="card-body">
                       <div class="table-wrap">
@@ -2151,7 +2124,7 @@
                         <h3 class="card-title">修复规则</h3>
                         <div class="card-sub">答题通过后只恢复近期行为分，不改写原扣分记录。</div>
                       </div>
-                      <span class="chip orange">近期行为分</span>
+                      <button class="btn primary" data-dialog="repairRule">新增修复规则</button>
                     </div>
                     <div class="card-body">
                       <div class="table-wrap">
@@ -2187,7 +2160,7 @@
                         <h3 class="card-title">题库配置</h3>
                         <div class="card-sub">围绕租号玩基础业务行为维护题目：不能开挂、环境异常处理、投诉撤单规范等。</div>
                       </div>
-                      <span class="chip gray">按业务分类维护</span>
+                      <button class="btn primary" data-dialog="repairQuestion">新增题目</button>
                     </div>
                     <div class="card-body">
                       <div class="table-wrap">
@@ -2844,9 +2817,9 @@
           }
         ]
       },
-      repairRule: {
-        title: "新增信用修复规则",
-        desc: "用于配置哪些用户可以在前端看到信用修复入口，以及答题通过后可恢复的近期行为分。",
+      repairTriggerRule: {
+        title: "新增信用修复触发规则",
+        desc: "用于配置哪些用户可以在前端看到信用修复入口。",
         sections: [
           {
             title: "触发条件",
@@ -2858,7 +2831,13 @@
               ["近期行为分区间", "例如 ≤ 75", true],
               ["排除用户", "红线 / 清零 / 永久限制", true, "", "select"]
             ]
-          },
+          }
+        ]
+      },
+      repairRule: {
+        title: "新增信用修复规则",
+        desc: "用于配置答题通过后的恢复分值、总分上限和用户频次限制。",
+        sections: [
           {
             title: "修复规则",
             fields: [
