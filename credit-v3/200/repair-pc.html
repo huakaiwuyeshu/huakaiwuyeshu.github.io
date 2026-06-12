@@ -42,8 +42,7 @@
     }
 
     .hero,
-    .canvas,
-    .rule-strip {
+    .canvas {
       border: 1px solid rgba(84, 107, 139, .18);
       border-radius: 8px;
       background: var(--card);
@@ -122,37 +121,6 @@
     .pill.warn { color: var(--orange); background: var(--orange-soft); }
     .pill.red { color: var(--red); background: var(--red-soft); }
     .pill.gray { color: #475467; background: #eef2f7; }
-
-    .rule-strip {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0;
-      overflow: hidden;
-    }
-
-    .rule-item {
-      min-height: 92px;
-      padding: 16px 18px;
-      border-left: 1px solid var(--line);
-      background: #fbfdff;
-    }
-
-    .rule-item:first-child { border-left: 0; }
-
-    .rule-item strong {
-      display: block;
-      font-size: 15px;
-      font-weight: 950;
-    }
-
-    .rule-item span {
-      display: block;
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.55;
-      font-weight: 720;
-    }
 
     .canvas {
       padding: 22px;
@@ -574,7 +542,6 @@
         display: block;
       }
 
-      .rule-strip,
       .screen-grid,
       .repair-meta,
       .timeline,
@@ -593,25 +560,18 @@
         <div>
           <p class="kicker">Credit Repair · PC端展示</p>
           <h1>信用修复机制</h1>
-          <p class="hero-desc">面向历史信誉表现较好、近期行为分因短期异常下降较多的用户，在信誉积分详情页展示信用修复入口。用户完成租号玩基础规范答题后，系统恢复本次可修复的近期行为分。</p>
+          <p class="hero-desc">用户完成租号玩基础规范答题后，系统恢复本次可修复的近期行为分；原扣分记录仍保留，可在积分明细中查看来源。</p>
         </div>
         <div class="badge">用户侧展示</div>
       </div>
-    </section>
-
-    <section class="rule-strip" aria-label="信用修复展示规则">
-      <div class="rule-item"><strong>展示对象</strong><span>历史信誉积分较高，长期履约基础稳定。</span></div>
-      <div class="rule-item"><strong>触发条件</strong><span>近30天近期行为分突降，当前总分落入可修复区间。</span></div>
-      <div class="rule-item"><strong>修复方式</strong><span>完成租号玩业务规范答题，达标后恢复部分近期行为分。</span></div>
-      <div class="rule-item"><strong>边界规则</strong><span>平台红线、重度违规、清零和永久限制不展示入口。</span></div>
     </section>
 
     <section class="canvas">
       <section class="stage">
         <div class="stage-head">
           <div>
-            <h2 class="stage-title">详情页出现信用修复入口</h2>
-            <p class="stage-desc">入口放在 PC 端信誉积分详情页主内容区，和恢复路径并列，但明确这是一次教育型修复任务。</p>
+            <h2 class="stage-title">详情页展示信用修复入口</h2>
+            <p class="stage-desc">入口放在 PC 端信誉积分详情页主内容区，提示可修复分值、答题要求和记录保留规则。</p>
           </div>
           <span class="pill">入口展示</span>
         </div>
@@ -627,7 +587,7 @@
               <div class="score-label">当前总信誉积分</div>
               <div class="score">82<span>分</span></div>
               <div><span class="pill warn">部分受限</span> <span class="pill red">近期扣分较多</span></div>
-              <p class="score-copy">历史信誉表现稳定，本次因近期行为分下降较多进入观察限制。完成信用修复后，可恢复部分近期行为分。</p>
+              <p class="score-copy">当前因近期行为分下降较多进入观察限制。完成信用修复后，可恢复部分近期行为分。</p>
               <div class="ability">
                 <div class="status-row"><div><strong>高价值账号租赁</strong><small>当前未达准入要求</small></div><span class="pill warn">受限</span></div>
                 <div class="status-row"><div><strong>特价专区下单</strong><small>近期违规限制租用</small></div><span class="pill warn">受限</span></div>
@@ -652,21 +612,21 @@
               </section>
 
               <section class="timeline">
-                <div class="step"><strong>1 命中条件</strong><span>历史信誉积分高，近期行为分短期突降。</span></div>
-                <div class="step"><strong>2 展示入口</strong><span>在详情页恢复路径区域展示信用修复任务。</span></div>
-                <div class="step"><strong>3 完成答题</strong><span>围绕外挂、环境异常、投诉撤单等基础规范。</span></div>
-                <div class="step"><strong>4 生成记录</strong><span>恢复近期行为分，并同步到明细与日志。</span></div>
+                <div class="step"><strong>1 查看任务</strong><span>在详情页查看可修复分值与答题要求。</span></div>
+                <div class="step"><strong>2 开始答题</strong><span>围绕外挂、环境异常、投诉撤单等基础规范。</span></div>
+                <div class="step"><strong>3 提交结果</strong><span>答题通过后恢复本次可修复的近期行为分。</span></div>
+                <div class="step"><strong>4 查看记录</strong><span>修复记录同步到积分明细，原扣分记录保留。</span></div>
               </section>
             </main>
 
             <aside class="panel">
               <div class="right-card">
-                <h3>为什么能修复</h3>
-                <p>用户长期信用基础较好，本次属于近期行为分短期下降，平台允许通过业务规范教育恢复部分近期行为分。</p>
+                <h3>修复说明</h3>
+                <p>信用修复用于帮助用户确认已了解基础规范，答题通过后恢复本次可修复分值。</p>
               </div>
               <div class="right-card">
-                <h3>什么不能修复</h3>
-                <p>平台红线、重度违规、恶意行为清零、永久限制类用户不展示入口，也不能通过答题解除。</p>
+                <h3>答题要求</h3>
+                <p>题目围绕租号玩安全行为规范，提交后根据答题结果展示修复完成态。</p>
               </div>
               <div class="right-card">
                 <h3>和申诉的区别</h3>
