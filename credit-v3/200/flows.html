@@ -1,9 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>信誉积分V3业务关键流程交互原型 200分版</title>
+  <title>信誉积分业务关键流程交互原型</title>
   <style>
     :root {
       --bg: #f4f6fb;
@@ -1435,7 +1435,7 @@
     <aside class="side">
       <div class="brand">
         <a class="back-home" href="./index.html">← 返回原型首页</a>
-        <p class="kicker">Credit V3 Flow Prototype</p>
+        <p class="kicker">Credit Flow Prototype</p>
         <h1>业务关键流程交互原型</h1>
         <p class="desc">覆盖找号、下单、投诉撤单、投诉类型和领券中心的信誉分限制弹窗。点击页面内的业务按钮后触发对应提示。</p>
       </div>
@@ -1687,7 +1687,7 @@
         <div class="search-row"><div class="search-input">全能搜索：王者 / 穿越火线 / 三角洲</div><div class="search-button">搜</div></div>
         <div class="recommend-tabs"><span class="active">推荐</span><span>王者荣耀</span><span>火影忍者</span><span>全部</span></div>
         <div class="shelf-grid">
-          ${goods("安卓/QQ", "【V10 163皮】省标马超 豪华皮肤 高信誉账号", true, true)}
+          ${goods("安卓/QQ", "【高品质账号】省标马超 豪华皮肤 高信誉账号", true, true)}
           ${goods("网通一区", "【可排位】幻神 星神音效卡 裁决4皮肤", false, false, "alt")}
           ${goods("安卓全区", "【10史诗大将军】动感皮肤 可快速上号", false, false, "green")}
           ${goods("微信区", "【日租特惠】荣耀典藏 高胜率账号", false, false)}
@@ -1703,7 +1703,7 @@
           </div>
           <div class="goods-body">
             <div class="goods-title">${title}</div>
-            <div><span class="tag green">V10检测</span> ${exclusive ? '<span class="tag pink">需信誉分 > XX</span>' : '<span class="tag gray">安全上号</span>'}</div>
+            <div><span class="tag green">安全检测</span> ${exclusive ? '<span class="tag pink">需信誉分 > XX</span>' : '<span class="tag gray">安全上号</span>'}</div>
             <div class="goods-meta"><span class="goods-price">¥1.46<small>/时</small></span><span>300+人租过</span></div>
           </div>
         </article>
@@ -1714,11 +1714,11 @@
       return `
         <div class="mobile-detail-cover">
           <div class="m-nav"><button class="m-back" type="button">‹</button><div>账号详情</div><div>⋯</div></div>
-          <div class="detail-cover-tags"><span class="tag pink">高信誉专享</span><span class="tag green">V10检测</span><span class="tag blue">免押金</span></div>
+          <div class="detail-cover-tags"><span class="tag pink">高信誉专享</span><span class="tag green">安全检测</span><span class="tag blue">免押金</span></div>
         </div>
         <div class="mobile-detail-main">
           <div class="order-card">
-            <h3 class="mobile-detail-title">【V10 163皮】省标马超 豪华皮肤 高信誉账号</h3>
+            <h3 class="mobile-detail-title">【高品质账号】省标马超 豪华皮肤 高信誉账号</h3>
             <div class="detail-price-row"><span><strong>¥1.46</strong> / 时</span><span>300+人租过</span></div>
             <div class="detail-tags-row">
               <span class="tag gray">安卓 | QQ账号</span>
@@ -1753,8 +1753,8 @@
             <div class="order-goods">
               <div class="thumb"></div>
               <div>
-                <div class="order-title">【V10 163皮】省标马超 豪华皮肤 高价值账号</div>
-                <div style="margin-top:6px;"><span class="tag gray">安卓 | QQ账号</span> <span class="tag green">V10检测</span></div>
+                <div class="order-title">【高品质账号】省标马超 豪华皮肤 高价值账号</div>
+                <div style="margin-top:6px;"><span class="tag gray">安卓 | QQ账号</span> <span class="tag green">安全检测</span></div>
               </div>
             </div>
             <div class="service-row"><span>禁止排位</span><span>允许打字/语音</span></div>
@@ -1784,8 +1784,8 @@
         </div>
         <div class="order-info-card">
           <div class="order-state"><div>订单进行中</div><div class="timer">剩余 43:28</div></div>
-          <div class="order-title">【V10 163皮】省标马超 豪华皮肤账号</div>
-          <div style="margin-top:8px;"><span class="tag green">V10检测</span> <span class="tag orange">时租 1.46元</span></div>
+          <div class="order-title">【高品质账号】省标马超 豪华皮肤账号</div>
+          <div style="margin-top:8px;"><span class="tag green">安全检测</span> <span class="tag orange">时租 1.46元</span></div>
         </div>
         <div class="detail-content">
           <div class="detail-panel"><h4>上号信息</h4><div class="info-grid"><div>区服<br>安卓QQ</div><div>租期<br>1小时</div><div>方式<br>快速上号</div></div></div>
@@ -1889,7 +1889,7 @@
     function pcOrderDetail(type) {
       const content = `
         <div class="pc-order-detail">
-          <section class="pc-card" style="padding:0;overflow:hidden;"><div class="pc-status-head"><h2>订单进行中</h2><div>剩余 43:28，请按页面提示上号</div></div><div class="pc-status-body"><div class="thumb"></div><div><h3>【V10 163皮】省标马超 豪华皮肤账号</h3><span class="tag green">V10检测</span> <span class="tag orange">时租 1.46元</span><div class="pc-actions"><button class="btn outline js-open-modal" type="button">投诉撤单</button><button class="btn" type="button">联系客服</button></div></div></div></section>
+          <section class="pc-card" style="padding:0;overflow:hidden;"><div class="pc-status-head"><h2>订单进行中</h2><div>剩余 43:28，请按页面提示上号</div></div><div class="pc-status-body"><div class="thumb"></div><div><h3>【高品质账号】省标马超 豪华皮肤账号</h3><span class="tag green">安全检测</span> <span class="tag orange">时租 1.46元</span><div class="pc-actions"><button class="btn outline js-open-modal" type="button">投诉撤单</button><button class="btn" type="button">联系客服</button></div></div></div></section>
           <aside class="pc-card"><h3>订单进度</h3><p style="color:#66707f;line-height:1.8;font-weight:760;">订单已支付，账号已保留。投诉撤单将进入平台审核流程，虚假投诉会影响信誉状态。</p></aside>
         </div>
       `;
