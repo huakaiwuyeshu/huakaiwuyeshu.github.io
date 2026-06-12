@@ -1136,6 +1136,106 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
+
+
+    /* realistic score rule config start */
+    .config-note {
+      margin: 0 18px 14px;
+      padding: 12px 14px;
+      border: 1px solid #d9e6ff;
+      border-radius: 8px;
+      background: #f6f9ff;
+      color: #38506f;
+      font-size: 12px;
+      line-height: 1.6;
+      font-weight: 760;
+    }
+
+    .config-note strong {
+      color: #1d5fe0;
+      font-weight: 950;
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 18px 14px;
+    }
+
+    .config-card {
+      min-height: 74px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .config-card .k {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 850;
+    }
+
+    .config-card .v {
+      margin-top: 8px;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.15;
+      font-weight: 950;
+    }
+
+    .config-card .s {
+      margin-top: 5px;
+      color: #6b778a;
+      font-size: 11px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .rule-table table {
+      min-width: 1180px;
+      table-layout: auto;
+    }
+
+    .rule-table tbody td {
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .rule-name {
+      display: block;
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 950;
+    }
+
+    .rule-desc {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .score-plus {
+      color: #0a9466;
+      font-weight: 950;
+    }
+
+    .score-minus {
+      color: #cc3636;
+      font-weight: 950;
+    }
+
+    .config-sidebar-list .item small {
+      line-height: 1.5;
+    }
+    /* realistic score rule config end */
   </style>
 </head>
 <body>
@@ -1195,83 +1295,151 @@
           <section class="panel active" data-panel="system">
             <div class="panel-shell">
               <div class="panel-head">
-                <h1 class="panel-title">体系配置 / 积分规则配置</h1>
+                <h1 class="panel-title">体系配置 / 加减分规则配置</h1>
+                <p class="panel-desc">本页配置用户信誉积分的规则骨架：哪些行为加分、哪些行为进入扣分规则、每月加分上限、统计窗口和是否允许申诉。</p>
               </div>
               <div class="toolbar">
                 <div class="group">
-                  <button class="btn primary" data-dialog="systemRule">新增分类规则</button>
+                  <button class="btn primary" data-dialog="systemRule">新增体系规则</button>
                   <button class="btn" data-go-tab="dictionary">查看字典项</button>
+                  <button class="btn" data-go-tab="deduct">查看减分配置</button>
+                </div>
+                <div class="group">
+                  <span class="badge green">加分上限</span>
+                  <span class="badge orange">统计周期</span>
+                  <span class="badge blue">200分模型</span>
                 </div>
               </div>
+
+              <div class="config-grid">
+                <div class="config-card">
+                  <div class="k">近期行为分基础值</div>
+                  <div class="v">100 分</div>
+                  <div class="s">近30天行为实时进入近期行为分</div>
+                </div>
+                <div class="config-card">
+                  <div class="k">历史累积分统计范围</div>
+                  <div class="v">2-12 个月</div>
+                  <div class="s">沉淀长期履约与违规记录</div>
+                </div>
+                <div class="config-card">
+                  <div class="k">订单结算月度加分上限</div>
+                  <div class="v">20 分 / 月</div>
+                  <div class="s">运营可配置，避免刷单式无限加分</div>
+                </div>
+                <div class="config-card">
+                  <div class="k">总信誉积分上限</div>
+                  <div class="v">200 分</div>
+                  <div class="s">近期行为分 + 历史累积分汇总</div>
+                </div>
+              </div>
+
+              <div class="config-note">
+                <strong>配置口径：</strong>基础信息类仅作为实名/绑定状态校验，不再产生加分；加分主要来自正常结算和月度累计完单，且受月度上限控制。扣分项只在体系配置中声明归属和申诉口径，具体扣分分值在“减分配置”维护。
+              </div>
+
               <div class="two-col">
                 <div>
-                  <div class="table-wrap">
+                  <div class="table-wrap rule-table">
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 14%;">一级分类</th>
-                          <th style="width: 24%;">二级分类</th>
-                          <th style="width: 14%;">行为范围</th>
-                          <th style="width: 12%;">单次分值</th>
-                          <th style="width: 10%;">申诉配置</th>
-                          <th style="width: 10%;">状态</th>
-                          <th style="width: 16%;">操作</th>
+                          <th style="width: 10%;">规则方向</th>
+                          <th style="width: 12%;">一级分类</th>
+                          <th style="width: 13%;">二级场景</th>
+                          <th style="width: 22%;">规则项</th>
+                          <th style="width: 9%;">单次分值</th>
+                          <th style="width: 12%;">上限 / 阈值</th>
+                          <th style="width: 10%;">统计窗口</th>
+                          <th style="width: 8%;">申诉</th>
+                          <th style="width: 8%;">状态</th>
+                          <th style="width: 8%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>履约行为</td>
-                          <td class="left">订单结算、连续履约</td>
-                          <td><span class="pill on">加分行为</span></td>
-                          <td>+2</td>
+                          <td><span class="pill on">加分</span></td>
+                          <td>基础信息</td>
+                          <td>账号绑定</td>
+                          <td class="left"><span class="rule-name">绑定手机号</span><span class="rule-desc">账号安全信息完善，按一次性任务计分</span></td>
+                          <td class="score-plus">+2</td>
+                          <td>每用户 1 次</td>
+                          <td>长期有效</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
+                          <td><span class="pill on">加分</span></td>
+                          <td>基础信息</td>
+                          <td>账号绑定</td>
+                          <td class="left"><span class="rule-name">绑定支付宝</span><span class="rule-desc">账号支付信息完善，按一次性任务计分</span></td>
+                          <td class="score-plus">+2</td>
+                          <td>每用户 1 次</td>
+                          <td>长期有效</td>
+                          <td>否</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td><span class="pill on">加分</span></td>
                           <td>订单行为</td>
-                          <td class="left">有效订单、订单完成</td>
-                          <td><span class="pill on">加分行为</span></td>
-                          <td>+3</td>
+                          <td>正常结算</td>
+                          <td class="left"><span class="rule-name">正常结算（履约）</span><span class="rule-desc">订单完成并正常结算后计入履约加分</span></td>
+                          <td class="score-plus">+1</td>
+                          <td>订单结算合计 ≤ 20分/月</td>
+                          <td>自然月</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>守约行为</td>
-                          <td class="left">投诉撤单、投诉核实、风控命中</td>
-                          <td><span class="pill danger">扣分行为</span></td>
-                          <td>按扣分规则</td>
+                          <td><span class="pill on">加分</span></td>
+                          <td>订单行为</td>
+                          <td>累计完单</td>
+                          <td class="left"><span class="rule-name">当月累计完单达标</span><span class="rule-desc">达到运营配置的 X 天或 X 次后给予一次性加分</span></td>
+                          <td class="score-plus">+3</td>
+                          <td>阈值可配置，合计 ≤ 20分/月</td>
+                          <td>自然月</td>
+                          <td>否</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td><span class="pill danger">减分</span></td>
+                          <td>订单环节</td>
+                          <td>投诉 / 撤单 / 租赁违规</td>
+                          <td class="left"><span class="rule-name">订单环节恶意行为</span><span class="rule-desc">虚假投诉、白嫖、租赁期违规、恶意撤单等</span></td>
+                          <td>关联减分配置</td>
+                          <td>按规则项扣分</td>
+                          <td>近30天 / 历史2-12个月</td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>处罚行为</td>
-                          <td class="left">分级处罚、严重处罚</td>
-                          <td><span class="pill danger">扣分行为</span></td>
-                          <td>按扣分规则</td>
+                          <td><span class="pill danger">减分</span></td>
+                          <td>平台级恶意行为</td>
+                          <td>引流 / 外挂 / 风控设备</td>
+                          <td class="left"><span class="rule-name">平台级恶意行为</span><span class="rule-desc">评论引流、恶意开挂、风险设备、外挂签名、风险账号等</span></td>
+                          <td>关联减分配置</td>
+                          <td>按规则项扣分</td>
+                          <td>近30天 / 历史2-12个月</td>
+                          <td>部分可申诉</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td><span class="pill danger">减分</span></td>
+                          <td>账号处置</td>
+                          <td>关闭 / 封禁用户</td>
+                          <td class="left"><span class="rule-name">用户关闭或封禁</span><span class="rule-desc">关闭用户、永久关闭、封禁用户等平台处置结果</span></td>
+                          <td>关联减分配置</td>
+                          <td>按处置级别扣分</td>
+                          <td>实时生效</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                        </tr>
-                        <tr>
-                          <td>基础信息</td>
-                          <td class="left">实名认证、绑定手机、绑定支付宝</td>
-                          <td><span class="pill off">不计分</span></td>
-                          <td>0</td>
-                          <td>否</td>
-                          <td><span class="pill off">不启用</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                        </tr>
-                        <tr>
-                          <td>系统调整</td>
-                          <td class="left">人工调整、申诉回滚</td>
-                          <td><span class="pill off">不计分</span></td>
-                          <td>人工录入</td>
-                          <td>否</td>
-                          <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -1281,26 +1449,27 @@
                 <aside class="sidebar">
                   <div class="side-box">
                     <div class="hd">
-                      <strong>保留 / 删除 / 新增</strong>
-                      <span>本次适配的核心改动</span>
+                      <strong>加分上限配置</strong>
+                      <span>运营可调整月度上限和达标阈值</span>
                     </div>
                     <div class="bd">
-                      <div class="side-list">
-                        <div class="item">保留<br/><small>体系配置、字典项配置、减分配置、惩罚配置、等级配置、信誉积分明细</small></div>
-                        <div class="item">删除<br/><small>奖励配置入口，及红包 / 券 / VIP / 免押等权益项</small></div>
-                        <div class="item">新增<br/><small>字典项配置、申诉审核、规则日志、手动加减分</small></div>
+                      <div class="side-list config-sidebar-list">
+                        <div class="item">订单结算月度上限<small>默认 20 分/月；正常结算和累计完单共享该上限。</small></div>
+                        <div class="item">累计完单阈值<small>不写死 5 次，支持配置为 X 天或 X 次。</small></div>
+                        <div class="item">封顶逻辑<small>达到月度上限后继续履约只记录明细，不再增加总分。</small></div>
                       </div>
                     </div>
                   </div>
                   <div class="side-box">
                     <div class="hd">
-                      <strong>字段建议</strong>
-                      <span>后台配置时建议新增</span>
+                      <strong>配置边界</strong>
+                      <span>体系页管规则归属，减分页管具体扣分</span>
                     </div>
                     <div class="bd">
-                      <div class="side-list">
-                        <div class="item">分类申诉<small>控制该一级分类下扣分记录是否可申诉</small></div>
-                        <div class="item">二级分类<small>用于承接一级分类下的业务场景</small></div>
+                      <div class="side-list config-sidebar-list">
+                        <div class="item">体系配置<small>维护一级分类、二级场景、加分上限、统计窗口、申诉口径。</small></div>
+                        <div class="item">减分配置<small>维护具体扣分项、扣分值、触发来源、适用业务和状态。</small></div>
+                        <div class="item">惩罚配置<small>只负责分数命中后的权益限制或业务拦截。</small></div>
                       </div>
                     </div>
                   </div>
@@ -1423,7 +1592,7 @@
             <div class="panel-shell">
               <div class="panel-head">
                 <h1 class="panel-title">减分配置 / 扣分规则配置</h1>
-                <p class="panel-desc">扣分规则只定义具体扣分行为和分值；申诉由体系配置的一级分类控制，业务限制由惩罚配置控制。</p>
+                <p class="panel-desc">按完整规则项维护扣分行为。这里配置“什么行为扣多少分”，不配置权益限制；申诉口径由体系配置的分类控制。</p>
               </div>
               <div class="toolbar">
                 <div class="group">
@@ -1431,110 +1600,274 @@
                   <button class="btn">导出</button>
                 </div>
                 <div class="group">
-                  <span class="badge blue">扣分行为</span>
-                  <span class="badge orange">分值配置</span>
-                  <span class="badge gray">可追溯</span>
+                  <span class="badge red">订单环节</span>
+                  <span class="badge orange">平台级恶意行为</span>
+                  <span class="badge gray">账号处置</span>
                 </div>
               </div>
+
+              <div class="config-note">
+                <strong>实际配置原则：</strong>扣分项来自订单环节、平台级恶意行为和账号处置三类。风险设备、外挂签名、风险账号等风控类规则可由风控系统命中后同步扣分；“预留扣分接口”保留为系统扩展，不默认启用。
+              </div>
+
               <div class="two-col">
                 <div>
-                  <div class="table-wrap">
+                  <div class="table-wrap rule-table">
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 18%;">扣分规则名称</th>
-                          <th style="width: 10%;">一级分类</th>
-                          <th style="width: 14%;">行为字典项</th>
-                          <th style="width: 12%;">投诉类型</th>
-                          <th style="width: 22%;">投诉选项 / 核实结果</th>
+                          <th style="width: 11%;">一级分类</th>
+                          <th style="width: 13%;">业务场景</th>
+                          <th style="width: 28%;">扣分规则项</th>
                           <th style="width: 8%;">分值</th>
+                          <th style="width: 12%;">触发来源</th>
+                          <th style="width: 10%;">适用业务</th>
+                          <th style="width: 8%;">申诉</th>
                           <th style="width: 8%;">状态</th>
                           <th style="width: 8%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td class="left">异常撤单扣分</td>
-                          <td>守约行为</td>
-                          <td>异常撤单</td>
-                          <td>买家投诉</td>
-                          <td class="left">个人原因撤单 / 核实成立</td>
-                          <td>-6</td>
+                          <td>订单环节</td>
+                          <td>投诉核实</td>
+                          <td class="left"><span class="rule-name">虚假投诉</span><span class="rule-desc">用户发起投诉后核实为虚假投诉</span></td>
+                          <td class="score-minus">-3</td>
+                          <td>投诉系统</td>
+                          <td>租号 / 交易</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td class="left">虚假投诉扣分</td>
-                          <td>守约行为</td>
-                          <td>虚假投诉</td>
-                          <td>客服投诉</td>
-                          <td class="left">重复申诉 / 核实不成立</td>
-                          <td>-8</td>
+                          <td>订单环节</td>
+                          <td>投诉核实</td>
+                          <td class="left"><span class="rule-name">白嫖行为</span><span class="rule-desc">使用服务后恶意拒付、恶意退款或规避结算</span></td>
+                          <td class="score-minus">-4</td>
+                          <td>投诉系统</td>
+                          <td>租号 / 陪玩 / 代练</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td class="left">账号异常使用</td>
-                          <td>守约行为</td>
-                          <td>账号异常使用</td>
-                          <td>防御命中</td>
-                          <td class="left">账号风险 / 核实成立</td>
-                          <td>-4</td>
+                          <td>订单环节</td>
+                          <td>租赁违规</td>
+                          <td class="left"><span class="rule-name">租赁期间违规</span><span class="rule-desc">租赁期间存在违反租用规则的行为</span></td>
+                          <td class="score-minus">-4</td>
+                          <td>订单系统</td>
+                          <td>租号</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td class="left">恶意撤单</td>
-                          <td>守约行为</td>
-                          <td>恶意撤单</td>
-                          <td>上号器投诉</td>
-                          <td class="left">高频撤单 / 核实成立</td>
-                          <td>-5</td>
+                          <td>订单环节</td>
+                          <td>撤单行为</td>
+                          <td class="left"><span class="rule-name">恶意撤单</span><span class="rule-desc">单次恶意撤单，影响订单正常履约</span></td>
+                          <td class="score-minus">-4</td>
+                          <td>订单 / 客服</td>
+                          <td>租号</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td class="left">处罚命中扣分</td>
-                          <td>守约行为</td>
-                          <td>处罚命中</td>
-                          <td>分级处罚</td>
-                          <td class="left">违规等级 2 / 核实成功</td>
-                          <td>-12</td>
+                          <td>订单环节</td>
+                          <td>租赁违规</td>
+                          <td class="left"><span class="rule-name">租赁期间违规（多次）</span><span class="rule-desc">同周期内多次出现租赁期间违规</span></td>
+                          <td class="score-minus">-6</td>
+                          <td>订单系统</td>
+                          <td>租号</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>订单环节</td>
+                          <td>撤单行为</td>
+                          <td class="left"><span class="rule-name">恶意撤单（多次）</span><span class="rule-desc">同周期内多次恶意撤单或高频撤单</span></td>
+                          <td class="score-minus">-6</td>
+                          <td>订单 / 客服</td>
+                          <td>租号</td>
+                          <td>是</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>平台级恶意行为</td>
+                          <td>评论 / 引流</td>
+                          <td class="left"><span class="rule-name">通过评论引流</span><span class="rule-desc">评论区导流外部平台、私下交易或绕开平台</span></td>
+                          <td class="score-minus">-4</td>
+                          <td>内容审核</td>
+                          <td>全业务</td>
+                          <td>是</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>平台级恶意行为</td>
+                          <td>外挂 / 开挂</td>
+                          <td class="left"><span class="rule-name">恶意开挂</span><span class="rule-desc">租用或陪玩代练过程中存在开挂行为</span></td>
+                          <td class="score-minus">-6</td>
+                          <td>风控 / 客服</td>
+                          <td>租号 / 陪玩 / 代练</td>
+                          <td>是</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>平台级恶意行为</td>
+                          <td>设备异常</td>
+                          <td class="left"><span class="rule-name">风险设备 / 设备异常</span><span class="rule-desc">手游设备开启外挂必需的特殊权限、root 或解锁设备</span></td>
+                          <td class="score-minus">-10</td>
+                          <td>风控系统</td>
+                          <td>租号 / 手游</td>
+                          <td>部分可申诉</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>平台级恶意行为</td>
+                          <td>外挂识别</td>
+                          <td class="left"><span class="rule-name">用户手机安装手游外挂</span><span class="rule-desc">APP包名签名命中对应游戏外挂</span></td>
+                          <td class="score-minus">-8</td>
+                          <td>风控系统</td>
+                          <td>租号 / 手游</td>
+                          <td>部分可申诉</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>平台级恶意行为</td>
+                          <td>账号风险</td>
+                          <td class="left"><span class="rule-name">平台风险账号</span><span class="rule-desc">大量实名、售卖账号、共性标签等风险账号</span></td>
+                          <td class="score-minus">-8</td>
+                          <td>风控系统</td>
+                          <td>全业务</td>
+                          <td>部分可申诉</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>平台级恶意行为</td>
+                          <td>手机号风险</td>
+                          <td class="left"><span class="rule-name">手机号风险名单</span><span class="rule-desc">指定手机号或号段命中风险名单</span></td>
+                          <td class="score-minus">-8</td>
+                          <td>风控系统</td>
+                          <td>全业务</td>
+                          <td>部分可申诉</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>平台级恶意行为</td>
+                          <td>动态校验</td>
+                          <td class="left"><span class="rule-name">风险设备动态标签验证</span><span class="rule-desc">疑似篡改设备、APP等动态风控标签命中</span></td>
+                          <td class="score-minus">-5</td>
+                          <td>风控系统</td>
+                          <td>全业务</td>
+                          <td>部分可申诉</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>平台级恶意行为</td>
+                          <td>设备处置</td>
+                          <td class="left"><span class="rule-name">设备 XDID 拉黑</span><span class="rule-desc">设备唯一标识进入黑名单</span></td>
+                          <td class="score-minus">-5</td>
+                          <td>风控系统</td>
+                          <td>全业务</td>
+                          <td>否</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>平台级恶意行为</td>
+                          <td>系统扩展</td>
+                          <td class="left"><span class="rule-name">预留扣分接口</span><span class="rule-desc">预留给后续风控或业务系统扩展，分值上线前配置</span></td>
+                          <td>配置后生效</td>
+                          <td>接口同步</td>
+                          <td>全业务</td>
+                          <td>按来源配置</td>
+                          <td><span class="pill off">关闭</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">启用</span></td>
+                        </tr>
+                        <tr>
+                          <td>账号处置</td>
+                          <td>关闭用户</td>
+                          <td class="left"><span class="rule-name">关闭用户（30天内）</span><span class="rule-desc">短期关闭用户，保留恢复可能</span></td>
+                          <td class="score-minus">-6</td>
+                          <td>处罚系统</td>
+                          <td>全业务</td>
+                          <td>否</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>账号处置</td>
+                          <td>关闭用户</td>
+                          <td class="left"><span class="rule-name">关闭用户（短期）</span><span class="rule-desc">短期关闭处罚，影响用户业务权限</span></td>
+                          <td class="score-minus">-10</td>
+                          <td>处罚系统</td>
+                          <td>全业务</td>
+                          <td>否</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>账号处置</td>
+                          <td>关闭用户</td>
+                          <td class="left"><span class="rule-name">关闭用户（永久）</span><span class="rule-desc">永久关闭用户，触发重度风险处置</span></td>
+                          <td class="score-minus">-20</td>
+                          <td>处罚系统</td>
+                          <td>全业务</td>
+                          <td>否</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>账号处置</td>
+                          <td>封禁用户</td>
+                          <td class="left"><span class="rule-name">封禁用户</span><span class="rule-desc">平台级封禁，按严重违规处理</span></td>
+                          <td class="score-minus">-20</td>
+                          <td>处罚系统</td>
+                          <td>全业务</td>
+                          <td>否</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                   <div class="footer-info">
-                    这里保留“扣分规则名称、一级分类、行为字典项、投诉类型、投诉选项、核实结果、分值、状态、操作”。申诉和限制不在扣分规则层配置。
+                    减分配置只维护扣分行为和分值。用户明细展示时使用规则项名称、扣分原因、关联订单或风控单号；业务限制仍由惩罚配置按总分和风险状态统一判断。
                   </div>
                 </div>
                 <aside class="sidebar">
                   <div class="side-box">
                     <div class="hd">
-                      <strong>本页重点</strong>
-                      <span>扣分规则只讲清楚什么能扣、扣多少</span>
+                      <strong>扣分规则覆盖</strong>
+                      <span>按附件规则项补齐</span>
                     </div>
                     <div class="bd">
                       <div class="mini-list">
-                        <div class="mini-item"><div><strong>行为字典项</strong><span>从字典中选择具体行为</span></div><span class="chip blue">必选</span></div>
-                        <div class="mini-item"><div><strong>扣分分值</strong><span>定义单次扣多少分</span></div><span class="chip orange">必填</span></div>
-                        <div class="mini-item"><div><strong>规则状态</strong><span>控制该扣分规则是否生效</span></div><span class="chip green">开启</span></div>
+                        <div class="mini-item"><div><strong>订单环节</strong><span>虚假投诉、白嫖、租期违规、恶意撤单</span></div><span class="chip red">6项</span></div>
+                        <div class="mini-item"><div><strong>平台级恶意行为</strong><span>引流、开挂、风险设备、风险账号等</span></div><span class="chip orange">9项</span></div>
+                        <div class="mini-item"><div><strong>账号处置</strong><span>关闭用户、永久关闭、封禁用户</span></div><span class="chip gray">4项</span></div>
                       </div>
                     </div>
                   </div>
                   <div class="side-box">
                     <div class="hd">
-                      <strong>新增项</strong>
-                      <span>本次需要补进来的字段</span>
+                      <strong>配置边界</strong>
+                      <span>扣分不等于限制</span>
                     </div>
                     <div class="bd">
-                      <div class="side-list">
-                        <div class="item">扣分规则名称<small>用于后台和用户侧展示</small></div>
-                        <div class="item">一级分类<small>全部归属于守约行为</small></div>
-                        <div class="item">行为字典项<small>用于关联具体扣分行为</small></div>
-                        <div class="item">核实结果<small>用于确定是否触发扣分</small></div>
+                      <div class="side-list config-sidebar-list">
+                        <div class="item">分值配置<small>每条规则维护明确扣分值；预留接口未配置分值前不启用。</small></div>
+                        <div class="item">触发来源<small>订单、投诉、风控、处罚系统可同步命中记录。</small></div>
+                        <div class="item">申诉口径<small>订单类默认可申诉；风控类按来源部分可申诉；账号处置类不在此页配置申诉。</small></div>
                       </div>
                     </div>
                   </div>
@@ -2555,35 +2888,37 @@
 
     const dialogConfigs = {
       systemRule: {
-        title: "新增分类规则",
-        desc: "用于配置一级分类、二级分类和加减分值口径。守约类具体扣分可继续在扣分规则中细化。",
+        title: "新增体系规则",
+        desc: "用于配置加分规则、扣分分类归属、统计窗口、月度上限和申诉口径。具体扣分值仍在减分配置维护。",
         sections: [
           {
             title: "分类与映射",
             fields: [
-              ["一级分类", "履约行为 / 订单行为 / 守约行为 / 处罚行为", true, "", "select"],
-              ["二级分类", "请选择：订单结算 / 连续履约 / 投诉撤单 / 投诉核实 / 风控命中", true, "", "select"],
-              ["行为范围", "加分行为 / 扣分行为 / 不计分", true, "", "select"],
-              ["适用业务", "租号 / 陪玩 / 代练 / 交易 / 投诉", true, "", "select"]
+              ["规则方向", "加分 / 减分 / 不计分", true, "", "select"],
+              ["一级分类", "基础信息 / 订单行为 / 订单环节 / 平台级恶意行为 / 账号处置", true, "", "select"],
+              ["二级场景", "账号绑定 / 正常结算 / 累计完单 / 投诉核实 / 风控命中 / 关闭封禁", true, "", "select"],
+              ["规则项名称", "例如正常结算（履约）", true]
             ]
           },
           {
-            title: "分值配置",
+            title: "分值与上限",
             fields: [
-              ["分值配置方式", "固定分值 / 关联扣分规则 / 不计分 / 人工录入", true, "", "select"],
-              ["单次分值", "请输入加减分值，例如 +2 / -6；关联扣分规则时可填写默认值", true],
-              ["分值说明", "用于说明该分类规则的加减分口径", false, "wide"]
+              ["分值配置方式", "固定加分 / 关联减分配置 / 不计分", true, "", "select"],
+              ["单次分值", "请输入分值，例如 +1 / +3；减分分类可选择关联减分配置", true],
+              ["月度加分上限", "加分规则必填，例如 20 分/月", false],
+              ["达标阈值", "累计完单规则填写 X 天或 X 次", false]
             ],
-            tip: "加分行为可直接填写正分；扣分行为可填写默认扣分值，或选择关联扣分规则后在减分配置中维护具体扣分。"
+            tip: "正常结算和累计完单共享月度加分上限；达到上限后继续记录明细，但不再增加总分。"
           },
           {
-            title: "申诉与状态",
+            title: "统计与状态",
             fields: [
-              ["是否允许申诉", "是 / 否", true, "", "select"],
-              ["展示说明", "用于说明该一级分类下扣分记录是否可申诉", false, "wide"],
+              ["统计窗口", "近30天 / 2-12个月 / 自然月 / 长期有效 / 实时生效", true, "", "select"],
+              ["是否允许申诉", "是 / 否 / 部分可申诉", true, "", "select"],
+              ["展示说明", "用于说明该规则在用户端的展示口径", false, "wide"],
               ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
             ],
-            tip: "同一扣分行为触发后，近 30 天统计进入近期行为分，历史 2-12 个月统计进入历史累积分；不在本页手工选择分值归属。"
+            tip: "近30天行为进入近期行为分，历史2-12个月行为进入历史累积分；规则归属不在用户端展示双轨分。"
           }
         ]
       },
@@ -2612,26 +2947,34 @@
       },
       deductRule: {
         title: "新增扣分规则",
-        desc: "用于配置投诉、撤单、账号异常、防御命中、分级处罚等扣分行为和分值；申诉与限制不在本页配置。",
+        desc: "用于配置订单环节、平台级恶意行为、账号处置等扣分行为和分值；权益限制不在本页配置。",
         sections: [
           {
             title: "规则基础",
             fields: [
-              ["扣分规则名称", "例如虚假投诉扣分", true],
-              ["行为字典项", "请选择：异常撤单 / 虚假投诉 / 账号异常使用", true, "", "select"],
-              ["投诉类型", "买家投诉 / 客服投诉 / 上号器投诉", false, "", "select"],
-              ["投诉选项", "请选择投诉选项", false, "", "select"],
-              ["核实结果", "核实成功 / 核实失败 / 不成立", true, "", "select"]
+              ["一级分类", "订单环节 / 平台级恶意行为 / 账号处置", true, "", "select"],
+              ["业务场景", "投诉核实 / 租赁违规 / 撤单行为 / 风控设备 / 外挂识别 / 账号处置", true, "", "select"],
+              ["扣分规则项", "请选择或输入规则项，例如风险设备 / 设备异常", true],
+              ["触发来源", "订单系统 / 投诉系统 / 风控系统 / 处罚系统 / 接口同步", true, "", "select"]
             ]
           },
           {
-            title: "扣分与状态",
+            title: "扣分与适用范围",
             fields: [
-              ["扣分值", "请输入负分，例如 -8", true],
-              ["状态", "开启 / 关闭 / 草稿", true, "", "select"],
-              ["备注", "说明该扣分规则的触发口径", false, "wide"]
+              ["扣分值", "请输入负分，例如 -8；预留接口可暂不启用", true],
+              ["适用业务", "租号 / 陪玩 / 代练 / 交易 / 全业务", true, "", "select"],
+              ["是否允许申诉", "是 / 否 / 部分可申诉", true, "", "select"],
+              ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
             ],
-            tip: "扣分规则只配置扣分行为本身。申诉口径取决于该行为归属的一级分类，业务限制取决于惩罚配置。"
+            tip: "订单类默认可申诉；风控类按来源部分可申诉；账号处置类通常不在本页开放申诉。"
+          },
+          {
+            title: "说明",
+            fields: [
+              ["触发口径", "说明该规则何时命中、是否需要核实成功", true, "wide"],
+              ["用户端展示原因", "用于积分明细展示的扣分原因", false, "wide"]
+            ],
+            tip: "扣分记录生成后进入用户积分明细；业务限制由惩罚配置根据最新总分和风险状态自动判断。"
           }
         ]
       },
