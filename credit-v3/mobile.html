@@ -1187,7 +1187,6 @@
     }
 
     .repair-hero,
-    .repair-conditions,
     .repair-quiz,
     .repair-result {
       border: 1px solid var(--line);
@@ -1287,7 +1286,6 @@
       font-weight: 850;
     }
 
-    .repair-conditions,
     .repair-quiz,
     .repair-result {
       margin-top: 12px;
@@ -1308,33 +1306,6 @@
       font-size: 12px;
       line-height: 1.45;
       font-weight: 760;
-    }
-
-    .repair-condition-list {
-      display: grid;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .repair-condition {
-      min-height: 40px;
-      padding: 8px 0;
-      border-top: 1px solid rgba(229, 235, 242, .86);
-    }
-
-    .repair-condition:first-child {
-      border-top: 0;
-    }
-
-    .repair-condition strong {
-      color: var(--text);
-      font-size: 13px;
-      line-height: 1.2;
-      font-weight: 950;
-    }
-
-    .repair-condition span {
-      flex: 0 0 auto;
     }
 
     .repair-progress {
@@ -2683,7 +2654,7 @@
     <div class="scene-head">
       <div>
         <h1 class="scene-title">信用修复答题页</h1>
-        <p class="scene-sub">命中后台特殊配置后，在详情页展示信用修复入口；用户完成租号玩基础规范答题后恢复可配置的近期行为分。</p>
+        <p class="scene-sub">用户完成租号玩基础规范答题后，恢复本次可修复的近期行为分。</p>
       </div>
       <div class="scene-mark">移动端信用修复</div>
     </div>
@@ -2701,31 +2672,16 @@
         <section class="repair-hero">
           <div class="repair-hero-top">
             <div>
-              <div class="repair-kicker">已命中特殊配置</div>
+              <div class="repair-kicker">信用修复任务</div>
               <div class="repair-score">可修复 <span>+10分</span></div>
             </div>
-            <span class="status-chip green">入口已开放</span>
+            <span class="status-chip green">可参与</span>
           </div>
           <p class="repair-copy">历史信誉表现稳定，本次因近期行为分短期下降较多进入限制观察。完成租号玩安全行为答题并达标后，系统恢复本次可修复的近期行为分；原扣分记录继续保留。</p>
           <div class="repair-metric-row">
             <div class="repair-metric"><strong>历史较高</strong><span>长期基础稳定</span></div>
             <div class="repair-metric"><strong>近30天</strong><span>近期突降</span></div>
             <div class="repair-metric"><strong>5题</strong><span>需全部答对</span></div>
-          </div>
-        </section>
-
-        <section class="repair-conditions">
-          <div class="repair-title-row">
-            <div>
-              <h2 class="repair-section-title">触发机制</h2>
-              <p class="repair-section-sub">由后台“特殊配置 / 信用修复配置”控制是否展示入口。</p>
-            </div>
-            <span class="status-chip blue">后台配置</span>
-          </div>
-          <div class="repair-condition-list">
-            <div class="repair-condition"><strong>历史信誉积分达到配置门槛</strong><span class="tag green">满足</span></div>
-            <div class="repair-condition"><strong>近期行为分扣减达到配置阈值</strong><span class="tag green">满足</span></div>
-            <div class="repair-condition"><strong>未命中红线、清零、永久限制</strong><span class="tag green">满足</span></div>
           </div>
         </section>
 
