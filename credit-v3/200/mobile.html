@@ -1809,6 +1809,44 @@
       flex: 0 0 auto;
     }
     /* mobile overview redesign end */
+
+
+    /* mobile score quick actions start */
+    #home .home-quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    #home .home-quick-action {
+      min-width: 0;
+      min-height: 58px;
+      padding: 8px 4px;
+      border: 1px solid #d8e5ff;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      gap: 5px;
+      color: var(--blue);
+      background: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 950;
+      box-shadow: 0 6px 16px rgba(47, 107, 255, 0.05);
+    }
+
+    #home .home-quick-action svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    /* mobile score quick actions end */
   </style>
 </head>
 <body>
@@ -1920,9 +1958,29 @@
               <span>优质区间</span>
             </div>
           </div>
+
+
+          <div class="home-quick-actions" aria-label="信誉积分快捷入口">
+            <a class="home-quick-action" href="#detail">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v16H7z"/><path d="M10 8h4"/><path d="M10 12h4"/><path d="M10 16h3"/></svg>
+              <span>积分明细</span>
+            </a>
+            <a class="home-quick-action" href="#appeal">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v11H8l-3 3z"/><path d="M9 9h6"/><path d="M9 13h4"/></svg>
+              <span>申诉记录</span>
+            </a>
+            <a class="home-quick-action" href="#rules">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span>规则说明</span>
+            </a>
+            <a class="home-quick-action" href="#recoveryPath" data-scroll-target="recoveryPath">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M6 21v-4h4"/></svg>
+              <span>恢复路径</span>
+            </a>
+          </div>
         </section>
 
-        <section class="home-card home-card-pad">
+        <section class="home-card home-card-pad" id="recoveryPath">
           <div class="home-section-head">
             <div>
               <h2 class="home-section-title">能力影响</h2>
@@ -2418,6 +2476,14 @@
     }
 
     document.addEventListener("click", (event) => {
+      const scrollTarget = event.target.closest("[data-scroll-target]");
+      if (scrollTarget) {
+        event.preventDefault();
+        const targetId = scrollTarget.getAttribute("data-scroll-target");
+        const target = targetId ? document.getElementById(targetId) : null;
+        target?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
       const backButton = event.target.closest(".nav-back");
       if (backButton) {
         event.preventDefault();
