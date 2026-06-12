@@ -869,6 +869,15 @@
       display: none;
     }
 
+    .pc-repair-mode .workspace {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pc-repair-mode .detail-drawer,
+    .pc-repair-mode .overview-appeal-panel {
+      display: none;
+    }
+
     .overview-appeal-panel {
       display: none;
       height: 100%;
@@ -1097,6 +1106,353 @@
       font-size: 12px;
       line-height: 1.34;
       font-weight: 700;
+    }
+
+    .repair-home-card {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid #cfe6dc;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(232, 247, 239, .96), rgba(247, 251, 255, .98)),
+        #fff;
+      box-shadow: inset 3px 0 0 var(--green);
+    }
+
+    .repair-home-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .repair-home-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.32;
+      font-weight: 950;
+    }
+
+    .repair-home-copy {
+      margin: 8px 0 0;
+      color: #50627a;
+      font-size: 12px;
+      line-height: 1.48;
+      font-weight: 760;
+    }
+
+    .repair-home-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .repair-home-meta div {
+      min-height: 54px;
+      padding: 10px;
+      border: 1px solid rgba(207, 230, 220, .92);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .repair-home-meta strong {
+      display: block;
+      color: #122033;
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .repair-home-meta span {
+      display: block;
+      margin-top: 5px;
+      color: #66758c;
+      font-size: 11px;
+      line-height: 1.25;
+      font-weight: 780;
+    }
+
+    .repair-home-actions {
+      display: grid;
+      margin-top: 12px;
+    }
+
+    .repair-panel {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      padding: 0;
+      border-top: 4px solid var(--blue);
+      background: #f8fbff;
+    }
+
+    .repair-page-head {
+      min-height: 86px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .repair-page-title {
+      margin: 0;
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 950;
+    }
+
+    .repair-page-sub {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 760;
+    }
+
+    .repair-page-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .repair-grid {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 16px;
+      padding: 18px;
+    }
+
+    .repair-quiz-card,
+    .repair-result-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 10px 22px rgba(31, 46, 71, 0.055);
+    }
+
+    .repair-quiz-card {
+      padding: 20px;
+    }
+
+    .repair-quiz-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: #42526a;
+      font-size: 13px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .repair-progress {
+      height: 8px;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8edf5;
+    }
+
+    .repair-progress span {
+      display: block;
+      width: 60%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+
+    .repair-question {
+      margin: 22px 0 16px;
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1.42;
+      font-weight: 950;
+    }
+
+    .repair-options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .repair-option {
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 14px;
+      border: 1px solid #dbe5f1;
+      border-radius: 8px;
+      background: #fff;
+      color: #40526d;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 850;
+      text-align: left;
+    }
+
+    .repair-option:hover {
+      border-color: #b9cffb;
+      background: #f9fbff;
+    }
+
+    .repair-option.selected {
+      border-color: #74a1ff;
+      color: #1f55c8;
+      background: #f4f8ff;
+      box-shadow: inset 3px 0 0 var(--blue);
+    }
+
+    .repair-radio {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid #b9c7d9;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .repair-option.selected .repair-radio {
+      border: 5px solid var(--blue);
+    }
+
+    .repair-quiz-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .repair-quiz-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.42;
+      font-weight: 760;
+    }
+
+    .repair-result-card {
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .repair-result-hero {
+      padding: 15px;
+      border: 1px solid #cfe0ff;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #f7fbff, #fff);
+    }
+
+    .repair-result-hero.complete {
+      border-color: #bfead9;
+      background: linear-gradient(180deg, #f3fbf6, #fff);
+    }
+
+    .repair-result-hero[hidden] {
+      display: none;
+    }
+
+    .repair-result-value {
+      margin-top: 12px;
+      color: var(--green);
+      font-size: 44px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .repair-result-value span {
+      margin-left: 4px;
+      color: #244433;
+      font-size: 16px;
+      font-weight: 950;
+    }
+
+    .repair-result-hero h3 {
+      margin: 12px 0 0;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.35;
+      font-weight: 950;
+    }
+
+    .repair-result-hero p {
+      margin: 8px 0 0;
+      color: #53657d;
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 760;
+    }
+
+    .repair-score-flow {
+      display: grid;
+      gap: 10px;
+    }
+
+    .repair-score-box {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid #dfe8f5;
+      border-radius: 9px;
+      background: #fbfcff;
+    }
+
+    .repair-score-box strong {
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 950;
+    }
+
+    .repair-score-box span {
+      display: block;
+      color: #516178;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 950;
+    }
+
+    .repair-score-box p {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 730;
+    }
+
+    .repair-rule-list {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid #e6edf6;
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .repair-rule-list div {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.42;
+      font-weight: 750;
+    }
+
+    .repair-rule-list strong {
+      color: #43536a;
+      font-weight: 950;
     }
 
     .panel-head {
@@ -2133,6 +2489,85 @@
                 </div>
               </article>
             </section>
+
+            <section class="view" data-panel="repair">
+              <article class="panel repair-panel">
+                <div class="repair-page-head">
+                  <div>
+                    <h2 class="repair-page-title">信用修复答题</h2>
+                    <p class="repair-page-sub">围绕租号玩基础安全行为进行确认，答题通过后恢复本次可修复的近期行为分；原扣分记录仍保留。</p>
+                  </div>
+                  <div class="repair-page-actions">
+                    <span class="tag green">可修复 +10</span>
+                    <button class="button gray" data-tab="overview">返回首页</button>
+                  </div>
+                </div>
+
+                <div class="repair-grid">
+                  <section class="repair-quiz-card" aria-label="信用修复答题">
+                    <div class="repair-quiz-head">
+                      <span>信用修复答题</span>
+                      <span>3 / 5</span>
+                    </div>
+                    <div class="repair-progress" aria-hidden="true"><span></span></div>
+                    <h3 class="repair-question">租用账号过程中，发现游戏环境异常或疑似无法正常启动，应该怎么处理？</h3>
+                    <div class="repair-options">
+                      <button class="repair-option selected" type="button" data-repair-option>
+                        <span class="repair-radio" aria-hidden="true"></span>
+                        <span>停止继续操作，保留截图并联系平台客服或发起订单问题反馈</span>
+                      </button>
+                      <button class="repair-option" type="button" data-repair-option>
+                        <span class="repair-radio" aria-hidden="true"></span>
+                        <span>自行修改系统环境或尝试绕过检测</span>
+                      </button>
+                      <button class="repair-option" type="button" data-repair-option>
+                        <span class="repair-radio" aria-hidden="true"></span>
+                        <span>继续游戏，等订单结束后再处理</span>
+                      </button>
+                    </div>
+                    <div class="repair-quiz-actions">
+                      <p class="repair-quiz-note">题目聚焦外挂、环境异常、投诉撤单等基础规范；当前页面展示答题与修复完成后的状态变化。</p>
+                      <button class="button primary" id="finishRepair">提交答题</button>
+                    </div>
+                  </section>
+
+                  <aside class="repair-result-card" aria-label="信用修复说明与完成态">
+                    <div class="repair-result-hero" id="repairBeforeState">
+                      <span class="tag green">本次可修复</span>
+                      <div class="repair-result-value">+10<span>近期行为分</span></div>
+                      <h3>完成答题后恢复</h3>
+                      <p>答题通过后，系统恢复本次可修复分值，并重新匹配当前限制状态。</p>
+                    </div>
+                    <div class="repair-result-hero complete" id="repairCompleteState" hidden>
+                      <span class="tag green">修复完成</span>
+                      <div class="repair-result-value">+10<span>近期行为分</span></div>
+                      <h3>已恢复本次可修复分值</h3>
+                      <p>原扣分记录仍保留，可在积分明细中查看来源；页面会生成信用修复记录。</p>
+                    </div>
+
+                    <div class="repair-score-flow">
+                      <div class="repair-score-box">
+                        <span>修复前</span>
+                        <strong>112分</strong>
+                        <p>部分能力受限，近期行为分下降较多。</p>
+                      </div>
+                      <div class="repair-score-box">
+                        <span>修复后</span>
+                        <strong id="repairAfterScore">122分</strong>
+                        <p>生成信用修复记录，重新匹配限制状态。</p>
+                      </div>
+                    </div>
+
+                    <div class="repair-rule-list">
+                      <div><strong>记录保留</strong><span>原扣分记录不删除，修复记录进入积分明细。</span></div>
+                      <div><strong>修复范围</strong><span>仅恢复本次可修复的近期行为分。</span></div>
+                      <div><strong>后续查看</strong><span>可回到积分明细查看修复来源与分值变化。</span></div>
+                    </div>
+                    <button class="button" data-tab="detail">查看积分明细</button>
+                  </aside>
+                </div>
+              </article>
+            </section>
           </div>
 
           <aside class="panel overview-appeal-panel" aria-label="申诉状态">
@@ -2148,6 +2583,23 @@
               <div class="appeal-summary-row"><div><strong>已通过</strong><span>历史申诉已生成回滚明细</span></div><span class="tag green">+6</span></div>
               <div class="appeal-summary-row"><div><strong>未提交</strong><span>存在未申诉扣分记录</span></div><span class="tag warn">1 条</span></div>
             </div>
+
+            <section class="repair-home-card" aria-label="信用修复">
+              <div class="repair-home-top">
+                <div>
+                  <h2 class="repair-home-title">信用修复</h2>
+                  <p class="repair-home-copy">完成租号玩安全行为答题后，可恢复本次可修复的近期行为分；原扣分记录仍保留。</p>
+                </div>
+                <span class="tag green">+10</span>
+              </div>
+              <div class="repair-home-meta">
+                <div><strong>5题</strong><span>基础规范题</span></div>
+                <div><strong>100%</strong><span>需全部答对</span></div>
+              </div>
+              <div class="repair-home-actions">
+                <button class="button primary" data-tab="repair">开始信用修复</button>
+              </div>
+            </section>
           </aside>
 
           <aside class="detail-drawer" aria-label="点击详情">
@@ -2304,7 +2756,7 @@
       "rules-default": {
         title: "规则说明摘要",
         desc: "先展示总分区间、分值含义、扣分规则和恢复方式，作为规则说明初稿占位。",
-        note: "当前仅为占位初稿，后续会根据后台配置补齐正式阈值和扣分值。",
+        note: "当前仅为占位初稿，后续会补齐正式阈值和扣分值。",
         meta: [
           ["分值区间", "总信誉积分为 0 - 200"],
           ["分值含义", "分值越高，风险越低、限制越少"],
@@ -2354,7 +2806,7 @@
         desc: "申诉通过后生成恢复/回滚明细，补回对应扣分。",
         note: "原扣分记录不能删除，需要标记已回滚，并与回滚记录互相关联。",
         meta: [
-          ["触发条件", "申诉审核通过"],
+          ["回滚原因", "申诉审核通过"],
           ["回滚方式", "生成 +分 恢复/回滚流水"],
           ["原记录", "保留并标记已回滚"],
           ["关联关系", "申诉单、原扣分单、回滚流水"],
@@ -2576,7 +3028,11 @@
     function activateTab(name, options = {}) {
       document.body.classList.add("pc-detail-mode");
       document.body.classList.toggle("pc-overview-mode", name === "overview");
-      tabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.tab === name));
+      document.body.classList.toggle("pc-repair-mode", name === "repair");
+      tabs.forEach((tab) => {
+        const tabName = name === "repair" ? "overview" : name;
+        tab.classList.toggle("active", tab.dataset.tab === tabName);
+      });
       panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.panel === name));
       if (location.hash !== `#${name}`) {
         history.replaceState(null, "", `#${name}`);
@@ -2657,6 +3113,26 @@
         activateTab("overview");
       });
     });
+
+    document.querySelectorAll("[data-repair-option]").forEach((option) => {
+      option.addEventListener("click", () => {
+        document.querySelectorAll("[data-repair-option]").forEach((item) => item.classList.remove("selected"));
+        option.classList.add("selected");
+      });
+    });
+
+    const finishRepair = document.getElementById("finishRepair");
+    const repairBeforeState = document.getElementById("repairBeforeState");
+    const repairCompleteState = document.getElementById("repairCompleteState");
+    if (finishRepair) {
+      finishRepair.addEventListener("click", () => {
+        if (repairBeforeState) repairBeforeState.hidden = true;
+        if (repairCompleteState) repairCompleteState.hidden = false;
+        finishRepair.textContent = "已完成修复";
+        finishRepair.classList.remove("primary");
+        finishRepair.classList.add("green");
+      });
+    }
 
     submitAppeal.addEventListener("click", submitAppealForm);
 
