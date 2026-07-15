@@ -663,6 +663,60 @@
       border-color: #cbeedf;
     }
 
+    .evidence-cell {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .evidence-thumb {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid #d7e1ee;
+      background:
+        linear-gradient(135deg, #eef3fb 0%, #d9e6f8 100%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+      position: relative;
+      flex: 0 0 auto;
+      cursor: pointer;
+    }
+
+    .evidence-thumb::after {
+      content: "图";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #5b6b82;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .evidence-meta {
+      color: #5b6b82;
+      font-size: 12px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .evidence-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 7px;
+    }
+
+    .evidence-gallery .evidence-thumb {
+      width: 64px;
+      height: 64px;
+    }
+
+    .evidence-gallery .evidence-thumb::after {
+      font-size: 12px;
+    }
+
     .pill.gray {
       color: #637183;
       background: #f5f7fb;
@@ -851,8 +905,9 @@
       z-index: 80;
       display: grid;
       place-items: center;
-      padding: 28px;
+      padding: 16px;
       background: rgba(17, 24, 39, 0.38);
+      overflow: auto;
     }
 
     .modal-layer[hidden] {
@@ -861,7 +916,9 @@
 
     .config-modal {
       width: min(980px, 100%);
-      max-height: min(880px, calc(100vh - 56px));
+      max-height: calc(100vh - 32px);
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
       border: 1px solid rgba(17, 24, 39, 0.12);
       border-radius: 10px;
@@ -871,6 +928,7 @@
 
     .modal-head {
       min-height: 68px;
+      flex: 0 0 auto;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
@@ -912,8 +970,13 @@
     }
 
     .modal-body {
-      max-height: 690px;
-      overflow: auto;
+      flex: 1 1 auto;
+      min-height: 0;
+      max-height: none;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
       padding: 18px 20px;
       background: #fff;
     }
@@ -1012,15 +1075,163 @@
       line-height: 1;
     }
 
-    select.fake-input {
+    select.fake-input,
+    input.fake-input,
+    textarea.fake-input {
       display: block;
       width: 100%;
+      box-sizing: border-box;
       cursor: pointer;
       appearance: auto;
       line-height: 30px;
     }
 
-    select.fake-input:focus {
+    input.fake-input,
+    textarea.fake-input {
+      cursor: text;
+      color: #1f2937;
+      font-weight: 850;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    input.fake-input:disabled,
+    textarea.fake-input:disabled,
+    select.fake-input:disabled {
+      color: #667085;
+      background: #f5f7fa;
+      cursor: not-allowed;
+    }
+
+    textarea.fake-input,
+    textarea.fake-input.multi {
+      min-height: 88px;
+      height: auto;
+      padding: 10px 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      overflow-y: auto;
+      align-items: flex-start;
+    }
+
+    /* 题库等紧凑弹窗：尽量一屏展示 */
+    .config-modal.is-compact {
+      width: min(920px, 100%);
+      max-height: calc(100vh - 32px);
+    }
+
+    .config-modal.is-compact .modal-body {
+      padding: 12px 14px;
+    }
+
+    .config-modal.is-compact .modal-section-title {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+
+    .config-modal.is-compact .modal-fields {
+      gap: 8px;
+      padding: 10px;
+    }
+
+    .config-modal.is-compact .modal-field {
+      min-height: 0;
+      padding: 7px 9px;
+    }
+
+    .config-modal.is-compact .modal-field label {
+      font-size: 11px;
+    }
+
+    .config-modal.is-compact .fake-input {
+      margin-top: 5px;
+      height: 28px;
+      font-size: 12px;
+    }
+
+    .config-modal.is-compact select.fake-input,
+    .config-modal.is-compact input.fake-input {
+      line-height: 28px;
+    }
+
+    .config-modal.is-compact textarea.fake-input,
+    .config-modal.is-compact textarea.fake-input.multi {
+      min-height: 48px;
+      max-height: 96px;
+      padding: 7px 9px;
+      line-height: 1.45;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .config-modal.is-compact .modal-field.full textarea.fake-input {
+      min-height: 56px;
+      max-height: 110px;
+    }
+
+    .threshold-row {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr);
+      gap: 8px;
+      margin-top: 7px;
+    }
+
+    .threshold-row .fake-input {
+      margin-top: 0;
+      width: 100%;
+    }
+
+    .unit-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      margin-top: 7px;
+      align-items: center;
+    }
+
+    .unit-row .fake-input {
+      margin-top: 0;
+      width: 100%;
+    }
+
+    .unit-row .unit-text {
+      color: #34404f;
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .field-tip {
+      margin-top: 6px;
+      color: #e34d59;
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 700;
+      white-space: pre-line;
+    }
+
+    .config-modal.is-manual-adjust {
+      width: min(520px, 100%);
+    }
+
+    .config-modal.is-manual-adjust .modal-fields {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .config-modal.is-manual-adjust .modal-field {
+      min-height: 0;
+    }
+
+    .config-modal.is-manual-adjust .modal-section-title {
+      display: none;
+    }
+
+    select.fake-input:focus,
+    input.fake-input:focus,
+    textarea.fake-input:focus {
       outline: 0;
       border-color: #5f93ff;
       box-shadow: 0 0 0 3px rgba(95, 147, 255, 0.14);
@@ -1033,15 +1244,125 @@
     }
 
     .fake-input.multi {
-      height: 62px;
+      min-height: 62px;
+      height: auto;
       align-items: flex-start;
       padding-top: 9px;
       line-height: 1.45;
-      white-space: normal;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .fake-input.multi.select {
       align-items: flex-start;
+    }
+
+    /* 只读详情：描述列表样式，避免输入框观感 */
+    .config-modal.is-view {
+      width: min(760px, 100%);
+    }
+
+    .config-modal.is-view .modal-body {
+      background: #f6f8fb;
+    }
+
+    .config-modal.is-view .modal-section,
+    .modal-section.is-readonly {
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .config-modal.is-view .modal-section-title,
+    .modal-section.is-readonly .modal-section-title {
+      background: #f8fafc;
+      color: #1f2a3a;
+    }
+
+    .config-modal.is-view .modal-fields,
+    .modal-section.is-readonly .modal-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding: 0;
+    }
+
+    .config-modal.is-view .modal-field,
+    .modal-section.is-readonly .modal-field {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px 16px;
+      border: 0;
+      border-right: 1px solid #eef2f7;
+      border-bottom: 1px solid #eef2f7;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .config-modal.is-view .modal-field:nth-child(2n),
+    .modal-section.is-readonly .modal-field:nth-child(2n) {
+      border-right: 0;
+    }
+
+    .config-modal.is-view .modal-field.wide,
+    .config-modal.is-view .modal-field.full,
+    .modal-section.is-readonly .modal-field.wide,
+    .modal-section.is-readonly .modal-field.full {
+      grid-column: 1 / -1;
+      border-right: 0;
+    }
+
+    .config-modal.is-view .modal-field label,
+    .modal-section.is-readonly .modal-field label {
+      justify-content: flex-start;
+      color: #8a94a6;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .config-modal.is-view .modal-field label em,
+    .modal-section.is-readonly .modal-field label em {
+      display: none;
+    }
+
+    .config-modal.is-view .detail-value,
+    .modal-section.is-readonly .detail-value {
+      color: #1f2937;
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 750;
+      word-break: break-word;
+    }
+
+    .config-modal.is-view .detail-value.is-score-minus,
+    .modal-section.is-readonly .detail-value.is-score-minus {
+      color: #d4380d;
+      font-weight: 900;
+    }
+
+    .config-modal.is-view .detail-value.is-score-plus,
+    .modal-section.is-readonly .detail-value.is-score-plus {
+      color: #16a36b;
+      font-weight: 900;
+    }
+
+    .config-modal.is-view .detail-value.is-muted,
+    .modal-section.is-readonly .detail-value.is-muted {
+      color: #667085;
+      font-weight: 650;
+    }
+
+    .config-modal.is-view .modal-tips {
+      margin: 0;
+      border-top: 1px solid #eef2f7;
+      border-radius: 0;
+      background: #fbfcfe;
+    }
+
+    .modal-section.is-readonly + .modal-section {
+      margin-top: 12px;
     }
 
     .modal-tips {
@@ -1057,12 +1378,319 @@
     }
 
     .modal-actions {
+      flex: 0 0 auto;
       display: flex;
       justify-content: flex-end;
       gap: 10px;
       padding: 14px 20px 18px;
       border-top: 1px solid var(--line);
       background: #fbfcfe;
+    }
+
+    /* 撤单限制配置：对齐现有后台列表/修改页 */
+    .cancel-admin {
+      background: #fff;
+      border: 1px solid #d9d9d9;
+      color: #333;
+      font-weight: 400;
+    }
+
+    .cancel-admin .crumb {
+      padding: 10px 12px;
+      color: #52c41a;
+      font-size: 13px;
+      border-bottom: 1px solid #e8e8e8;
+      font-weight: 600;
+    }
+
+    .cancel-admin .port-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      padding: 12px;
+      border-bottom: 1px solid #e8e8e8;
+      font-size: 13px;
+    }
+
+    .cancel-admin .port-bar label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      cursor: pointer;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .cancel-admin .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border-bottom: 1px solid #e8e8e8;
+      font-size: 13px;
+    }
+
+    .cancel-admin .filter-bar select,
+    .cancel-admin .filter-bar .fake-select {
+      min-width: 120px;
+      height: 30px;
+      padding: 0 8px;
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+      background: #fff;
+      color: #333;
+      font-size: 13px;
+    }
+
+    .cancel-admin .btn-green {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 64px;
+      height: 30px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 2px;
+      background: #52c41a;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .cancel-admin .btn-green:hover {
+      background: #73d13d;
+    }
+
+    .cancel-admin .table-wrap {
+      border: 0;
+      border-radius: 0;
+      overflow: auto;
+    }
+
+    .cancel-admin table {
+      table-layout: auto;
+      min-width: 1280px;
+    }
+
+    .cancel-admin thead th {
+      padding: 10px 8px;
+      background: #fafafa;
+      border: 1px solid #e8e8e8;
+      color: #333;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .cancel-admin tbody td {
+      padding: 10px 8px;
+      border: 1px solid #e8e8e8;
+      color: #333;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.5;
+      vertical-align: middle;
+    }
+
+    .cancel-admin tbody tr:hover td {
+      background: #fcfcfc;
+    }
+
+    .cancel-admin .ops-col {
+      white-space: nowrap;
+    }
+
+    .cancel-admin .op-green {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      height: 28px;
+      margin: 2px 0;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 2px;
+      background: #52c41a;
+      color: #fff !important;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cancel-admin .op-green + .op-green {
+      margin-left: 0;
+      margin-top: 4px;
+    }
+
+    .config-modal.is-cancel-form {
+      width: min(860px, 100%);
+    }
+
+    .config-modal.is-cancel-form .modal-body {
+      padding: 0;
+      background: #fff;
+    }
+
+    .cancel-form {
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .cancel-form .form-row {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      border-bottom: 1px solid #e8e8e8;
+      min-height: 48px;
+    }
+
+    .cancel-form .form-label {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 12px 14px;
+      background: #fafafa;
+      border-right: 1px solid #e8e8e8;
+      color: #333;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .cancel-form .form-label em {
+      color: #f5222d;
+      font-style: normal;
+      margin-right: 2px;
+    }
+
+    .cancel-form .form-control {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 14px;
+      color: #333;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .cancel-form input[type="text"],
+    .cancel-form input[type="number"],
+    .cancel-form select {
+      height: 30px;
+      padding: 0 8px;
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+      background: #fff;
+      color: #333;
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+
+    .cancel-form input.w-sm {
+      width: 72px;
+    }
+
+    .cancel-form input.w-md {
+      width: 100px;
+    }
+
+    .cancel-form select.w-lg {
+      min-width: 180px;
+    }
+
+    .cancel-form .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .cancel-form .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 26px;
+      padding: 0 8px;
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+      background: #f5f5f5;
+      color: #333;
+      font-size: 12px;
+    }
+
+    .cancel-form .tag i {
+      color: #999;
+      font-style: normal;
+      cursor: default;
+    }
+
+    .cancel-form .radio-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .cancel-form .radio-row label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .cancel-form .hint {
+      color: #999;
+      font-size: 12px;
+    }
+
+    .cancel-form .form-save {
+      display: flex;
+      justify-content: center;
+      padding: 18px 14px 20px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .cancel-form .score-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .config-modal.is-cancel-form.is-complaint-form .modal-actions {
+      display: none;
+    }
+
+    .config-modal.is-cancel-form.is-complaint-form .modal-head {
+      display: none;
+    }
+
+    .config-modal.is-cancel-form.is-complaint-form {
+      width: min(920px, 100%);
+      border-radius: 0;
+      border-color: #d9d9d9;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .complaint-page-head {
+      padding: 10px 12px;
+      color: #52c41a;
+      font-size: 13px;
+      font-weight: 600;
+      border-bottom: 1px solid #e8e8e8;
+      background: #fff;
+    }
+
+    .complaint-page-title {
+      padding: 10px 14px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #e8e8e8;
+      color: #333;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .panel-desc,
@@ -1157,6 +1785,38 @@
       table-layout: auto;
     }
 
+    .system-rule-table table {
+      min-width: 0;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    .system-rule-table th,
+    .system-rule-table td {
+      padding: 14px 16px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .system-rule-table tbody td.left {
+      font-weight: 850;
+      white-space: normal;
+    }
+
+    .system-layout {
+      display: block;
+      padding: 18px 18px 22px;
+    }
+
+    .system-layout > div {
+      min-width: 0;
+    }
+
+    .system-layout .table-wrap {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
     .rule-table tbody td {
       word-break: normal;
       overflow-wrap: anywhere;
@@ -1215,10 +1875,10 @@
           <button class="tab" data-tab="deduct">减分配置</button>
           <button class="tab" data-tab="punish">惩罚配置</button>
           <button class="tab" data-tab="grade">等级配置</button>
-          <button class="tab" data-tab="special">特殊配置</button>
+          <button class="tab" data-tab="special">信用修复配置</button>
           <button class="tab" data-tab="detail">信誉积分明细</button>
           <button class="tab" data-tab="appeal">申诉审核</button>
-          <button class="tab" data-tab="log">规则日志</button>
+          <button class="tab" data-tab="log">操作日志</button>
           <button class="tab" data-tab="legacy">历史功能拓展</button>
         </div>
       </section>
@@ -1228,116 +1888,78 @@
           <section class="panel active" data-panel="system">
             <div class="panel-shell">
               <div class="panel-head">
-                <h1 class="panel-title">体系配置 / 加减分规则配置</h1>
-                <p class="panel-desc">本页配置用户信誉积分的规则骨架：哪些行为加分、哪些行为进入扣分规则、每月加分上限、统计窗口和是否允许申诉。</p>
-              </div>
-              <div class="toolbar">
-                <div class="group">
-                  <button class="btn primary" data-dialog="systemRule">新增体系规则</button>
-                  <button class="btn" data-go-tab="deduct">查看减分配置</button>
-                </div>
+                <h1 class="panel-title">体系配置</h1>
+                <p class="panel-desc">本页配置用户信誉积分的规则骨架：规则方向、分类场景、单次分值与启停状态。具体扣分值在减分配置维护；月度上限与累计完单阈值见右侧说明。</p>
               </div>
 
-              <div class="two-col">
+              <div class="two-col system-layout">
                 <div>
-                  <div class="table-wrap rule-table">
+                  <div class="table-wrap rule-table system-rule-table">
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 10%;">规则方向</th>
-                          <th style="width: 12%;">一级分类</th>
-                          <th style="width: 13%;">二级场景</th>
-                          <th style="width: 22%;">规则项</th>
-                          <th style="width: 9%;">单次分值</th>
-                          <th style="width: 12%;">上限 / 阈值</th>
-                          <th style="width: 10%;">统计窗口</th>
-                          <th style="width: 8%;">申诉</th>
-                          <th style="width: 8%;">状态</th>
-                          <th style="width: 8%;">操作</th>
+                          <th style="width: 14%;">规则方向</th>
+                          <th style="width: 18%;">一级分类</th>
+                          <th style="width: 32%;">二级场景</th>
+                          <th style="width: 14%;">单次分值</th>
+                          <th style="width: 10%;">状态</th>
+                          <th style="width: 12%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td><span class="pill on">加分</span></td>
                           <td>基础信息</td>
-                          <td>账号绑定</td>
-                          <td class="left"><span class="rule-name">绑定手机号</span><span class="rule-desc">账号安全信息完善，按一次性任务计分</span></td>
+                          <td class="left">绑定手机号</td>
                           <td class="score-plus">+2</td>
-                          <td>每用户 1 次</td>
-                          <td>长期有效</td>
-                          <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td><span class="pill on">加分</span></td>
                           <td>基础信息</td>
-                          <td>账号绑定</td>
-                          <td class="left"><span class="rule-name">绑定支付宝</span><span class="rule-desc">账号支付信息完善，按一次性任务计分</span></td>
+                          <td class="left">绑定支付宝</td>
                           <td class="score-plus">+2</td>
-                          <td>每用户 1 次</td>
-                          <td>长期有效</td>
-                          <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td><span class="pill on">加分</span></td>
                           <td>订单行为</td>
-                          <td>正常结算</td>
-                          <td class="left"><span class="rule-name">正常结算（履约）</span><span class="rule-desc">订单完成并正常结算后计入履约加分</span></td>
+                          <td class="left">正常结算（履约）</td>
                           <td class="score-plus">+1</td>
-                          <td>订单结算合计 ≤ 20分/月</td>
-                          <td>自然月</td>
-                          <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td><span class="pill on">加分</span></td>
                           <td>订单行为</td>
-                          <td>累计完单</td>
-                          <td class="left"><span class="rule-name">当月累计完单达标</span><span class="rule-desc">达到运营配置的 X 天或 X 次后给予一次性加分</span></td>
+                          <td class="left">当月累计完单达标</td>
                           <td class="score-plus">+3</td>
-                          <td>阈值可配置，合计 ≤ 20分/月</td>
-                          <td>自然月</td>
-                          <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td><span class="pill danger">减分</span></td>
                           <td>订单环节</td>
-                          <td>投诉 / 撤单 / 租赁违规</td>
-                          <td class="left"><span class="rule-name">订单环节恶意行为</span><span class="rule-desc">虚假投诉、白嫖、租赁期违规、恶意撤单等</span></td>
+                          <td class="left">投诉 / 撤单 / 租赁违规</td>
                           <td>关联减分配置</td>
-                          <td>按规则项扣分</td>
-                          <td>近30天 / 历史2-12个月</td>
-                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td><span class="pill danger">减分</span></td>
                           <td>平台级恶意行为</td>
-                          <td>引流 / 外挂 / 风控设备</td>
-                          <td class="left"><span class="rule-name">平台级恶意行为</span><span class="rule-desc">评论引流、恶意开挂、风险设备、外挂签名、风险账号等</span></td>
+                          <td class="left">引流 / 外挂 / 风控设备</td>
                           <td>关联减分配置</td>
-                          <td>按规则项扣分</td>
-                          <td>近30天 / 历史2-12个月</td>
-                          <td>部分可申诉</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td><span class="pill danger">减分</span></td>
                           <td>账号处置</td>
-                          <td>关闭 / 封禁用户</td>
-                          <td class="left"><span class="rule-name">用户关闭或封禁</span><span class="rule-desc">关闭用户、永久关闭、封禁用户等平台处置结果</span></td>
+                          <td class="left">关闭 / 封禁用户</td>
                           <td>关联减分配置</td>
-                          <td>按处置级别扣分</td>
-                          <td>实时生效</td>
-                          <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
@@ -1355,8 +1977,20 @@
                     <div class="bd">
                       <div class="side-list config-sidebar-list">
                         <div class="item">订单结算月度上限<small>默认 20 分/月；正常结算和累计完单共享该上限。</small></div>
-                        <div class="item">累计完单阈值<small>不写死 5 次，支持配置为 X 天或 X 次。</small></div>
+                        <div class="item">累计完单阈值<small>默认示例 5 天或 5 次，支持配置为 X 天或 X 次。</small></div>
                         <div class="item">封顶逻辑<small>达到月度上限后继续履约只记录明细，不再增加总分。</small></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="side-box">
+                    <div class="hd">
+                      <strong>基础信息加分</strong>
+                      <span>绑定类一次性计分</span>
+                    </div>
+                    <div class="bd">
+                      <div class="side-list config-sidebar-list">
+                        <div class="item">绑定手机号<small>账号安全信息完善，默认 +2，每用户 1 次。</small></div>
+                        <div class="item">绑定支付宝<small>账号支付信息完善，默认 +2，每用户 1 次。</small></div>
                       </div>
                     </div>
                   </div>
@@ -1367,9 +2001,9 @@
                     </div>
                     <div class="bd">
                       <div class="side-list config-sidebar-list">
-                        <div class="item">体系配置<small>维护一级分类、二级场景、加分上限、统计窗口、申诉口径。</small></div>
-                        <div class="item">减分配置<small>维护具体扣分项、扣分值、触发来源、适用业务和状态。</small></div>
-                        <div class="item">惩罚配置<small>只负责分数命中后的权益限制或业务拦截。</small></div>
+                        <div class="item">体系配置<small>维护规则方向、一级分类、二级场景、单次分值与状态。</small></div>
+                        <div class="item">减分配置<small>维护具体扣分项、扣分值、适用业务和状态。</small></div>
+                        <div class="item">信用修复配置<small>维护触发规则、恢复分值与题库；加分引导用户端常驻。</small></div>
                       </div>
                     </div>
                   </div>
@@ -1381,37 +2015,20 @@
           <section class="panel" data-panel="deduct">
             <div class="panel-shell">
               <div class="panel-head">
-                <h1 class="panel-title">减分配置 / 扣分规则配置</h1>
+                <h1 class="panel-title">减分配置</h1>
                 <p class="panel-desc">按完整规则项维护扣分行为。这里配置“什么行为扣多少分”，不配置权益限制；申诉口径由体系配置的分类控制。</p>
               </div>
-              <div class="toolbar">
-                <div class="group">
-                  <button class="btn primary" data-dialog="deductRule">新增扣分规则</button>
-                  <button class="btn">导出</button>
-                </div>
-                <div class="group">
-                  <span class="badge red">订单环节</span>
-                  <span class="badge orange">平台级恶意行为</span>
-                  <span class="badge gray">账号处置</span>
-                </div>
-              </div>
-
-              <div class="config-note">
-                <strong>实际配置原则：</strong>扣分项来自订单环节、平台级恶意行为和账号处置三类。风险设备、外挂签名、风险账号等风控类规则可由风控系统命中后同步扣分；“预留扣分接口”保留为系统扩展，不默认启用。
-              </div>
-
               <div class="two-col">
                 <div>
                   <div class="table-wrap rule-table">
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 11%;">一级分类</th>
-                          <th style="width: 13%;">业务场景</th>
-                          <th style="width: 28%;">扣分规则项</th>
+                          <th style="width: 12%;">一级分类</th>
+                          <th style="width: 14%;">业务场景</th>
+                          <th style="width: 34%;">扣分规则项</th>
                           <th style="width: 8%;">分值</th>
-                          <th style="width: 12%;">触发来源</th>
-                          <th style="width: 10%;">适用业务</th>
+                          <th style="width: 12%;">适用业务</th>
                           <th style="width: 8%;">申诉</th>
                           <th style="width: 8%;">状态</th>
                           <th style="width: 8%;">操作</th>
@@ -1421,9 +2038,8 @@
                         <tr>
                           <td>订单环节</td>
                           <td>投诉核实</td>
-                          <td class="left"><span class="rule-name">虚假投诉</span><span class="rule-desc">用户发起投诉后核实为虚假投诉</span></td>
+                          <td class="left">虚假投诉</td>
                           <td class="score-minus">-3</td>
-                          <td>投诉系统</td>
                           <td>租号 / 交易</td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
@@ -1432,31 +2048,8 @@
                         <tr>
                           <td>订单环节</td>
                           <td>投诉核实</td>
-                          <td class="left"><span class="rule-name">白嫖行为</span><span class="rule-desc">使用服务后恶意拒付、恶意退款或规避结算</span></td>
+                          <td class="left">白嫖行为</td>
                           <td class="score-minus">-4</td>
-                          <td>投诉系统</td>
-                          <td>租号 / 陪玩 / 代练</td>
-                          <td>是</td>
-                          <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
-                        </tr>
-                        <tr>
-                          <td>订单环节</td>
-                          <td>租赁违规</td>
-                          <td class="left"><span class="rule-name">租赁期间违规</span><span class="rule-desc">租赁期间存在违反租用规则的行为</span></td>
-                          <td class="score-minus">-4</td>
-                          <td>订单系统</td>
-                          <td>租号</td>
-                          <td>是</td>
-                          <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
-                        </tr>
-                        <tr>
-                          <td>订单环节</td>
-                          <td>撤单行为</td>
-                          <td class="left"><span class="rule-name">恶意撤单</span><span class="rule-desc">单次恶意撤单，影响订单正常履约</span></td>
-                          <td class="score-minus">-4</td>
-                          <td>订单 / 客服</td>
                           <td>租号</td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
@@ -1465,9 +2058,8 @@
                         <tr>
                           <td>订单环节</td>
                           <td>租赁违规</td>
-                          <td class="left"><span class="rule-name">租赁期间违规（多次）</span><span class="rule-desc">同周期内多次出现租赁期间违规</span></td>
-                          <td class="score-minus">-6</td>
-                          <td>订单系统</td>
+                          <td class="left">租赁期间违规</td>
+                          <td class="score-minus">-4</td>
                           <td>租号</td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
@@ -1476,9 +2068,28 @@
                         <tr>
                           <td>订单环节</td>
                           <td>撤单行为</td>
-                          <td class="left"><span class="rule-name">恶意撤单（多次）</span><span class="rule-desc">同周期内多次恶意撤单或高频撤单</span></td>
+                          <td class="left">恶意撤单</td>
+                          <td class="score-minus">-4</td>
+                          <td>租号</td>
+                          <td>是</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>订单环节</td>
+                          <td>租赁违规</td>
+                          <td class="left">租赁期间违规（多次）</td>
                           <td class="score-minus">-6</td>
-                          <td>订单 / 客服</td>
+                          <td>租号</td>
+                          <td>是</td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                        </tr>
+                        <tr>
+                          <td>订单环节</td>
+                          <td>撤单行为</td>
+                          <td class="left">恶意撤单（多次）</td>
+                          <td class="score-minus">-6</td>
                           <td>租号</td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
@@ -1487,9 +2098,8 @@
                         <tr>
                           <td>平台级恶意行为</td>
                           <td>评论 / 引流</td>
-                          <td class="left"><span class="rule-name">通过评论引流</span><span class="rule-desc">评论区导流外部平台、私下交易或绕开平台</span></td>
+                          <td class="left">通过评论引流</td>
                           <td class="score-minus">-4</td>
-                          <td>内容审核</td>
                           <td>全业务</td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
@@ -1498,10 +2108,9 @@
                         <tr>
                           <td>平台级恶意行为</td>
                           <td>外挂 / 开挂</td>
-                          <td class="left"><span class="rule-name">恶意开挂</span><span class="rule-desc">租用或陪玩代练过程中存在开挂行为</span></td>
+                          <td class="left">恶意开挂</td>
                           <td class="score-minus">-6</td>
-                          <td>风控 / 客服</td>
-                          <td>租号 / 陪玩 / 代练</td>
+                          <td>租号</td>
                           <td>是</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
@@ -1509,86 +2118,68 @@
                         <tr>
                           <td>平台级恶意行为</td>
                           <td>设备异常</td>
-                          <td class="left"><span class="rule-name">风险设备 / 设备异常</span><span class="rule-desc">手游设备开启外挂必需的特殊权限、root 或解锁设备</span></td>
+                          <td class="left">风险设备 / 设备异常</td>
                           <td class="score-minus">-10</td>
-                          <td>风控系统</td>
                           <td>租号 / 手游</td>
-                          <td>部分可申诉</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>平台级恶意行为</td>
                           <td>外挂识别</td>
-                          <td class="left"><span class="rule-name">用户手机安装手游外挂</span><span class="rule-desc">APP包名签名命中对应游戏外挂</span></td>
+                          <td class="left">用户手机安装手游外挂</td>
                           <td class="score-minus">-8</td>
-                          <td>风控系统</td>
                           <td>租号 / 手游</td>
-                          <td>部分可申诉</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>平台级恶意行为</td>
                           <td>账号风险</td>
-                          <td class="left"><span class="rule-name">平台风险账号</span><span class="rule-desc">大量实名、售卖账号、共性标签等风险账号</span></td>
+                          <td class="left">平台风险账号</td>
                           <td class="score-minus">-8</td>
-                          <td>风控系统</td>
                           <td>全业务</td>
-                          <td>部分可申诉</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>平台级恶意行为</td>
                           <td>手机号风险</td>
-                          <td class="left"><span class="rule-name">手机号风险名单</span><span class="rule-desc">指定手机号或号段命中风险名单</span></td>
+                          <td class="left">手机号风险名单</td>
                           <td class="score-minus">-8</td>
-                          <td>风控系统</td>
                           <td>全业务</td>
-                          <td>部分可申诉</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>平台级恶意行为</td>
                           <td>动态校验</td>
-                          <td class="left"><span class="rule-name">风险设备动态标签验证</span><span class="rule-desc">疑似篡改设备、APP等动态风控标签命中</span></td>
+                          <td class="left">风险设备动态标签验证</td>
                           <td class="score-minus">-5</td>
-                          <td>风控系统</td>
                           <td>全业务</td>
-                          <td>部分可申诉</td>
+                          <td>是</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>平台级恶意行为</td>
                           <td>设备处置</td>
-                          <td class="left"><span class="rule-name">设备 XDID 拉黑</span><span class="rule-desc">设备唯一标识进入黑名单</span></td>
+                          <td class="left">设备 XDID 拉黑</td>
                           <td class="score-minus">-5</td>
-                          <td>风控系统</td>
                           <td>全业务</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>平台级恶意行为</td>
-                          <td>系统扩展</td>
-                          <td class="left"><span class="rule-name">预留扣分接口</span><span class="rule-desc">预留给后续风控或业务系统扩展，分值上线前配置</span></td>
-                          <td>配置后生效</td>
-                          <td>接口同步</td>
-                          <td>全业务</td>
-                          <td>按来源配置</td>
-                          <td><span class="pill off">关闭</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">启用</span></td>
-                        </tr>
-                        <tr>
                           <td>账号处置</td>
                           <td>关闭用户</td>
-                          <td class="left"><span class="rule-name">关闭用户（30天内）</span><span class="rule-desc">短期关闭用户，保留恢复可能</span></td>
+                          <td class="left">关闭用户（30天内）</td>
                           <td class="score-minus">-6</td>
-                          <td>处罚系统</td>
                           <td>全业务</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
@@ -1597,9 +2188,8 @@
                         <tr>
                           <td>账号处置</td>
                           <td>关闭用户</td>
-                          <td class="left"><span class="rule-name">关闭用户（短期）</span><span class="rule-desc">短期关闭处罚，影响用户业务权限</span></td>
+                          <td class="left">关闭用户（短期）</td>
                           <td class="score-minus">-10</td>
-                          <td>处罚系统</td>
                           <td>全业务</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
@@ -1608,9 +2198,8 @@
                         <tr>
                           <td>账号处置</td>
                           <td>关闭用户</td>
-                          <td class="left"><span class="rule-name">关闭用户（永久）</span><span class="rule-desc">永久关闭用户，触发重度风险处置</span></td>
+                          <td class="left">关闭用户（永久）</td>
                           <td class="score-minus">-20</td>
-                          <td>处罚系统</td>
                           <td>全业务</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
@@ -1619,9 +2208,8 @@
                         <tr>
                           <td>账号处置</td>
                           <td>封禁用户</td>
-                          <td class="left"><span class="rule-name">封禁用户</span><span class="rule-desc">平台级封禁，按严重违规处理</span></td>
+                          <td class="left">封禁用户</td>
                           <td class="score-minus">-20</td>
-                          <td>处罚系统</td>
                           <td>全业务</td>
                           <td>否</td>
                           <td><span class="pill on">开启</span></td>
@@ -1637,27 +2225,13 @@
                 <aside class="sidebar">
                   <div class="side-box">
                     <div class="hd">
-                      <strong>扣分规则覆盖</strong>
-                      <span>按附件规则项补齐</span>
-                    </div>
-                    <div class="bd">
-                      <div class="mini-list">
-                        <div class="mini-item"><div><strong>订单环节</strong><span>虚假投诉、白嫖、租期违规、恶意撤单</span></div><span class="chip red">6项</span></div>
-                        <div class="mini-item"><div><strong>平台级恶意行为</strong><span>引流、开挂、风险设备、风险账号等</span></div><span class="chip orange">9项</span></div>
-                        <div class="mini-item"><div><strong>账号处置</strong><span>关闭用户、永久关闭、封禁用户</span></div><span class="chip gray">4项</span></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="side-box">
-                    <div class="hd">
                       <strong>配置边界</strong>
                       <span>扣分不等于限制</span>
                     </div>
                     <div class="bd">
                       <div class="side-list config-sidebar-list">
-                        <div class="item">分值配置<small>每条规则维护明确扣分值；预留接口未配置分值前不启用。</small></div>
-                        <div class="item">触发来源<small>订单、投诉、风控、处罚系统可同步命中记录。</small></div>
-                        <div class="item">申诉口径<small>订单类默认可申诉；风控类按来源部分可申诉；账号处置类不在此页配置申诉。</small></div>
+                        <div class="item">分值配置<small>每条规则维护明确扣分值，并与用户明细展示口径一致。</small></div>
+                        <div class="item">申诉口径<small>申诉仅支持「是 / 否」两种状态；账号处置类默认不可申诉。</small></div>
                       </div>
                     </div>
                   </div>
@@ -1669,19 +2243,8 @@
           <section class="panel" data-panel="punish">
             <div class="panel-shell">
               <div class="panel-head">
-                <h1 class="panel-title">惩罚配置 / 限制策略配置</h1>
+                <h1 class="panel-title">惩罚配置</h1>
                 <p class="panel-desc">限制策略只按信誉分触发业务限制，本期不按次数类或事件类条件单独触发。</p>
-              </div>
-              <div class="toolbar">
-                <div class="group">
-                  <button class="btn primary" data-dialog="limitRule">新增限制策略</button>
-                  <button class="btn" data-dialog="copyLimit">复制策略</button>
-                </div>
-                <div class="group">
-                  <span class="badge blue">提醒</span>
-                  <span class="badge orange">拦截下单</span>
-                  <span class="badge gray">禁止参与</span>
-                </div>
               </div>
               <div class="two-col">
                 <div>
@@ -1704,7 +2267,7 @@
                           <td><span class="pill warn">提醒</span></td>
                           <td>当天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>特价专区</td>
@@ -1712,7 +2275,7 @@
                           <td><span class="pill danger">拦截下单</span></td>
                           <td>7 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>发布账号</td>
@@ -1720,7 +2283,7 @@
                           <td><span class="pill danger">拦截</span></td>
                           <td>30 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>领券中心</td>
@@ -1728,7 +2291,7 @@
                           <td><span class="pill danger">禁止领券</span></td>
                           <td>30 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>活动参与</td>
@@ -1736,7 +2299,7 @@
                           <td><span class="pill danger">禁止参与活动</span></td>
                           <td>7 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -1778,18 +2341,12 @@
           <section class="panel" data-panel="legacy">
             <div class="panel-shell">
               <div class="panel-head">
-                <h1 class="panel-title">历史功能拓展 / 投诉与撤单限制</h1>
-                <p class="panel-desc">基于现有“撤单限制配置”和“租客投诉规则列表”做字段扩展，原“信誉积分”条件拆成历史累积分和近期行为分两个子项。</p>
+                <h1 class="panel-title">历史功能拓展</h1>
+                <p class="panel-desc">撤单限制配置、租客投诉规则列表均对齐现有后台；原「信誉积分」拆分为「历史信誉分」「近期行为分」两个维度独立配置。</p>
               </div>
               <div class="toolbar">
                 <div class="group">
-                  <button class="btn primary" data-dialog="legacyRule">新增历史规则</button>
-                  <button class="btn">查询</button>
-                </div>
-                <div class="group">
-                  <span class="badge blue">撤单限制</span>
-                  <span class="badge orange">租客投诉</span>
-                  <span class="badge gray">双分值条件</span>
+                  <button class="btn primary" data-dialog="legacyRule">新增规则</button>
                 </div>
               </div>
               <div class="subtab-row" aria-label="历史功能子页面">
@@ -1798,151 +2355,306 @@
               </div>
               <div style="padding: 14px 18px 18px;">
                 <div class="legacy-pane active" data-legacy-panel="cancel">
-                <div class="card">
-                  <div class="card-head">
-                    <div>
-                      <h3 class="card-title">撤单限制配置（扩展后）</h3>
-                    </div>
+                <div class="cancel-admin">
+                  <div class="crumb">你当前的位置：租号玩 &gt; 投诉处理 &gt; 撤单限制配置</div>
+                  <div class="port-bar">
+                    <span>限制开启端口：</span>
+                    <label><input type="checkbox" checked /> 官网</label>
+                    <label><input type="checkbox" checked /> M站</label>
+                    <label><input type="checkbox" checked /> 分销</label>
+                    <label><input type="checkbox" checked /> 官网客户端</label>
+                    <label><input type="checkbox" checked /> 极速客户端</label>
+                    <label><input type="checkbox" checked /> 安卓1.0</label>
+                    <label><input type="checkbox" checked /> 安卓2.0</label>
+                    <label><input type="checkbox" checked /> 安卓pro版</label>
+                    <label><input type="checkbox" checked /> 安卓lite版</label>
+                    <label><input type="checkbox" checked /> IOS</label>
+                    <label><input type="checkbox" checked /> 安卓lite刀锋互娱版</label>
+                    <label><input type="checkbox" checked /> 七鱼一触即达</label>
+                    <button class="btn-green" type="button">保存</button>
                   </div>
-                  <div class="card-body" style="padding: 0;">
-                    <div class="table-wrap">
-                      <table>
-                        <thead>
-                          <tr>
-                            <th rowspan="2" style="width: 6%;">编号</th>
-                            <th rowspan="2" style="width: 10%;">用户身份</th>
-                            <th rowspan="2" style="width: 10%;">游戏类型</th>
-                            <th colspan="2" style="width: 20%;">信誉积分条件</th>
-                            <th rowspan="2" style="width: 10%;">注册时间</th>
-                            <th rowspan="2" style="width: 9%;">近一周订单数</th>
-                            <th rowspan="2" style="width: 18%;">投诉类型</th>
-                            <th rowspan="2" style="width: 7%;">提醒次数</th>
-                            <th rowspan="2" style="width: 8%;">限制周期</th>
-                            <th rowspan="2" style="width: 6%;">状态</th>
-                            <th rowspan="2" style="width: 8%;">操作</th>
-                          </tr>
-                          <tr>
-                            <th>历史累积分</th>
-                            <th>近期行为分</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>264</td>
-                            <td>至尊VIP用户</td>
-                            <td>全部</td>
-                            <td>小于25分</td>
-                            <td>小于60分</td>
-                            <td>注册时间 &lt;= 7天</td>
-                            <td>不限</td>
-                            <td class="left">租错号、不想玩了、租错区服、选错时长/套餐</td>
-                            <td>2</td>
-                            <td>3/1</td>
-                            <td>开启</td>
-                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                          </tr>
-                          <tr>
-                            <td>263</td>
-                            <td>至尊VIP用户</td>
-                            <td>全部</td>
-                            <td>小于45分</td>
-                            <td>小于40分</td>
-                            <td>注册时间 &gt; 7天</td>
-                            <td>不限</td>
-                            <td class="left">租错号、不想玩了、计划有变</td>
-                            <td>1</td>
-                            <td>2/1</td>
-                            <td>开启</td>
-                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                          </tr>
-                          <tr>
-                            <td>260</td>
-                            <td>普通分销</td>
-                            <td>全部</td>
-                            <td>小于25分</td>
-                            <td>不限</td>
-                            <td>不限</td>
-                            <td>不限</td>
-                            <td class="left">不限</td>
-                            <td>10</td>
-                            <td>20/1</td>
-                            <td>开启</td>
-                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                  <div class="filter-bar">
+                    <span>游戏类型：</span>
+                    <select>
+                      <option>全部</option>
+                      <option>王者荣耀</option>
+                      <option>和平精英</option>
+                      <option>穿越火线</option>
+                    </select>
+                    <button class="btn-green" type="button">查询</button>
+                    <button class="btn-green" type="button" data-cancel-add>添加规则</button>
+                  </div>
+                  <div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>编号</th>
+                          <th>用户身份</th>
+                          <th>游戏类型</th>
+                          <th>历史信誉分</th>
+                          <th>近期行为分</th>
+                          <th>用户注册时间</th>
+                          <th>近一周订单数</th>
+                          <th style="min-width: 220px;">投诉类型</th>
+                          <th>撤单提醒</th>
+                          <th>限制撤单/限制周期</th>
+                          <th>限制租用/限制周期</th>
+                          <th>优先级</th>
+                          <th>状态</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>200</td>
+                          <td>普通用户</td>
+                          <td>王者荣耀,和平精英</td>
+                          <td>小于等于98分</td>
+                          <td>小于等于60分</td>
+                          <td>不限</td>
+                          <td>0 - 1000</td>
+                          <td class="left">账号描述与实际不符,账号密码错误,无法登录(登录不上),租错号了,被挤号（顶号）了,不想玩了或计划有变,号被封了,自己的号要撤销,租方开外挂,上号器自动投诉（使用外挂）,上号器自动投诉（qq冻结）,上号器自动投诉（账号密码错误）,客服发起-其它原因,客服发起-描述不符,客服发起-无法登录,客服发起-健康系统,客服发起-租客违规,客服发起-投诉被限制,客服发起-未成年人消费,</td>
+                          <td>2</td>
+                          <td>5/1</td>
+                          <td>5/1</td>
+                          <td>99</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-cancel-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>199</td>
+                          <td>至尊VIP用户</td>
+                          <td>全部</td>
+                          <td>小于等于10分</td>
+                          <td>小于等于40分</td>
+                          <td>不限</td>
+                          <td>0 - 100</td>
+                          <td class="left">租错号了,被挤号（顶号）了,不想玩了或计划有变,游戏维护,</td>
+                          <td>0</td>
+                          <td>8/1</td>
+                          <td>10/1</td>
+                          <td>99</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-cancel-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>198</td>
+                          <td>普通分销</td>
+                          <td>穿越火线</td>
+                          <td>小于等于100分</td>
+                          <td>不限</td>
+                          <td>不限</td>
+                          <td>无订单</td>
+                          <td class="left">账号描述与实际不符,账号密码错误,</td>
+                          <td>1</td>
+                          <td>2/1</td>
+                          <td>3/1</td>
+                          <td>0</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-cancel-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>196</td>
+                          <td>普通用户</td>
+                          <td>穿越火线,英雄联盟,QQ飞车,绝地求生</td>
+                          <td>小于等于99分</td>
+                          <td>小于等于80分</td>
+                          <td>不限</td>
+                          <td>1 - 3</td>
+                          <td class="left">不限</td>
+                          <td>1</td>
+                          <td>2/1</td>
+                          <td>3/1</td>
+                          <td>0</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-cancel-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>195</td>
+                          <td>普通用户</td>
+                          <td>女妖</td>
+                          <td>小于等于100分</td>
+                          <td>不限</td>
+                          <td>不限</td>
+                          <td>无订单</td>
+                          <td class="left">不限</td>
+                          <td>2</td>
+                          <td>3/1</td>
+                          <td>4/1</td>
+                          <td>0</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-cancel-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
                 </div>
 
                 <div class="legacy-pane" data-legacy-panel="complaint">
-                <div class="card">
-                  <div class="card-head">
-                    <div>
-                      <h3 class="card-title">租客投诉规则列表（扩展后）</h3>
-                    </div>
+                <div class="cancel-admin">
+                  <div class="crumb">你当前的位置：租号玩 &gt; 投诉处理 &gt; 租客投诉规则配置</div>
+                  <div class="filter-bar" style="justify-content:center; border-bottom:1px solid #e8e8e8;">
+                    <span>游戏类型：</span>
+                    <select>
+                      <option>选择游戏</option>
+                      <option>全部游戏</option>
+                      <option>王者荣耀</option>
+                      <option>蛋仔派对</option>
+                      <option>穿越火线</option>
+                    </select>
                   </div>
-                  <div class="card-body" style="padding: 0;">
-                    <div class="table-wrap">
-                      <table>
-                        <thead>
-                          <tr>
-                            <th rowspan="2" style="width: 6%;">编号</th>
-                            <th rowspan="2" style="width: 10%;">用户身份</th>
-                            <th rowspan="2" style="width: 12%;">游戏类型</th>
-                            <th colspan="2" style="width: 20%;">信誉积分条件</th>
-                            <th rowspan="2" style="width: 12%;">限制方式</th>
-                            <th rowspan="2" style="width: 22%;">投诉类型</th>
-                            <th rowspan="2" style="width: 8%;">操作人</th>
-                            <th rowspan="2" style="width: 8%;">状态</th>
-                            <th rowspan="2" style="width: 8%;">操作</th>
-                          </tr>
-                          <tr>
-                            <th>历史累积分</th>
-                            <th>近期行为分</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>51</td>
-                            <td>普通用户</td>
-                            <td>全部游戏</td>
-                            <td>小于等于15分</td>
-                            <td>小于等于50分</td>
-                            <td>限制部分类型次数上限</td>
-                            <td class="left">租错号了、不想玩了、租错区服、选错时长/套餐</td>
-                            <td>何冰冰</td>
-                            <td>关闭</td>
-                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                          </tr>
-                          <tr>
-                            <td>50</td>
-                            <td>普通用户</td>
-                            <td>全部游戏</td>
-                            <td>小于等于10分</td>
-                            <td>小于等于35分</td>
-                            <td>限制部分类型不可选</td>
-                            <td class="left">租错号了、不想玩了、计划有变</td>
-                            <td>何冰冰</td>
-                            <td>关闭</td>
-                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                          </tr>
-                          <tr>
-                            <td>49</td>
-                            <td>普通用户</td>
-                            <td>全部游戏</td>
-                            <td>小于等于11分</td>
-                            <td>小于等于45分</td>
-                            <td>限制部分类型次数上限</td>
-                            <td class="left">账号描述不符、密码错误、无法登录、账号禁赛</td>
-                            <td>何冰冰</td>
-                            <td>开启</td>
-                            <td><span class="op secondary">修改</span><span class="op">删除</span></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                  <div class="filter-bar" style="justify-content:center;">
+                    <button class="btn-green" type="button">查询</button>
+                    <button class="btn-green" type="button" data-complaint-add>添加规则</button>
+                  </div>
+                  <div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>编号</th>
+                          <th>用户身份</th>
+                          <th>游戏类型</th>
+                          <th>历史信誉分</th>
+                          <th>近期行为分</th>
+                          <th>限制方式</th>
+                          <th style="min-width: 180px;">投诉类型</th>
+                          <th>操作人</th>
+                          <th>操作时间</th>
+                          <th>状态</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>41</td>
+                          <td>至尊VIP用户</td>
+                          <td>蛋仔派对,</td>
+                          <td>小于等于60分</td>
+                          <td>小于等于50分</td>
+                          <td>限制部分类型次数上限</td>
+                          <td class="left">租错号了,不想玩了或计划有变,</td>
+                          <td>zhwadmin2015</td>
+                          <td>2025-07-10 17:16:40</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-complaint-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>40</td>
+                          <td>至尊VIP用户</td>
+                          <td>全部游戏,</td>
+                          <td>小于等于60分</td>
+                          <td>不限</td>
+                          <td>限制部分类型次数上限</td>
+                          <td class="left">账号密码错误,无法登录(登录不上),</td>
+                          <td>zhwadmin2015</td>
+                          <td>2025-12-16 14:45:34</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-complaint-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>39</td>
+                          <td>至尊VIP用户</td>
+                          <td>全部游戏,</td>
+                          <td>小于等于70分</td>
+                          <td>小于等于40分</td>
+                          <td>限制部分类型次数上限</td>
+                          <td class="left">账号密码错误,无法登录(登录不上),</td>
+                          <td>zhwadmin2015</td>
+                          <td>2025-12-16 14:45:49</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-complaint-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>38</td>
+                          <td>至尊VIP用户</td>
+                          <td>全部游戏,</td>
+                          <td>小于等于100分</td>
+                          <td>小于等于80分</td>
+                          <td>限制部分类型次数上限</td>
+                          <td class="left">账号密码错误,无法登录(登录不上),</td>
+                          <td>zhwadmin2015</td>
+                          <td>2025-12-16 14:48:06</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-complaint-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>36</td>
+                          <td>普通用户</td>
+                          <td>王者荣耀,</td>
+                          <td>小于等于45分</td>
+                          <td>小于等于35分</td>
+                          <td>限制部分类型次数上限</td>
+                          <td class="left">租错号了,不想玩了或计划有变,</td>
+                          <td>zhwadmin2015</td>
+                          <td>2025-07-10 13:49:05</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-complaint-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>35</td>
+                          <td>至尊VIP用户</td>
+                          <td>全部游戏,</td>
+                          <td>小于等于45分</td>
+                          <td>不限</td>
+                          <td>限制部分类型次数上限</td>
+                          <td class="left">账号密码错误,无法登录(登录不上),</td>
+                          <td>zhwadmin2015</td>
+                          <td>2025-12-16 14:48:20</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-complaint-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>33</td>
+                          <td>普通用户</td>
+                          <td>全部游戏,</td>
+                          <td>小于等于100分</td>
+                          <td>小于等于90分</td>
+                          <td>限制部分类型次数上限</td>
+                          <td class="left">账号密码错误,无法登录(登录不上),</td>
+                          <td>zhwadmin2015</td>
+                          <td>2026-03-18 19:40:54</td>
+                          <td>开启</td>
+                          <td class="ops-col">
+                            <div class="op-green" data-complaint-edit>修改</div>
+                            <div class="op-green">删除</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
                 </div>
@@ -1953,20 +2665,8 @@
           <section class="panel" data-panel="grade">
             <div class="panel-shell">
               <div class="panel-head">
-                <h1 class="panel-title">等级配置 / 信誉状态配置</h1>
-                <p class="panel-desc">信誉状态名称支持动态配置；总信誉积分区间和近期行为分区间不可重复、不可交集，并可关联惩罚配置给前端展示。</p>
-              </div>
-              <div class="toolbar">
-                <div class="group">
-                  <button class="btn primary" data-dialog="statusRule">新增状态</button>
-                  <button class="btn">调整区间</button>
-                </div>
-                <div class="group">
-                  <span class="badge green">正常</span>
-                  <span class="badge blue">预警</span>
-                  <span class="badge orange">受限</span>
-                  <span class="badge gray">高风险</span>
-                </div>
+                <h1 class="panel-title">等级配置</h1>
+                <p class="panel-desc">信誉状态名称支持动态配置；总信誉积分区间和近期行为分区间不可重复、不可交集。</p>
               </div>
               <div class="two-col">
                 <div>
@@ -1974,72 +2674,54 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 12%;">状态名称</th>
-                          <th style="width: 8%;">状态等级</th>
-                          <th style="width: 14%;">总信誉积分区间</th>
-                          <th style="width: 13%;">近期行为分区间</th>
-                          <th style="width: 17%;">展示文案</th>
-                          <th style="width: 10%;">触发惩罚</th>
-                          <th style="width: 10%;">关联限制策略</th>
-                          <th style="width: 6%;">状态</th>
+                          <th style="width: 16%;">状态名称</th>
+                          <th style="width: 20%;">总信誉积分区间</th>
+                          <th style="width: 18%;">近期行为分区间</th>
+                          <th style="width: 28%;">展示文案</th>
+                          <th style="width: 8%;">状态</th>
                           <th style="width: 10%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>正常</td>
-                          <td>1</td>
                           <td>160 - 200</td>
                           <td>80 - 100</td>
                           <td class="left">当前信誉状态正常</td>
-                          <td>否</td>
-                          <td>--</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>预警</td>
-                          <td>2</td>
                           <td>120 - 159</td>
                           <td>60 - 79</td>
                           <td class="left">当前信誉状态需要关注</td>
-                          <td>部分</td>
-                          <td class="left">高价值账号提醒</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>部分受限</td>
-                          <td>3</td>
                           <td>80 - 119</td>
                           <td>40 - 59</td>
                           <td class="left">部分能力当前受限</td>
-                          <td>是</td>
-                          <td class="left">特价专区限制</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>限制</td>
-                          <td>4</td>
                           <td>40 - 79</td>
                           <td>20 - 39</td>
                           <td class="left">当前功能不可用</td>
-                          <td>是</td>
-                          <td class="left">发布账号限制</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>高风险</td>
-                          <td>5</td>
                           <td>0 - 39</td>
                           <td>0 - 19</td>
                           <td class="left">当前为高风险状态</td>
-                          <td>是</td>
-                          <td class="left">领券 / 活动限制</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -2053,9 +2735,9 @@
                     </div>
                     <div class="bd">
                       <div class="side-list">
-                        <div class="item">用户侧展示<small>只展示总分、风险状态和限制情况</small></div>
+                        <div class="item">用户侧展示<small>三区首页：总分、风险状态、限制、最近变化、提升与恢复</small></div>
                         <div class="item">后台判断<small>可同时使用总分和近期行为分</small></div>
-                        <div class="item">不再使用<small>红包 / 券 / VIP 等权益配置</small></div>
+                        <div class="item">不再使用<small>红包 / 券 / VIP / 近15天趋势图配置</small></div>
                       </div>
                     </div>
                   </div>
@@ -2067,13 +2749,8 @@
           <section class="panel" data-panel="special">
             <div class="panel-shell">
               <div class="panel-head">
-                <h1 class="panel-title">特殊配置 / 信用修复配置</h1>
-                <p class="panel-desc">用于配置“历史信誉表现较好，但近期行为分突然下降较多”的用户是否展示信用修复入口，以及答题通过后可恢复的近期行为分。</p>
-              </div>
-              <div class="toolbar">
-                <div class="group">
-                  <button class="btn">导出记录</button>
-                </div>
+                <h1 class="panel-title">信用修复配置</h1>
+                <p class="panel-desc">配置“历史信誉较好但近期行为分突降”用户的信用修复入口与恢复分值。加分引导在用户端常驻展示，本期不在后台配置。</p>
               </div>
 
               <div class="two-col">
@@ -2082,23 +2759,18 @@
                     <div class="card-head">
                       <div>
                         <h3 class="card-title">信用修复触发规则</h3>
-                        <div class="card-sub">控制哪些用户可以在详情页看到信用修复入口。</div>
                       </div>
-                      <button class="btn primary" data-dialog="repairTriggerRule">新增触发规则</button>
                     </div>
                     <div class="card-body">
                       <div class="table-wrap">
                         <table>
                           <thead>
                             <tr>
-                              <th style="width: 16%;">规则名称</th>
-                              <th style="width: 13%;">历史信誉积分门槛</th>
-                              <th style="width: 14%;">近30天扣分突降</th>
-                              <th style="width: 12%;">当前总分区间</th>
-                              <th style="width: 13%;">近期行为分区间</th>
-                              <th style="width: 14%;">排除用户</th>
-                              <th style="width: 8%;">状态</th>
-                              <th style="width: 10%;">操作</th>
+                              <th style="width: 28%;">规则名称</th>
+                              <th style="width: 22%;">历史信誉积分门槛</th>
+                              <th style="width: 22%;">近30天扣分突降</th>
+                              <th style="width: 12%;">状态</th>
+                              <th style="width: 16%;">操作</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -2106,11 +2778,8 @@
                               <td class="left">优质用户近期突降修复</td>
                               <td>≥ 80</td>
                               <td>累计扣分 ≥ 30</td>
-                              <td>70 - 119</td>
-                              <td>≤ 75</td>
-                              <td class="left">红线 / 清零 / 永久限制</td>
                               <td><span class="pill on">开启</span></td>
-                              <td><span class="op secondary">修改</span><span class="op">删除</span></td>
+                              <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                             </tr>
                           </tbody>
                         </table>
@@ -2122,30 +2791,24 @@
                     <div class="card-head">
                       <div>
                         <h3 class="card-title">修复规则</h3>
-                        <div class="card-sub">答题通过后只恢复近期行为分，不改写原扣分记录。</div>
                       </div>
-                      <button class="btn primary" data-dialog="repairRule">新增修复规则</button>
                     </div>
                     <div class="card-body">
                       <div class="table-wrap">
                         <table>
                           <thead>
                             <tr>
-                              <th style="width: 20%;">答题通过标准</th>
-                              <th style="width: 16%;">单次恢复分值</th>
-                              <th style="width: 18%;">修复后总分上限</th>
-                              <th style="width: 18%;">用户频次限制</th>
-                              <th style="width: 16%;">失败冷却时间</th>
-                              <th style="width: 12%;">操作</th>
+                              <th style="width: 28%;">答题通过标准</th>
+                              <th style="width: 24%;">单次恢复分值</th>
+                              <th style="width: 28%;">用户频次限制</th>
+                              <th style="width: 20%;">操作</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td>5 题全对</td>
+                              <td>全部答题通过</td>
                               <td>+10</td>
-                              <td>不超过 120</td>
                               <td>30 天 1 次</td>
-                              <td>24 小时后重试</td>
                               <td><span class="op secondary">修改</span></td>
                             </tr>
                           </tbody>
@@ -2158,7 +2821,6 @@
                     <div class="card-head">
                       <div>
                         <h3 class="card-title">题库配置</h3>
-                        <div class="card-sub">围绕租号玩基础业务行为维护题目：不能开挂、环境异常处理、投诉撤单规范等。</div>
                       </div>
                       <button class="btn primary" data-dialog="repairQuestion">新增题目</button>
                     </div>
@@ -2168,10 +2830,9 @@
                           <thead>
                             <tr>
                               <th style="width: 14%;">题目分类</th>
-                              <th style="width: 28%;">题目示例</th>
-                              <th style="width: 26%;">正确答案方向</th>
+                              <th style="width: 32%;">题目示例</th>
+                              <th style="width: 30%;">正确答案方向</th>
                               <th style="width: 12%;">适用业务</th>
-                              <th style="width: 8%;">状态</th>
                               <th style="width: 12%;">操作</th>
                             </tr>
                           </thead>
@@ -2181,7 +2842,6 @@
                               <td class="left">租用账号时能否使用外挂、脚本或其他作弊工具？</td>
                               <td class="left">不能使用，发现异常应停止操作并联系平台。</td>
                               <td>租号</td>
-                              <td><span class="pill on">启用</span></td>
                               <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                             </tr>
                             <tr>
@@ -2189,7 +2849,6 @@
                               <td class="left">游戏环境异常或无法启动时，用户应该如何处理？</td>
                               <td class="left">保留截图，联系平台或提交订单问题，不自行绕过。</td>
                               <td>租号</td>
-                              <td><span class="pill on">启用</span></td>
                               <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                             </tr>
                             <tr>
@@ -2197,7 +2856,6 @@
                               <td class="left">遇到订单问题时，是否可以虚假投诉来快速退款？</td>
                               <td class="left">不可以，需按真实问题提交说明与凭证。</td>
                               <td>租号 / 交易</td>
-                              <td><span class="pill on">启用</span></td>
                               <td><span class="op secondary">修改</span><span class="op">删除</span></td>
                             </tr>
                           </tbody>
@@ -2210,15 +2868,29 @@
                 <aside class="sidebar">
                   <div class="side-box">
                     <div class="hd">
-                      <strong>用户侧展示口径</strong>
+                      <strong>用户端三区映射</strong>
+                      <span>与 PC / 移动端详情首页对齐</span>
+                    </div>
+                    <div class="bd">
+                      <div class="side-list">
+                        <div class="item">信誉状态<small>总分、风险状态、当前受限能力（惩罚配置联动）</small></div>
+                        <div class="item">最近变化<small>关键明细 3 条；扣分可申诉（明细 + 申诉审核）</small></div>
+                        <div class="item">提升与恢复<small>提升积分 = 加分引导（用户端常驻）；恢复处理 = 申诉待办 + 信用修复</small></div>
+                        <div class="item">不再展示<small>近 15 天趋势图、奖励权益、基础信息加分任务</small></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="side-box">
+                    <div class="hd">
+                      <strong>信用修复展示口径</strong>
                       <span>只给符合条件的用户展示入口</span>
                     </div>
                     <div class="bd">
                       <div class="side-list">
-                        <div class="item">展示位置<small>信誉积分详情页恢复路径下方</small></div>
-                        <div class="item">入口文案<small>信用修复任务 / 可修复 +10</small></div>
+                        <div class="item">展示位置<small>详情页「提升与恢复 → 恢复处理」Tab</small></div>
+                        <div class="item">入口文案<small>信用修复可恢复 +10 / 开始修复</small></div>
                         <div class="item">完成结果<small>近期行为分修复，原扣分记录保留</small></div>
-                        <div class="item">不可展示<small>红线、重度违规、恶意行为清零、永久限制</small></div>
+                        <div class="item">加分引导<small>用户端常驻展示，本期不在后台配置</small></div>
                       </div>
                     </div>
                   </div>
@@ -2235,7 +2907,7 @@
                     </div>
                   </div>
                   <div class="footer-info">
-                    建议产品口径：信用修复是“教育型、一次性、可配置”的近期行为分恢复机制，不是奖励任务，不改变违规事实。
+                    建议产品口径：加分引导在用户端常驻展示；信用修复是“教育型、一次性、可配置”的近期行为分恢复，不是奖励任务，不改变违规事实。
                   </div>
                 </aside>
               </div>
@@ -2245,13 +2917,12 @@
           <section class="panel" data-panel="detail">
             <div class="panel-shell">
               <div class="panel-head">
-                <h1 class="panel-title">信誉积分明细 / 用户信誉分查询</h1>
-                <p class="panel-desc">保留 UID 查询和手动加减分能力；扣分行为会按统计窗口自动参与近期行为分与历史累积分，明细只展示实际变动记录。</p>
+                <h1 class="panel-title">信誉积分明细</h1>
+                <p class="panel-desc">支持按用户名称查询积分变动；扣分行为会按统计窗口自动参与近期行为分与历史累积分，明细只展示实际变动记录。</p>
               </div>
               <div class="toolbar">
                 <div class="group">
                   <button class="btn primary" data-dialog="manualAdjust">手动加减分</button>
-                  <button class="btn">导出明细</button>
                 </div>
               </div>
               <div class="card" style="margin: 14px 18px 0;">
@@ -2262,10 +2933,9 @@
                 </div>
                 <div class="card-body">
                   <div class="form-grid">
-                    <div class="field"><label>用户 UID</label><div class="input"></div><div class="hint">必填查询条件</div></div>
-                    <div class="field"><label>变动类型</label><select class="input"><option>全部</option><option>加分</option><option>扣分</option><option>恢复</option><option>回滚</option><option>系统调整</option></select><div class="hint">下拉选择</div></div>
-                    <div class="field"><label>是否有效</label><select class="input"><option>全部</option><option>有效</option><option>无效</option></select><div class="hint">下拉选择</div></div>
-                    <div class="field"><label>申诉状态</label><select class="input"><option>全部</option><option>未申诉</option><option>申诉中</option><option>通过</option><option>驳回</option><option>已回滚</option></select><div class="hint">下拉选择</div></div>
+                    <div class="field"><label>用户名称</label><div class="input"></div></div>
+                    <div class="field"><label>变动类型</label><select class="input"><option>全部</option><option>加分</option><option>扣分</option><option>恢复</option><option>回滚</option><option>系统调整</option></select></div>
+                    <div class="field"><label>申诉状态</label><select class="input"><option>全部</option><option>未申诉</option><option>已回滚</option><option>驳回</option></select></div>
                   </div>
                 </div>
               </div>
@@ -2276,13 +2946,13 @@
                       <thead>
                         <tr>
                           <th style="width: 8%;">编号</th>
-                          <th style="width: 13%;">用户 UID</th>
-                          <th style="width: 12%;">变动类型</th>
+                          <th style="width: 12%;">用户 UID</th>
+                          <th style="width: 10%;">变动类型</th>
                           <th style="width: 10%;">分值变化</th>
-                          <th style="width: 22%;">规则名称</th>
-                          <th style="width: 18%;">关联业务单号</th>
+                          <th style="width: 18%;">触发规则名称</th>
+                          <th style="width: 16%;">订单号</th>
                           <th style="width: 10%;">申诉状态</th>
-                          <th style="width: 7%;">操作</th>
+                          <th style="width: 10%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -2291,72 +2961,59 @@
                           <td>101406347</td>
                           <td><span class="pill danger">扣分</span></td>
                           <td>-6</td>
-                          <td class="left">异常撤单扣分</td>
+                          <td class="left">恶意撤单（多次）</td>
                           <td class="left">ORDER202605130042</td>
                           <td><span class="pill warn">未申诉</span></td>
-                          <td><span class="op secondary">调整</span></td>
+                          <td><span class="op secondary" data-order-detail>查看</span></td>
                         </tr>
                         <tr>
                           <td>2</td>
                           <td>101406347</td>
                           <td><span class="pill danger">扣分</span></td>
-                          <td>-8</td>
-                          <td class="left">虚假投诉扣分</td>
-                          <td class="left">COMPLAINT202605100032</td>
-                          <td><span class="pill blue">申诉中</span></td>
-                          <td><span class="op secondary">查看</span></td>
+                          <td>-3</td>
+                          <td class="left">虚假投诉</td>
+                          <td class="left">ORDER202605100032</td>
+                          <td><span class="pill gray">驳回</span></td>
+                          <td><span class="op secondary" data-order-detail>查看</span></td>
                         </tr>
                         <tr>
                           <td>3</td>
                           <td>101406347</td>
                           <td><span class="pill green">恢复</span></td>
                           <td>+6</td>
-                          <td class="left">申诉通过回滚</td>
-                          <td class="left">APPEAL202605140018</td>
+                          <td class="left">恶意撤单（多次）</td>
+                          <td class="left">ORDER202605130042</td>
                           <td><span class="pill green">已回滚</span></td>
-                          <td><span class="op secondary">日志</span></td>
+                          <td><span class="op secondary" data-order-detail>查看</span></td>
                         </tr>
                         <tr>
                           <td>4</td>
                           <td>101406347</td>
                           <td><span class="pill green">加分</span></td>
                           <td>+2</td>
-                          <td class="left">正常结算</td>
+                          <td class="left">正常结算（履约）</td>
                           <td class="left">ORDER202605170021</td>
-                          <td><span class="pill gray">不适用</span></td>
-                          <td><span class="op secondary">日志</span></td>
+                          <td><span class="pill warn">未申诉</span></td>
+                          <td><span class="op secondary" data-order-detail>查看</span></td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                   <div class="footer-info">
-                    手动加减分弹窗建议保留：用户 UID、调整类型、调整分值、调整原因、关联业务单号、备注、操作人。
+                    操作仅支持查看：点击后弹出订单详情，并展示该订单关联的信誉积分扣分 / 回滚明细。
                   </div>
                 </div>
                 <aside class="sidebar">
                   <div class="side-box">
                     <div class="hd">
-                      <strong>手动加减分</strong>
-                      <span>需要补的后台动作</span>
-                    </div>
-                    <div class="bd">
-                      <div class="mini-list">
-                        <div class="mini-item"><div><strong>调整类型</strong><span>加分 / 扣分 / 系统调整</span></div><span class="chip green">必填</span></div>
-                        <div class="mini-item"><div><strong>调整原因</strong><span>必须记录审计原因</span></div><span class="chip orange">必填</span></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="side-box">
-                    <div class="hd">
-                      <strong>状态含义</strong>
-                      <span>明细页要能讲清楚为什么变、变了多少、能否申诉</span>
+                      <strong>申诉状态</strong>
+                      <span>仅三种状态</span>
                     </div>
                     <div class="bd">
                       <div class="side-list">
-                        <div class="item">未申诉<small>可提交申诉</small></div>
-                        <div class="item">申诉中<small>不可重复提交</small></div>
-                        <div class="item">已回滚<small>生成恢复 / 回滚明细</small></div>
-                        <div class="item">系统调整<small>保留后台原因</small></div>
+                        <div class="item">未申诉<small>用户尚未发起申诉，或该记录无需申诉</small></div>
+                        <div class="item">已回滚<small>申诉通过后已生成恢复 / 回滚明细</small></div>
+                        <div class="item">驳回<small>申诉审核未通过，原扣分继续生效</small></div>
                       </div>
                     </div>
                   </div>
@@ -2371,67 +3028,75 @@
                 <h1 class="panel-title">申诉审核</h1>
                 <p class="panel-desc">新增后台审核页，用于查看用户对扣分记录的申诉，执行通过、驳回、补充说明和回滚动作。</p>
               </div>
-              <div class="toolbar">
-                <div class="group">
-                  <span class="badge blue">待审核</span>
-                  <span class="badge orange">审核中</span>
-                  <span class="badge green">已回滚</span>
-                </div>
-              </div>
               <div class="log-grid" style="padding: 14px 18px 18px;">
                 <div>
                   <div class="table-wrap">
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 10%;">申诉单号</th>
-                          <th style="width: 10%;">用户 UID</th>
-                          <th style="width: 12%;">关联扣分记录</th>
+                          <th style="width: 12%;">订单号</th>
+                          <th style="width: 9%;">用户 UID</th>
+                          <th style="width: 8%;">扣除分数</th>
                           <th style="width: 12%;">扣分规则</th>
                           <th style="width: 12%;">申诉原因</th>
-                          <th style="width: 10%;">状态</th>
-                          <th style="width: 10%;">审核结果</th>
-                          <th style="width: 10%;">处理人</th>
-                          <th style="width: 8%;">是否回滚</th>
-                          <th style="width: 6%;">操作</th>
+                          <th style="width: 14%;">申诉证据</th>
+                          <th style="width: 9%;">状态</th>
+                          <th style="width: 9%;">审核结果</th>
+                          <th style="width: 8%;">处理人</th>
+                          <th style="width: 7%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>AP20260514</td>
+                          <td class="left">ORDER202605130042</td>
                           <td>101406347</td>
-                          <td>ORDER202605130042</td>
-                          <td class="left">异常撤单扣分</td>
+                          <td class="score-minus">-6</td>
+                          <td class="left">恶意撤单</td>
                           <td class="left">订单责任需复核</td>
+                          <td>
+                            <div class="evidence-cell">
+                              <span class="evidence-thumb" title="证据图1"></span>
+                              <span class="evidence-thumb" title="证据图2"></span>
+                            </div>
+                          </td>
                           <td><span class="pill warn">待审核</span></td>
                           <td>未处理</td>
                           <td>--</td>
-                          <td>否</td>
-                          <td><span class="op secondary">审核</span></td>
+                          <td><span class="op secondary" data-dialog="appealAudit">审核</span></td>
                         </tr>
                         <tr>
-                          <td>AP20260515</td>
+                          <td class="left">ORDER202605100032</td>
                           <td>101406347</td>
-                          <td>COMPLAINT202605100032</td>
-                          <td class="left">虚假投诉扣分</td>
+                          <td class="score-minus">-3</td>
+                          <td class="left">虚假投诉</td>
                           <td class="left">举证不足</td>
-                          <td><span class="pill blue">审核中</span></td>
-                          <td>待结果</td>
+                          <td>
+                            <div class="evidence-cell">
+                              <span class="evidence-thumb" title="证据图1"></span>
+                            </div>
+                          </td>
+                          <td><span class="pill gray">驳回</span></td>
+                          <td>已处理</td>
                           <td>何冰冰</td>
-                          <td>否</td>
-                          <td><span class="op secondary">查看</span></td>
+                          <td><span class="op secondary" data-dialog="appealView">查看</span></td>
                         </tr>
                         <tr>
-                          <td>AP20260512</td>
+                          <td class="left">ORDER202605100087</td>
                           <td>101406347</td>
-                          <td>ORDER202605100087</td>
-                          <td class="left">账号异常使用</td>
+                          <td data-original-score="-4">0</td>
+                          <td class="left">租赁期间违规</td>
                           <td class="left">已补充证据</td>
+                          <td>
+                            <div class="evidence-cell">
+                              <span class="evidence-thumb" title="证据图1"></span>
+                              <span class="evidence-thumb" title="证据图2"></span>
+                              <span class="evidence-thumb" title="证据图3"></span>
+                            </div>
+                          </td>
                           <td><span class="pill green">已回滚</span></td>
-                          <td>通过</td>
+                          <td>已处理</td>
                           <td>何冰冰</td>
-                          <td>是</td>
-                          <td><span class="op secondary">日志</span></td>
+                          <td><span class="op secondary" data-dialog="appealView">查看</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -2445,7 +3110,7 @@
                     </div>
                     <div class="bd">
                       <div class="flow">
-                        <div class="flow-step"><strong>1 查看扣分</strong>定位关联扣分记录和申诉理由</div>
+                        <div class="flow-step"><strong>1 查看扣分</strong>核对扣除分数、触发规则、申诉理由与用户上传的申诉证据图片</div>
                         <div class="flow-step"><strong>2 审核结果</strong>通过 / 驳回 / 补充说明</div>
                         <div class="flow-step"><strong>3 回滚记录</strong>通过后生成回滚明细，系统按最新分值匹配限制策略</div>
                       </div>
@@ -2453,14 +3118,14 @@
                   </div>
                   <div class="side-box">
                     <div class="hd">
-                      <strong>用户侧回显</strong>
-                      <span>审核结果需要同步给用户</span>
+                      <strong>状态与操作</strong>
+                      <span>与列表口径一致</span>
                     </div>
                     <div class="bd">
                       <div class="side-list">
-                        <div class="item">通过<small>显示已回滚与恢复明细</small></div>
-                        <div class="item">驳回<small>显示驳回原因</small></div>
-                        <div class="item">审核中<small>不允许重复提交</small></div>
+                        <div class="item">待审核<small>审核结果为未处理，操作显示「审核」</small></div>
+                        <div class="item">已回滚<small>审核结果为已处理，操作显示「查看」</small></div>
+                        <div class="item">驳回<small>审核结果为已处理，操作显示「查看」</small></div>
                       </div>
                     </div>
                   </div>
@@ -2472,20 +3137,8 @@
           <section class="panel" data-panel="log">
             <div class="panel-shell">
               <div class="panel-head">
-                <h1 class="panel-title">规则日志 / 操作审计</h1>
-                <p class="panel-desc">补齐规则命中、配置变更、手动调整、回滚、灰度和批量重算等追溯能力。</p>
-              </div>
-              <div class="toolbar">
-                <div class="group">
-                  <button class="btn primary" data-dialog="logQuery">查询日志</button>
-                  <button class="btn">导出</button>
-                </div>
-                <div class="group">
-                  <span class="badge gray">规则命中</span>
-                  <span class="badge gray">配置变更</span>
-                  <span class="badge gray">手动调整</span>
-                  <span class="badge gray">回滚日志</span>
-                </div>
+                <h1 class="panel-title">操作日志</h1>
+                <p class="panel-desc">仅记录后台规则配置的修改操作；系统扣分命中、申诉回滚等业务日志不在此统计。</p>
               </div>
               <div class="log-grid" style="padding: 14px 18px 18px;">
                 <div>
@@ -2493,61 +3146,48 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 10%;">日志类型</th>
-                          <th style="width: 11%;">用户 / 对象</th>
-                          <th style="width: 11%;">调整类型</th>
-                          <th style="width: 10%;">分值 / 变更</th>
-                          <th style="width: 22%;">调整原因 / 操作内容</th>
-                          <th style="width: 14%;">关联业务单号</th>
-                          <th style="width: 10%;">调整人</th>
-                          <th style="width: 9%;">时间</th>
-                          <th style="width: 3%;">操作</th>
+                          <th style="width: 14%;">日志类型</th>
+                          <th style="width: 16%;">调整功能</th>
+                          <th style="width: 38%;">变更内容</th>
+                          <th style="width: 14%;">调整人</th>
+                          <th style="width: 18%;">时间</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>规则命中</td>
-                          <td>101406347</td>
-                          <td>扣分</td>
-                          <td>-6</td>
-                          <td class="left">命中异常撤单扣分规则</td>
-                          <td class="left">ORDER202605130042</td>
-                          <td>系统</td>
-                          <td>2026-05-19 10:40</td>
-                          <td><span class="op secondary">查看</span></td>
+                          <td>配置变更</td>
+                          <td>减分配置</td>
+                          <td class="left">「恶意撤单」规则扣分项由 -4 改为 -6</td>
+                          <td>何冰冰</td>
+                          <td>2026-05-19 11:12</td>
                         </tr>
                         <tr>
                           <td>配置变更</td>
-                          <td>特价专区限制</td>
-                          <td>阈值调整</td>
-                          <td>30 / 20</td>
-                          <td class="left">调整特价专区触发阈值</td>
-                          <td>--</td>
+                          <td>减分配置</td>
+                          <td class="left">「虚假投诉」规则扣分项由 -2 改为 -3</td>
                           <td>何冰冰</td>
-                          <td>2026-05-19 11:12</td>
-                          <td><span class="op secondary">查看</span></td>
+                          <td>2026-05-19 11:28</td>
                         </tr>
                         <tr>
-                          <td>手动调整</td>
-                          <td>用户 101406347</td>
-                          <td>手动加分</td>
-                          <td>+4</td>
-                          <td class="left">修正异常撤单误扣</td>
-                          <td class="left">ORDER202605130042</td>
+                          <td>配置变更</td>
+                          <td>惩罚配置</td>
+                          <td class="left">「特价专区」限制策略总分阈值由 80 改为 70</td>
                           <td>何冰冰</td>
                           <td>2026-05-19 14:08</td>
-                          <td><span class="op secondary">查看</span></td>
                         </tr>
                         <tr>
-                          <td>回滚日志</td>
-                          <td>AP20260512</td>
-                          <td>申诉回滚</td>
-                          <td>+6</td>
-                          <td class="left">申诉通过恢复原扣分</td>
-                          <td class="left">APPEAL202605140018</td>
+                          <td>配置变更</td>
+                          <td>等级配置</td>
+                          <td class="left">「预警」状态展示文案由「需关注」改为「当前信誉状态需要关注」</td>
                           <td>何冰冰</td>
                           <td>2026-05-19 15:32</td>
-                          <td><span class="op secondary">查看</span></td>
+                        </tr>
+                        <tr>
+                          <td>配置变更</td>
+                          <td>信用修复配置</td>
+                          <td class="left">「优质用户近期突降修复」近30天扣分突降门槛由 20 改为 30</td>
+                          <td>何冰冰</td>
+                          <td>2026-05-19 16:05</td>
                         </tr>
                       </tbody>
                     </table>
@@ -2556,15 +3196,14 @@
                 <aside class="sidebar">
                   <div class="side-box">
                     <div class="hd">
-                      <strong>补齐的能力</strong>
-                      <span>老后台没有或者表达不完整的部分</span>
+                      <strong>统计范围</strong>
+                      <span>仅后台配置修改</span>
                     </div>
                     <div class="bd">
                       <div class="side-list">
-                        <div class="item">规则命中日志<small>解释为什么扣分 / 为什么限制</small></div>
-                        <div class="item">配置变更日志<small>记录新增、修改、启停、删除</small></div>
-                        <div class="item">回滚日志<small>申诉通过后可追溯</small></div>
-                        <div class="item">批量重算<small>规则改动后的存量修正</small></div>
+                        <div class="item">纳入统计<small>体系 / 减分 / 惩罚 / 等级 / 信用修复等规则配置的新增、修改、启停</small></div>
+                        <div class="item">变更内容<small>写明规则名称与字段前后值，例如「恶意撤单」规则扣分项由 -4 改为 -6</small></div>
+                        <div class="item">不纳入<small>系统扣分命中日志、申诉回滚日志等业务流水</small></div>
                       </div>
                     </div>
                   </div>
@@ -2632,7 +3271,6 @@
       <div class="modal-body" id="modalBody"></div>
       <footer class="modal-actions" id="modalActions">
         <button class="btn" type="button" data-close-modal>取消</button>
-        <button class="btn ghost" type="button">保存草稿</button>
         <button class="btn primary" type="button" data-close-modal>确认保存</button>
       </footer>
     </section>
@@ -2651,130 +3289,63 @@
 
     const dialogConfigs = {
       systemRule: {
-        title: "新增体系规则",
-        desc: "用于配置加分规则、扣分分类归属、统计窗口、月度上限和申诉口径。具体扣分值仍在减分配置维护。",
+        title: "修改体系规则",
+        desc: "",
         sections: [
           {
-            title: "分类与映射",
+            title: "体系规则",
             fields: [
-              ["规则方向", "加分 / 减分 / 不计分", true, "", "select"],
-              ["一级分类", "基础信息 / 订单行为 / 订单环节 / 平台级恶意行为 / 账号处置", true, "", "select"],
-              ["二级场景", "账号绑定 / 正常结算 / 累计完单 / 投诉核实 / 风控命中 / 关闭封禁", true, "", "select"],
-              ["规则项名称", "例如正常结算（履约）", true]
+              ["规则方向", "加分", false, "", "disabled"],
+              ["一级分类", "基础信息", false, "", "disabled"],
+              ["二级场景", "绑定手机号", false, "", "disabled"],
+              ["状态", "开启", false, "", "disabled"],
+              ["单次分值", "+2", true, "", "input"]
             ]
-          },
-          {
-            title: "分值与上限",
-            fields: [
-              ["分值配置方式", "固定加分 / 关联减分配置 / 不计分", true, "", "select"],
-              ["单次分值", "请输入分值，例如 +1 / +3；减分分类可选择关联减分配置", true],
-              ["月度加分上限", "加分规则必填，例如 20 分/月", false],
-              ["达标阈值", "累计完单规则填写 X 天或 X 次", false]
-            ],
-            tip: "正常结算和累计完单共享月度加分上限；达到上限后继续记录明细，但不再增加总分。"
-          },
-          {
-            title: "统计与状态",
-            fields: [
-              ["统计窗口", "近30天 / 2-12个月 / 自然月 / 长期有效 / 实时生效", true, "", "select"],
-              ["是否允许申诉", "是 / 否 / 部分可申诉", true, "", "select"],
-              ["展示说明", "用于说明该规则在用户端的展示口径", false, "wide"],
-              ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
-            ],
-            tip: "近30天行为进入近期行为分，历史2-12个月行为进入历史累积分；规则归属不在用户端展示双轨分。"
           }
         ]
       },
       deductRule: {
-        title: "新增扣分规则",
-        desc: "用于配置订单环节、平台级恶意行为、账号处置等扣分行为和分值；权益限制不在本页配置。",
+        title: "修改扣分规则",
+        desc: "",
         sections: [
           {
-            title: "规则基础",
+            title: "扣分规则",
             fields: [
-              ["一级分类", "订单环节 / 平台级恶意行为 / 账号处置", true, "", "select"],
-              ["业务场景", "投诉核实 / 租赁违规 / 撤单行为 / 风控设备 / 外挂识别 / 账号处置", true, "", "select"],
-              ["扣分规则项", "请选择或输入规则项，例如风险设备 / 设备异常", true],
-              ["触发来源", "订单系统 / 投诉系统 / 风控系统 / 处罚系统 / 接口同步", true, "", "select"]
+              ["一级分类", "订单环节", false, "", "disabled"],
+              ["业务场景", "投诉核实", false, "", "disabled"],
+              ["扣分规则项", "虚假投诉", false, "", "disabled"],
+              ["适用业务", "租号 / 交易", false, "", "disabled"],
+              ["扣分值", "-3", true, "", "input"],
+              ["是否允许申诉", "是 / 否", true, "", "select", "是"],
+              ["状态", "开启 / 关闭", true, "", "select", "开启"],
+              ["用户端展示原因", "", false, "wide", "input"]
             ]
-          },
-          {
-            title: "扣分与适用范围",
-            fields: [
-              ["扣分值", "请输入负分，例如 -8；预留接口可暂不启用", true],
-              ["适用业务", "租号 / 陪玩 / 代练 / 交易 / 全业务", true, "", "select"],
-              ["是否允许申诉", "是 / 否 / 部分可申诉", true, "", "select"],
-              ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
-            ],
-            tip: "订单类默认可申诉；风控类按来源部分可申诉；账号处置类通常不在本页开放申诉。"
-          },
-          {
-            title: "说明",
-            fields: [
-              ["触发口径", "说明该规则何时命中、是否需要核实成功", true, "wide"],
-              ["用户端展示原因", "用于积分明细展示的扣分原因", false, "wide"]
-            ],
-            tip: "扣分记录生成后进入用户积分明细；业务限制由惩罚配置根据最新总分和风险状态自动判断。"
           }
         ]
       },
       limitRule: {
-        title: "新增限制策略",
-        desc: "用于配置找号、下单、发布账号、领券、活动等场景的提醒或拦截策略。",
+        title: "修改限制策略",
+        desc: "",
         sections: [
           {
-            title: "场景与触发条件",
+            title: "限制策略",
             fields: [
-              ["限制场景", "高价值账号 / 特价专区 / 热门游戏 / 下单租用 / 发布账号 / 领券中心 / 活动参与", true, "", "select"],
-              ["策略名称", "请输入限制策略名称", true],
-              ["总信誉积分阈值", "请输入 0-200 内阈值，例如 80", false],
-              ["近期行为分阈值", "低于或等于多少分触发", false]
+              ["限制场景", "高价值账号", false, "", "disabled"],
+              ["总信誉积分", "80", false, "", "threshold", "小于"],
+              ["近期行为分", "", false, "", "threshold", "小于"],
+              ["处理方式", "弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", "弹窗提醒"],
+              ["限制时长", "当天 / 一周 / 7 天 / 30 天 / 自定义天数", true, "", "select", "当天"],
+              ["状态", "开启 / 关闭", true, "", "select", "开启"]
             ]
-          },
-          {
-            title: "处理与时长",
-            fields: [
-              ["处理方式", "弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select"],
-              ["限制时长", "当天 / 一周 / 30 天 / 自定义天数", true, "", "select"],
-              ["前端提示正文", "原因 + 影响 + 下一步入口", true, "wide"],
-              ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
-            ],
-            tip: "限制策略生效后的解除逻辑由程序内置规则处理，本页只配置触发分值、处理方式、限制时长和前端提示。"
           }
         ]
       },
       legacyRule: {
-        title: "新增历史功能规则",
-        desc: "用于在撤单限制配置、租客投诉规则列表等历史功能中补充双分值条件。",
-        sections: [
-          {
-            title: "基础条件",
-            fields: [
-              ["历史功能类型", "撤单限制配置 / 租客投诉规则列表", true, "", "select"],
-              ["用户身份", "普通用户 / 普通分销 / 至尊VIP用户", true, "", "select"],
-              ["游戏类型", "全部游戏 / 指定游戏", true, "", "select"],
-              ["投诉类型", "请选择投诉类型", true, "", "select"]
-            ]
-          },
-          {
-            title: "信誉积分条件",
-            fields: [
-              ["历史累积分条件", "不限 / 小于 / 小于等于 / 大于等于", true, "", "select"],
-              ["历史累积分阈值", "请输入历史累积分阈值，例如 25", false],
-              ["近期行为分条件", "不限 / 小于 / 小于等于 / 大于等于", true, "", "select"],
-              ["近期行为分阈值", "请输入近期行为分阈值，例如 60", false]
-            ],
-            tip: "历史功能原有“信誉积分”字段拆成两个子项：历史累积分用于长期表现判断，近期行为分用于近期风险判断。"
-          },
-          {
-            title: "限制配置",
-            fields: [
-              ["限制方式", "撤单提醒 / 限制撤单 / 限制部分类型次数上限 / 限制部分类型不可选", true, "", "select"],
-              ["限制周期", "请输入限制次数/周期，例如 3/1", false],
-              ["状态", "开启 / 关闭", true, "", "select"]
-            ]
-          }
-        ]
+        title: "修改",
+        desc: "",
+        modalClass: "is-cancel-form",
+        primaryAction: "保存",
+        sections: []
       },
       copyLimit: {
         title: "复制限制策略",
@@ -2793,138 +3364,132 @@
         ]
       },
       statusRule: {
-        title: "新增信誉状态",
-        desc: "用于配置用户端展示的信誉状态和后台风险判断区间，不绑定奖励权益。各状态区间不可重复、不可交集。",
+        title: "修改等级配置",
+        desc: "",
         sections: [
           {
-            title: "状态区间",
+            title: "信誉状态",
             fields: [
-              ["状态名称", "请输入状态名称，例如部分受限", true],
-              ["状态等级", "数字越大风险越高", true],
-              ["总信誉积分区间", "例如 80 - 119", true],
-              ["近期行为分区间", "例如 40 - 59", true]
+              ["状态名称", "正常", false, "", "disabled"],
+              ["总信誉积分区间", "160 - 200", true, "", "input"],
+              ["近期行为分区间", "80 - 100", true, "", "input"],
+              ["展示文案", "当前信誉状态正常", true, "wide", "input"],
+              ["状态", "开启 / 关闭", true, "", "select", "开启"]
             ]
-          },
-          {
-            title: "展示与策略联动",
-            fields: [
-              ["展示文案", "用户端状态说明", true, "wide"],
-              ["是否触发限制策略", "是 / 否", true, "", "select"],
-              ["关联限制策略", "可多选", false, "", "select"],
-              ["状态", "开启 / 关闭", true, "", "select"]
-            ],
-            tip: "用户端只展示总信誉积分和信誉状态，不展示历史累积分、近期行为分等内部拆分值；前端需展示当前状态命中的限制策略。"
           }
         ]
       },
       repairTriggerRule: {
-        title: "新增信用修复触发规则",
-        desc: "用于配置哪些用户可以在前端看到信用修复入口。",
+        title: "修改信用修复触发规则",
+        desc: "",
         sections: [
           {
-            title: "触发条件",
+            title: "触发规则",
             fields: [
-              ["规则名称", "例如优质用户近期突降修复", true],
-              ["历史信誉积分门槛", "请输入门槛，例如 80", true],
-              ["近30天扣分突降门槛", "请输入累计扣分，例如 30", true],
-              ["当前总分区间", "例如 70 - 119", true],
-              ["近期行为分区间", "例如 ≤ 75", true],
-              ["排除用户", "红线 / 清零 / 永久限制", true, "", "select"]
+              ["规则名称", "优质用户近期突降修复", false, "", "disabled"],
+              ["历史信誉积分门槛", "≥ 80", true, "", "input"],
+              ["近30天扣分突降门槛", "累计扣分 ≥ 30", true, "", "input"],
+              ["状态", "开启 / 关闭", true, "", "select", "开启"]
             ]
           }
         ]
       },
       repairRule: {
-        title: "新增信用修复规则",
-        desc: "用于配置答题通过后的恢复分值、总分上限和用户频次限制。",
+        title: "修改信用修复规则",
+        desc: "",
         sections: [
           {
             title: "修复规则",
             fields: [
-              ["答题通过标准", "5题全对 / 允许错1题", true, "", "select"],
-              ["单次恢复分值", "请输入正分，例如 +10", true],
-              ["修复后总分上限", "请输入上限，例如 120", true],
-              ["用户频次限制", "7天1次 / 30天1次 / 90天1次", true, "", "select"],
-              ["失败冷却时间", "24小时后重试 / 48小时后重试", true, "", "select"],
-              ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
-            ],
-            tip: "信用修复只恢复近期行为分，不抹除违规记录，也不替代申诉；红线、清零、永久限制用户不展示入口。"
+              ["答题通过标准", "全部答题通过", false, "", "disabled"],
+              ["单次恢复分值", "+10", true, "", "input"],
+              ["用户频次限制", "7天1次 / 30天1次 / 90天1次 / 30 天 1 次", true, "", "select", "30 天 1 次"]
+            ]
           }
         ]
       },
       repairQuestion: {
-        title: "新增信用修复题目",
-        desc: "用于维护租号玩业务安全答题题库，题目围绕基础行为规范，避免再次违规。",
+        title: "修改信用修复题目",
+        desc: "",
+        compact: true,
         sections: [
           {
-            title: "题目基础",
+            title: "题目配置",
             fields: [
-              ["题目分类", "账号安全 / 环境异常 / 投诉撤单 / 私下交易", true, "", "select"],
-              ["适用业务", "租号 / 交易 / 全业务", true, "", "select"],
-              ["题干", "请输入题目内容", true, "wide"],
-              ["正确答案方向", "说明正确处理方式，用户端不直接展示", true, "wide"]
+              ["题目分类", "账号安全", true, "", "input"],
+              ["题干", "", true, "full", "textarea"],
+              ["正确答案", "", true, "full", "textarea"],
+              ["错误答案1", "", true, "", "textarea"],
+              ["错误答案2", "", true, "", "textarea"],
+              ["错误答案3", "", false, "", "textarea"]
             ]
-          },
-          {
-            title: "答案与状态",
-            fields: [
-              ["正确选项", "请输入正确选项文案", true, "wide"],
-              ["错误选项一", "请输入错误选项文案", true, "wide"],
-              ["错误选项二", "请输入错误选项文案", true, "wide"],
-              ["状态", "开启 / 关闭 / 草稿", true, "", "select"]
-            ],
-            tip: "题目表达避免奖励感，重点强调平台基础规范：不能开挂、环境异常要联系平台、不可虚假投诉、不可绕过平台。"
           }
         ]
       },
       manualAdjust: {
-        title: "手动加减分",
-        desc: "用于后台人工修正用户积分，所有调整必须生成系统调整明细并记录审计日志。",
+        title: "信誉积分手动加减分",
+        desc: "",
+        compact: true,
+        modalClass: "is-manual-adjust",
+        primaryAction: "提交",
         sections: [
           {
-            title: "用户与调整",
+            title: "手动加减分",
             fields: [
-              ["用户 UID", "请输入用户 UID", true],
-              ["调整类型", "加分 / 扣分 / 系统调整", true, "", "select"],
-              ["调整分值", "请输入本次调整分值", true]
+              ["用户名", "", true, "full", "input"],
+              ["分值", "", true, "full", "input", "", "加分正常填写数字，减分前面加个「-」\n例如减 5 分，则输入-5"],
+              ["备注", "管理员手动添加", false, "full", "input", "", "用户可见"]
             ]
-          },
-          {
-            title: "原因与审计",
-            fields: [
-              ["调整原因", "必须填写后台调整原因", true, "wide"],
-              ["关联业务单号", "订单号 / 投诉单号 / 申诉单号", false, "", "select"],
-              ["备注", "选填，仅后台可见", false, "wide"],
-              ["操作人", "系统自动记录当前后台账号", true]
-            ],
-            tip: "手动调整不允许无原因提交；提交后需要同步进入用户明细，并在规则日志中记录调整详情、调整原因和操作人。"
           }
         ]
       },
       appealAudit: {
         title: "申诉审核",
-        desc: "用于处理用户对扣分记录的申诉，审核通过后触发扣分回滚，系统按最新信誉分自动匹配限制策略。",
+        desc: "",
+        appealSubmit: true,
         sections: [
           {
-            title: "申诉单信息",
+            title: "申诉信息",
+            readonly: true,
             fields: [
-              ["申诉单号", "APPEAL202605140018", true],
-              ["用户 UID", "101406347", true],
-              ["关联扣分记录", "ORDER202605130042", true],
-              ["扣分规则名称", "异常撤单扣分", true],
-              ["原扣分值", "-6", true]
+              ["订单号", "ORDER202605130042", false],
+              ["用户 UID", "101406347", false],
+              ["扣除分数", "-6", false],
+              ["扣分规则", "恶意撤单", false],
+              ["申诉原因", "订单责任需复核", false, "wide"],
+              ["申诉证据", "", false, "full", "evidence", "2"],
+              ["状态", "待审核", false]
             ]
           },
           {
             title: "审核处理",
             fields: [
               ["审核结果", "通过 / 驳回", true, "", "select"],
-              ["审核说明", "请输入处理说明，用户端可展示", true, "wide"],
-              ["是否回滚", "通过时默认回滚", true, "", "select"],
-              ["回滚分值", "自动带出原扣分值", true],
-              ["处理来源", "审核后台", true, "", "select"]
-            ],
-            tip: "审核通过：生成恢复/回滚明细，原扣分记录保留；审核驳回：原扣分继续生效并展示驳回原因。业务限制由系统按最新分值自动判断。"
+              ["审核说明", "请输入处理说明，用户端可展示", true, "wide"]
+            ]
+          }
+        ]
+      },
+      appealView: {
+        title: "申诉详情",
+        desc: "",
+        viewOnly: true,
+        primaryAction: "关闭",
+        sections: [
+          {
+            title: "申诉信息",
+            readonly: true,
+            fields: [
+              ["订单号", "ORDER202605100032", false],
+              ["用户 UID", "101406347", false],
+              ["扣除分数", "-3", false],
+              ["扣分规则", "虚假投诉", false],
+              ["申诉原因", "举证不足", false, "wide"],
+              ["申诉证据", "", false, "full", "evidence", "1"],
+              ["状态", "驳回", false],
+              ["审核结果", "已处理", false],
+              ["处理人", "何冰冰", false]
+            ]
           }
         ]
       },
@@ -2945,6 +3510,36 @@
             tip: "日志查询需要能追溯每一次手动加减分的调整详情、调整原因、关联单号和操作人。"
           }
         ]
+      },
+      orderCreditDetail: {
+        title: "订单详情",
+        desc: "",
+        viewOnly: true,
+        primaryAction: "关闭",
+        sections: [
+          {
+            title: "订单信息",
+            fields: [
+              ["订单号", "ORDER202605130042", false, "", "text"],
+              ["用户 UID", "101406347", false, "", "text"],
+              ["业务类型", "租号", false, "", "text"],
+              ["订单状态", "已完成", false, "", "text"],
+              ["下单时间", "2026-05-13 14:22:18", false, "", "text"],
+              ["订单金额", "¥68.00", false, "", "text"]
+            ]
+          },
+          {
+            title: "信誉积分变动",
+            fields: [
+              ["变动类型", "扣分", false, "", "text"],
+              ["触发规则名称", "恶意撤单（多次）", false, "", "text"],
+              ["分值变化", "-6", false, "", "text"],
+              ["变动时间", "2026-05-13 16:08:42", false, "", "text"],
+              ["扣分原因", "订单在履约过程中命中「恶意撤单（多次）」规则，经核实后计入近期行为分扣分。", false, "wide", "text"],
+              ["申诉状态", "未申诉", false, "", "text"]
+            ]
+          }
+        ]
       }
     };
 
@@ -2958,9 +3553,76 @@
       legacyPanes.forEach((pane) => pane.classList.toggle("active", pane.dataset.legacyPanel === tabKey));
     }
 
-    function fieldHtml(field) {
-      const [label, placeholder, required, span, type] = field;
+    function detailValueClass(label, value) {
+      const text = String(value || "").trim();
+      if (/分值|扣分值|回滚分值|分值变化/.test(label)) {
+        if (/^-/.test(text)) return "detail-value is-score-minus";
+        if (/^\+/.test(text)) return "detail-value is-score-plus";
+      }
+      if (/原因|说明/.test(label)) return "detail-value is-muted";
+      return "detail-value";
+    }
+
+    function fieldHtml(field, options = {}) {
+      const [label, placeholder, required, span, type, selectedValue, tip] = field;
       const className = span === "full" ? "modal-field full" : span === "wide" ? "modal-field wide" : "modal-field";
+      const tipHtml = tip ? `<div class="field-tip">${escapeHtml(tip)}</div>` : "";
+
+      if (type === "evidence") {
+        const count = Math.max(1, Math.min(parseInt(selectedValue || "2", 10) || 2, 6));
+        const thumbs = Array.from({ length: count }, (_, i) =>
+          `<span class="evidence-thumb" title="证据图${i + 1}"></span>`
+        ).join("");
+        return `
+          <div class="${className}">
+            <label>${escapeHtml(label)}</label>
+            <div class="evidence-gallery">${thumbs}</div>
+            ${tipHtml}
+          </div>
+        `;
+      }
+
+      if (options.viewOnly || type === "text" || type === "display" || type === "readonly") {
+        return `
+          <div class="${className}">
+            <label>${escapeHtml(label)}</label>
+            <div class="${detailValueClass(label, placeholder)}">${escapeHtml(placeholder)}</div>
+            ${tipHtml}
+          </div>
+        `;
+      }
+
+      if (type === "threshold") {
+        const op = selectedValue || "小于";
+        const ops = ["大于", "小于", "区间", "大于等于", "小于等于"];
+        return `
+          <div class="${className}">
+            <label>${escapeHtml(label)}${required ? "<em>必填</em>" : ""}</label>
+            <div class="threshold-row">
+              <select class="fake-input select" aria-label="${escapeHtml(label)}条件">
+                ${ops.map((item) => `<option value="${escapeHtml(item)}"${item === op ? " selected" : ""}>${escapeHtml(item)}</option>`).join("")}
+              </select>
+              <input class="fake-input" type="text" value="${escapeHtml(placeholder)}" placeholder="${op === "区间" ? "例如 60-80" : "请输入数值"}" aria-label="${escapeHtml(label)}数值" />
+            </div>
+            ${tipHtml}
+          </div>
+        `;
+      }
+
+      if (type === "unit") {
+        const unit = selectedValue || "天";
+        return `
+          <div class="${className}">
+            <label>${escapeHtml(label)}${required ? "<em>必填</em>" : ""}</label>
+            <div class="unit-row">
+              <input class="fake-input" type="text" value="${escapeHtml(placeholder)}" placeholder="请输入${escapeHtml(label)}" aria-label="${escapeHtml(label)}" />
+              <span class="unit-text">${escapeHtml(unit)}</span>
+            </div>
+            ${tipHtml}
+          </div>
+        `;
+      }
+
       const selectLabels = new Set([
         "一级分类", "二级场景", "二级分类", "适用业务", "行为类型", "行为范围",
         "分值配置方式",
@@ -2971,22 +3633,50 @@
         "调整类型", "关联业务单号", "申诉状态", "审核结果",
         "是否回滚", "处理来源", "日志类型"
       ]);
-      const isSelect = type === "select" || selectLabels.has(label);
+      const forceStatic = type === "static" || type === "input" || type === "textarea" || type === "disabled" || type === "number" || type === "unit";
+      const isSelect = !forceStatic && (type === "select" || selectLabels.has(label));
+      // 手动加减分等短文本字段保持单行
+      const forceSingleLine = /^(用户名|分值|备注)$/.test(label);
+      const useTextarea = type === "textarea" || (type === "input" && (span === "wide" || span === "full") && !forceSingleLine);
       const inputClass = [
         "fake-input",
-        !isSelect && (span === "wide" || span === "full") ? "multi" : "",
+        !isSelect && useTextarea ? "multi" : "",
         isSelect ? "select" : ""
       ].filter(Boolean).join(" ");
 
       if (isSelect) {
-        const { prompt, options } = selectData(placeholder);
+        const { prompt, options: selectOptions } = selectData(placeholder);
+        const current = selectedValue != null && selectedValue !== "" ? String(selectedValue) : "";
         return `
           <div class="${className}">
             <label>${escapeHtml(label)}${required ? "<em>必填</em>" : ""}</label>
             <select class="${inputClass}" aria-label="${escapeHtml(label)}">
-              <option value="" selected>${escapeHtml(prompt)}</option>
-              ${options.map((option) => `<option value="${escapeHtml(option)}">${escapeHtml(option)}</option>`).join("")}
+              ${current ? "" : `<option value="" selected>${escapeHtml(prompt)}</option>`}
+              ${selectOptions.map((option) => `<option value="${escapeHtml(option)}"${option === current ? " selected" : ""}>${escapeHtml(option)}</option>`).join("")}
             </select>
+            ${tipHtml}
+          </div>
+        `;
+      }
+
+      if (type === "input" || type === "textarea" || type === "number" || type === "disabled" || options.useInput) {
+        const disabled = type === "disabled" ? " disabled" : "";
+        if (useTextarea) {
+          return `
+            <div class="${className}">
+              <label>${escapeHtml(label)}${required ? "<em>必填</em>" : ""}</label>
+              <textarea class="fake-input multi" aria-label="${escapeHtml(label)}"${disabled}>${escapeHtml(placeholder)}</textarea>
+              ${tipHtml}
+            </div>
+          `;
+        }
+        const valueAttr = placeholder ? ` value="${escapeHtml(placeholder)}"` : "";
+        const ph = placeholder || `请输入${label}`;
+        return `
+          <div class="${className}">
+            <label>${escapeHtml(label)}${required ? "<em>必填</em>" : ""}</label>
+            <input class="${inputClass}" type="text"${valueAttr} placeholder="${escapeHtml(ph)}" aria-label="${escapeHtml(label)}"${disabled} />
+            ${tipHtml}
           </div>
         `;
       }
@@ -2995,8 +3685,606 @@
         <div class="${className}">
           <label>${escapeHtml(label)}${required ? "<em>必填</em>" : ""}</label>
           <div class="${inputClass}">${escapeHtml(placeholder)}</div>
+          ${tipHtml}
         </div>
       `;
+    }
+
+    function parseCompareOp(text) {
+      const t = String(text || "").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+      if (/小于等于|≤|<=/.test(t)) return "小于等于";
+      if (/大于等于|≥|>=/.test(t)) return "大于等于";
+      if (/\d+\s*[-~—–]\s*\d+/.test(t) || /区间/.test(t)) return "区间";
+      if (/小于|</.test(t)) return "小于";
+      if (/大于|>/.test(t)) return "大于";
+      return "小于";
+    }
+
+    function parseScoreThresholds(conditionText) {
+      const text = String(conditionText || "").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+      const op = parseCompareOp(text);
+      const nums = text.match(/\d+/g) || [];
+      const value = op === "区间" && nums.length >= 2 ? `${nums[0]}-${nums[1]}` : (nums[0] || "");
+      if (/总信誉积分|总分/.test(text)) {
+        return { totalOp: op, total: value, recentOp: "小于", recent: "" };
+      }
+      if (/近期行为分|近期/.test(text)) {
+        return { totalOp: "小于", total: "", recentOp: op, recent: value };
+      }
+      return { totalOp: "小于", total: "", recentOp: "小于", recent: "" };
+    }
+
+    function mapHandleType(text) {
+      const t = String(text || "").trim();
+      if (/提醒/.test(t)) return "弹窗提醒";
+      if (/禁止领券/.test(t)) return "禁止领券";
+      if (/禁止参与/.test(t)) return "禁止参与活动";
+      if (/拦截下单|拦截/.test(t)) return "拦截下单";
+      return t || "弹窗提醒";
+    }
+
+    function mapDuration(text) {
+      const t = String(text || "").trim();
+      if (t === "7 天" || t === "7天") return "7 天";
+      if (t === "30 天" || t === "30天") return "30 天";
+      return t || "当天";
+    }
+
+    function openPunishRuleEdit(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const scene = cells[0]?.textContent.trim() || "高价值账号";
+      const condition = cells[1]?.textContent.trim() || "总信誉积分 < 80";
+      const handle = mapHandleType(cells[2]?.textContent.trim());
+      const duration = mapDuration(cells[3]?.textContent.trim());
+      const status = cells[4]?.textContent.trim() || "开启";
+      const { totalOp, total, recentOp, recent } = parseScoreThresholds(condition);
+
+      openDialog({
+        title: "修改限制策略",
+        desc: "",
+        sections: [
+          {
+            title: "限制策略",
+            fields: [
+              ["限制场景", scene, false, "", "disabled"],
+              ["总信誉积分", total, false, "", "threshold", totalOp],
+              ["近期行为分", recent, false, "", "threshold", recentOp],
+              ["处理方式", "弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", handle],
+              ["限制时长", [duration, "当天", "一周", "7 天", "30 天", "自定义天数"].filter((v, i, a) => v && a.indexOf(v) === i).join(" / "), true, "", "select", duration],
+              ["状态", "开启 / 关闭", true, "", "select", status]
+            ]
+          }
+        ]
+      });
+    }
+
+    function openStatusRuleEdit(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const name = cells[0]?.textContent.trim() || "正常";
+      const totalRange = cells[1]?.textContent.trim() || "160 - 200";
+      const recentRange = cells[2]?.textContent.trim() || "80 - 100";
+      const copy = cells[3]?.textContent.trim() || "";
+      const status = cells[4]?.textContent.trim() || "开启";
+
+      openDialog({
+        title: "修改等级配置",
+        desc: "",
+        sections: [
+          {
+            title: "信誉状态",
+            fields: [
+              ["状态名称", name, false, "", "disabled"],
+              ["总信誉积分区间", totalRange, true, "", "input"],
+              ["近期行为分区间", recentRange, true, "", "input"],
+              ["展示文案", copy, true, "wide", "input"],
+              ["状态", "开启 / 关闭", true, "", "select", status]
+            ]
+          }
+        ]
+      });
+    }
+
+    function parseScoreCompare(text) {
+      const raw = String(text || "").trim();
+      if (!raw || raw === "不限") return { op: "不限", value: "" };
+      let op = "小于等于";
+      if (/小于等于|≤|<=/.test(raw)) op = "小于等于";
+      else if (/大于等于|≥|>=/.test(raw)) op = "大于等于";
+      else if (/小于|</.test(raw)) op = "小于";
+      else if (/大于|>/.test(raw)) op = "大于";
+      else if (/等于|=/.test(raw)) op = "等于";
+      const num = (raw.match(/\d+/) || [""])[0];
+      return { op, value: num };
+    }
+
+    function parseSlashPair(text) {
+      const parts = String(text || "").split("/").map((item) => item.trim());
+      return { count: parts[0] || "", days: parts[1] || "1" };
+    }
+
+    function parseOrderRange(text) {
+      const raw = String(text || "").trim();
+      if (!raw || raw === "不限" || raw === "无订单") return { min: raw === "无订单" ? "0" : "0", max: raw === "无订单" ? "0" : "1000", label: raw };
+      const nums = raw.match(/\d+/g) || [];
+      return { min: nums[0] || "0", max: nums[1] || nums[0] || "1000", label: raw };
+    }
+
+    function cancelRuleFormHtml(data = {}) {
+      const identity = data.identity || "普通用户";
+      const games = (data.games || "王者荣耀,和平精英").split(/[,，]/).map((item) => item.trim()).filter(Boolean);
+      const hist = parseScoreCompare(data.hist || "小于等于98分");
+      const recent = parseScoreCompare(data.recent || "小于等于60分");
+      const regTime = data.regTime || "不限";
+      const orderRange = parseOrderRange(data.orderRange || "0 - 1000");
+      const remind = data.remind || "2";
+      const cancelLimit = parseSlashPair(data.cancelLimit || "5/1");
+      const rentLimit = parseSlashPair(data.rentLimit || "5/1");
+      const priority = data.priority || "99";
+      const status = data.status || "开启";
+      const isAdd = Boolean(data.isAdd);
+
+      const identities = ["普通用户", "至尊VIP用户", "普通分销"];
+      const scoreOps = ["不限", "小于", "小于等于", "等于", "大于", "大于等于"];
+      const regOptions = ["不限", "注册时间 <= 7天", "注册时间 > 7天", "注册时间 <= 30天"];
+
+      const optionHtml = (list, current) => list.map((item) =>
+        `<option value="${escapeHtml(item)}"${item === current ? " selected" : ""}>${escapeHtml(item)}</option>`
+      ).join("");
+
+      const tagsHtml = games.length
+        ? games.map((game) => `<span class="tag">${escapeHtml(game)} <i>×</i></span>`).join("")
+        : `<span class="tag">全部 <i>×</i></span>`;
+
+      return `
+        <div class="cancel-form">
+          <div class="form-row">
+            <div class="form-label"><em>*</em>用户身份：</div>
+            <div class="form-control">
+              <select class="w-lg" aria-label="用户身份">${optionHtml(identities, identity)}</select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>游戏类型：</div>
+            <div class="form-control" style="flex-direction:column;align-items:flex-start;">
+              <div>自定义游戏</div>
+              <div class="tags">${tagsHtml}</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>历史信誉分：</div>
+            <div class="form-control">
+              <select aria-label="历史信誉分条件">${optionHtml(scoreOps, hist.op)}</select>
+              <input class="w-sm" type="text" value="${escapeHtml(hist.value)}" ${hist.op === "不限" ? "disabled" : ""} aria-label="历史信誉分分值" />
+              <span>分</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>近期行为分：</div>
+            <div class="form-control">
+              <select aria-label="近期行为分条件">${optionHtml(scoreOps, recent.op)}</select>
+              <input class="w-sm" type="text" value="${escapeHtml(recent.value)}" ${recent.op === "不限" ? "disabled" : ""} aria-label="近期行为分分值" />
+              <span>分</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>用户注册时间：</div>
+            <div class="form-control">
+              <select class="w-lg" aria-label="用户注册时间">${optionHtml(regOptions, regOptions.includes(regTime) ? regTime : "不限")}</select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label">近一周订单数：</div>
+            <div class="form-control">
+              <input class="w-sm" type="text" value="${escapeHtml(orderRange.min)}" aria-label="近一周订单数最小值" />
+              <span>-</span>
+              <input class="w-sm" type="text" value="${escapeHtml(orderRange.max)}" aria-label="近一周订单数最大值" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label">限制投诉类型：</div>
+            <div class="form-control">
+              <div class="radio-row">
+                <label><input type="radio" name="cancelComplaintType" value="不限制" /> 不限制</label>
+                <label><input type="radio" name="cancelComplaintType" value="限制部分类型投诉" checked /> 限制部分类型投诉</label>
+                <label><input type="radio" name="cancelComplaintType" value="主观撤单类型" /> 主观撤单类型</label>
+                <label><input type="radio" name="cancelComplaintType" value="撤单核实投诉类型" /> 撤单核实投诉类型</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>撤单提醒：</div>
+            <div class="form-control">
+              <span>大于等于</span>
+              <input class="w-sm" type="text" value="${escapeHtml(remind)}" aria-label="撤单提醒次数" />
+              <span>单时提醒用户</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>限制撤单：</div>
+            <div class="form-control">
+              <span>等于</span>
+              <input class="w-sm" type="text" value="${escapeHtml(cancelLimit.count)}" aria-label="限制撤单次数" />
+              <span>单时对用户限制撤单</span>
+              <input class="w-sm" type="text" value="${escapeHtml(cancelLimit.days)}" aria-label="限制撤单天数" />
+              <span>天</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>限制租用：</div>
+            <div class="form-control">
+              <span>等于</span>
+              <input class="w-sm" type="text" value="${escapeHtml(rentLimit.count)}" aria-label="限制租用次数" />
+              <span>单时对用户限制租用</span>
+              <input class="w-sm" type="text" value="${escapeHtml(rentLimit.days)}" aria-label="限制租用天数" />
+              <span>天</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label">优先级：</div>
+            <div class="form-control">
+              <input class="w-sm" type="text" value="${escapeHtml(priority)}" aria-label="优先级" />
+              <span class="hint">（同条件下，值越大优先级越高）</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>状态：</div>
+            <div class="form-control">
+              <div class="radio-row">
+                <label><input type="radio" name="cancelStatus" value="开启"${status === "开启" ? " checked" : ""} /> 开启</label>
+                <label><input type="radio" name="cancelStatus" value="关闭"${status === "关闭" ? " checked" : ""} /> 关闭</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function openCancelRuleEdit(row, isAdd = false) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const data = isAdd ? { isAdd: true, identity: "普通用户", games: "王者荣耀,和平精英", hist: "小于等于98分", recent: "小于等于60分", regTime: "不限", orderRange: "0 - 1000", remind: "2", cancelLimit: "5/1", rentLimit: "5/1", priority: "99", status: "开启" } : {
+        identity: cells[1]?.textContent.trim() || "普通用户",
+        games: cells[2]?.textContent.trim() || "全部",
+        hist: cells[3]?.textContent.trim() || "不限",
+        recent: cells[4]?.textContent.trim() || "不限",
+        regTime: cells[5]?.textContent.trim() || "不限",
+        orderRange: cells[6]?.textContent.trim() || "0 - 1000",
+        remind: cells[8]?.textContent.trim() || "2",
+        cancelLimit: cells[9]?.textContent.trim() || "5/1",
+        rentLimit: cells[10]?.textContent.trim() || "5/1",
+        priority: cells[11]?.textContent.trim() || "0",
+        status: cells[12]?.textContent.trim() || "开启"
+      };
+
+      openDialog({
+        title: isAdd ? "添加规则" : "修改",
+        desc: "",
+        modalClass: "is-cancel-form",
+        primaryAction: "保存",
+        bodyHtml: cancelRuleFormHtml(data),
+        sections: []
+      });
+    }
+
+    function mapComplaintLimitWay(text) {
+      const t = String(text || "").trim();
+      if (/不可选/.test(t)) return "部分类型不可选";
+      if (/截图必选/.test(t)) return "部分类型截图必选";
+      if (/次数上限/.test(t)) return "部分投诉类型次数上限";
+      return "部分投诉类型次数上限";
+    }
+
+    function complaintRuleFormHtml(data = {}) {
+      const identity = data.identity || "至尊VIP用户";
+      const games = (data.games || "蛋仔派对").replace(/,+$/, "").split(/[,，]/).map((item) => item.trim()).filter(Boolean);
+      const hist = parseScoreCompare(data.hist || "小于等于60分");
+      const recent = parseScoreCompare(data.recent || "");
+      const histValue = hist.op === "不限" ? "" : (hist.value || "60");
+      const recentValue = recent.op === "不限" ? "" : (recent.value || "");
+      const limitWay = mapComplaintLimitWay(data.limitWay);
+      const status = data.status || "开启";
+      const dayLimit = data.dayLimit || "2";
+      const weekLimit = data.weekLimit || "3";
+      const pageTitle = data.isAdd ? "添加规则" : "修改";
+      const identities = ["普通用户", "至尊VIP用户", "普通分销"];
+
+      const optionHtml = (list, current) => list.map((item) =>
+        `<option value="${escapeHtml(item)}"${item === current ? " selected" : ""}>${escapeHtml(item)}</option>`
+      ).join("");
+
+      const tagsHtml = games.length
+        ? games.map((game) => `<span class="tag">${escapeHtml(game)} <i>×</i></span>`).join("")
+        : "";
+
+      // 严格对齐原图字段，仅把「用户信誉积分」拆成历史信誉分、近期行为分两行
+      return `
+        <div class="complaint-page-head">你当前的位置：租号玩 &gt; 投诉处理 &gt; 租客投诉规则配置</div>
+        <div class="complaint-page-title">${escapeHtml(pageTitle)}</div>
+        <div class="cancel-form">
+          <div class="form-row">
+            <div class="form-label"><em>*</em>用户身份：</div>
+            <div class="form-control">
+              <select class="w-lg" aria-label="用户身份">${optionHtml(identities, identity)}</select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>游戏类型：</div>
+            <div class="form-control" style="flex-direction:column;align-items:flex-start;gap:8px;">
+              <select class="w-lg" aria-label="选择游戏">
+                <option>选择游戏</option>
+                <option>全部游戏</option>
+                <option>蛋仔派对</option>
+                <option>王者荣耀</option>
+              </select>
+              <div class="tags">${tagsHtml}</div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>历史信誉分：</div>
+            <div class="form-control">
+              <div class="score-inline">
+                <span>小于等于</span>
+                <input class="w-sm" type="text" value="${escapeHtml(histValue)}" aria-label="历史信誉分" />
+                <span>分</span>
+                <span class="hint">（范围0-100，不填默认为0）</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>近期行为分：</div>
+            <div class="form-control">
+              <div class="score-inline">
+                <span>小于等于</span>
+                <input class="w-sm" type="text" value="${escapeHtml(recentValue)}" aria-label="近期行为分" />
+                <span>分</span>
+                <span class="hint">（范围0-100，不填默认为0）</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>限制方式：</div>
+            <div class="form-control">
+              <div class="radio-row">
+                <label><input type="radio" name="complaintLimitWay" value="部分类型不可选"${limitWay === "部分类型不可选" ? " checked" : ""} /> 部分类型不可选</label>
+                <label><input type="radio" name="complaintLimitWay" value="部分类型截图必选"${limitWay === "部分类型截图必选" ? " checked" : ""} /> 部分类型截图必选</label>
+                <label><input type="radio" name="complaintLimitWay" value="部分投诉类型次数上限"${limitWay === "部分投诉类型次数上限" ? " checked" : ""} /> 部分投诉类型次数上限</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>投诉类型：</div>
+            <div class="form-control" style="gap:10px;">
+              <button class="btn-green" type="button">选择</button>
+              <button class="btn-green" type="button">重置</button>
+            </div>
+          </div>
+          <div class="form-row" data-count-limit-row${limitWay === "部分投诉类型次数上限" ? "" : ' style="display:none;"'}>
+            <div class="form-label"><em>*</em>次数上限：</div>
+            <div class="form-control">
+              <span>日</span>
+              <input class="w-sm" type="text" value="${escapeHtml(dayLimit)}" aria-label="日次数上限" />
+              <span>次</span>
+              <span style="margin-left:8px;">周</span>
+              <input class="w-sm" type="text" value="${escapeHtml(weekLimit)}" aria-label="周次数上限" />
+              <span>次</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label"><em>*</em>状态：</div>
+            <div class="form-control">
+              <div class="radio-row">
+                <label><input type="radio" name="complaintStatus" value="开启"${status === "开启" ? " checked" : ""} /> 开启</label>
+                <label><input type="radio" name="complaintStatus" value="关闭"${status === "关闭" ? " checked" : ""} /> 关闭</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-save">
+            <button class="btn-green" type="button" data-close-modal style="min-width:88px;height:32px;">保存</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function openComplaintRuleEdit(row, isAdd = false) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const data = isAdd ? {
+        isAdd: true,
+        identity: "至尊VIP用户",
+        games: "蛋仔派对",
+        hist: "小于等于60分",
+        recent: "",
+        limitWay: "部分投诉类型次数上限",
+        status: "开启",
+        dayLimit: "2",
+        weekLimit: "3"
+      } : {
+        isAdd: false,
+        identity: cells[1]?.textContent.trim() || "至尊VIP用户",
+        games: cells[2]?.textContent.trim() || "蛋仔派对",
+        hist: cells[3]?.textContent.trim() || "小于等于60分",
+        recent: cells[4]?.textContent.trim() || "",
+        limitWay: cells[5]?.textContent.trim() || "部分投诉类型次数上限",
+        status: cells[9]?.textContent.trim() || "开启",
+        dayLimit: "2",
+        weekLimit: "3"
+      };
+
+      openDialog({
+        title: isAdd ? "添加规则" : "修改",
+        desc: "",
+        modalClass: "is-cancel-form",
+        complaintForm: true,
+        hideCancel: true,
+        hideActions: true,
+        bodyHtml: complaintRuleFormHtml(data),
+        sections: []
+      });
+
+      requestAnimationFrame(() => {
+        const radios = modalBody.querySelectorAll('input[name="complaintLimitWay"]');
+        const countRow = modalBody.querySelector("[data-count-limit-row]");
+        const syncCountRow = () => {
+          const checked = modalBody.querySelector('input[name="complaintLimitWay"]:checked')?.value || "";
+          if (countRow) countRow.style.display = checked === "部分投诉类型次数上限" ? "" : "none";
+        };
+        radios.forEach((radio) => radio.addEventListener("change", syncCountRow));
+        syncCountRow();
+      });
+    }
+
+    function openLegacyRuleEdit(row) {
+      const isComplaint = document.querySelector(".legacy-pane.active")?.dataset.legacyPanel === "complaint";
+      if (!isComplaint) {
+        openCancelRuleEdit(row, false);
+        return;
+      }
+      openComplaintRuleEdit(row, false);
+    }
+
+    function openRepairTriggerEdit(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      openDialog({
+        title: "修改信用修复触发规则",
+        desc: "",
+        sections: [
+          {
+            title: "触发规则",
+            fields: [
+              ["规则名称", cells[0]?.textContent.trim() || "优质用户近期突降修复", false, "", "disabled"],
+              ["历史信誉积分门槛", cells[1]?.textContent.trim() || "≥ 80", true, "", "input"],
+              ["近30天扣分突降门槛", cells[2]?.textContent.trim() || "累计扣分 ≥ 30", true, "", "input"],
+              ["状态", "开启 / 关闭", true, "", "select", cells[3]?.textContent.trim() || "开启"]
+            ]
+          }
+        ]
+      });
+    }
+
+    function openRepairRuleEdit(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const standard = cells[0]?.textContent.trim() || "全部答题通过";
+      const score = cells[1]?.textContent.trim() || "+10";
+      const freq = cells[2]?.textContent.trim() || "30 天 1 次";
+      openDialog({
+        title: "修改信用修复规则",
+        desc: "",
+        sections: [
+          {
+            title: "修复规则",
+            fields: [
+              ["答题通过标准", standard, false, "", "disabled"],
+              ["单次恢复分值", score, true, "", "input"],
+              ["用户频次限制", [freq, "7天1次", "30天1次", "90天1次", "30 天 1 次"].filter((v, i, a) => v && a.indexOf(v) === i).join(" / "), true, "", "select", freq]
+            ]
+          }
+        ]
+      });
+    }
+
+    function openRepairQuestionEdit(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const category = cells[0]?.textContent.trim() || "账号安全";
+      const question = cells[1]?.textContent.trim() || "";
+      const answer = cells[2]?.textContent.trim() || "";
+      const wrongAnswerMap = {
+        "账号安全": [
+          "可以使用外挂提升效率，只要不影响账号归属即可。",
+          "脚本可以开，但不要告诉客服。",
+          "只要没被发现，偶尔使用辅助工具也可以。"
+        ],
+        "环境异常": [
+          "直接换设备重登，无需保留证据。",
+          "自行修改客户端或绕过检测后继续使用。",
+          "直接放弃订单并多次重复下单尝试。"
+        ],
+        "投诉撤单": [
+          "可以先虚假投诉，拿到退款后再说明情况。",
+          "不想玩了也可以用账号问题投诉快速退款。",
+          "为了加快处理，可以夸大问题描述。"
+        ]
+      };
+      const wrongAnswers = wrongAnswerMap[category] || [
+        "错误选项示例 1",
+        "错误选项示例 2",
+        "错误选项示例 3"
+      ];
+      openDialog({
+        title: "修改信用修复题目",
+        desc: "",
+        compact: true,
+        sections: [
+          {
+            title: "题目配置",
+            fields: [
+              ["题目分类", category, true, "", "input"],
+              ["题干", question, true, "full", "textarea"],
+              ["正确答案", answer, true, "full", "textarea"],
+              ["错误答案1", wrongAnswers[0] || "", true, "", "textarea"],
+              ["错误答案2", wrongAnswers[1] || "", true, "", "textarea"],
+              ["错误答案3", wrongAnswers[2] || "", false, "", "textarea"]
+            ]
+          }
+        ]
+      });
+    }
+
+    function openDeductRuleEdit(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const category = cells[0]?.textContent.trim() || "订单环节";
+      const scene = cells[1]?.textContent.trim() || "投诉核实";
+      const ruleName = cells[2]?.querySelector(".rule-name")?.textContent.trim()
+        || cells[2]?.textContent.trim()
+        || "虚假投诉";
+      const score = cells[3]?.textContent.trim() || "-3";
+      const biz = cells[4]?.textContent.trim() || "租号";
+      const appeal = cells[5]?.textContent.trim() || "是";
+      const status = cells[6]?.textContent.trim() || "开启";
+
+      openDialog({
+        title: "修改扣分规则",
+        desc: "",
+        sections: [
+          {
+            title: "扣分规则",
+            fields: [
+              ["一级分类", category, false, "", "disabled"],
+              ["业务场景", scene, false, "", "disabled"],
+              ["扣分规则项", ruleName, false, "", "disabled"],
+              ["适用业务", biz, false, "", "disabled"],
+              ["扣分值", score, true, "", "input"],
+              ["是否允许申诉", "是 / 否", true, "", "select", appeal],
+              ["状态", "开启 / 关闭", true, "", "select", status],
+              ["用户端展示原因", "", false, "wide", "input"]
+            ]
+          }
+        ]
+      });
+    }
+
+    function openSystemRuleEdit(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const direction = cells[0]?.textContent.trim() || "加分";
+      const category = cells[1]?.textContent.trim() || "基础信息";
+      const scene = cells[2]?.textContent.trim() || "绑定手机号";
+      const score = cells[3]?.textContent.trim() || "+2";
+      const status = cells[4]?.textContent.trim() || "开启";
+      const isLinkedDeduct = /关联减分配置/.test(score);
+
+      openDialog({
+        title: "修改体系规则",
+        desc: "",
+        sections: [
+          {
+            title: "体系规则",
+            fields: [
+              ["规则方向", direction, false, "", "disabled"],
+              ["一级分类", category, false, "", "disabled"],
+              ["二级场景", scene, false, "", "disabled"],
+              ["状态", status, false, "", "disabled"],
+              ["单次分值", score, true, "", isLinkedDeduct ? "disabled" : "input"]
+            ]
+          }
+        ]
+      });
     }
 
     function escapeHtml(value) {
@@ -3031,28 +4319,230 @@
       return { prompt, options };
     }
 
-    function sectionHtml(section) {
+    function sectionHtml(section, options = {}) {
+      const sectionReadonly = Boolean(options.viewOnly || section.readonly);
+      const sectionClass = sectionReadonly ? "modal-section is-readonly" : "modal-section";
       return `
-        <section class="modal-section">
+        <section class="${sectionClass}">
           <div class="modal-section-title">${section.title}</div>
-          <div class="modal-fields">${section.fields.map(fieldHtml).join("")}</div>
+          <div class="modal-fields">${section.fields.map((field) => fieldHtml(field, { viewOnly: sectionReadonly })).join("")}</div>
           ${section.tip ? `<div class="modal-tips">${section.tip}</div>` : ""}
         </section>
       `;
+    }
+
+    function autosizeTextareas(root, compact) {
+      const minH = compact ? 48 : 88;
+      const maxH = compact ? 110 : 220;
+      root.querySelectorAll("textarea.fake-input").forEach((el) => {
+        const isFull = el.closest(".modal-field.full");
+        const localMin = compact && isFull ? 56 : minH;
+        const localMax = compact && isFull ? 110 : maxH;
+        el.style.height = "auto";
+        const next = Math.max(localMin, Math.min(el.scrollHeight + 2, localMax));
+        el.style.height = `${next}px`;
+        if (!el.dataset.autosizeBound) {
+          el.dataset.autosizeBound = "1";
+          el.addEventListener("input", () => {
+            el.style.height = "auto";
+            el.style.height = `${Math.max(localMin, Math.min(el.scrollHeight + 2, localMax))}px`;
+          });
+        }
+      });
+    }
+
+    let appealAuditRow = null;
+
+    function readAppealRow(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const scoreCell = cells[2];
+      const displayScore = scoreCell?.textContent.trim() || "0";
+      const originalScore = scoreCell?.dataset.originalScore || displayScore;
+      return {
+        cells,
+        scoreCell,
+        orderId: cells[0]?.textContent.trim() || "ORDER202605130042",
+        uid: cells[1]?.textContent.trim() || "101406347",
+        displayScore,
+        originalScore,
+        rule: cells[3]?.textContent.trim() || "恶意撤单",
+        reason: cells[4]?.textContent.trim() || "",
+        evidenceCount: String(row?.querySelectorAll(".evidence-thumb").length || 1),
+        status: cells[6]?.textContent.trim() || "待审核",
+        result: cells[7]?.textContent.trim() || "未处理",
+        handler: cells[8]?.textContent.trim() || "--"
+      };
+    }
+
+    function openAppealAudit(row) {
+      appealAuditRow = row || null;
+      const data = readAppealRow(row);
+      openDialog({
+        title: "申诉审核",
+        desc: "",
+        appealSubmit: true,
+        sections: [
+          {
+            title: "申诉信息",
+            readonly: true,
+            fields: [
+              ["订单号", data.orderId, false],
+              ["用户 UID", data.uid, false],
+              ["扣除分数", data.originalScore, false],
+              ["扣分规则", data.rule, false],
+              ["申诉原因", data.reason, false, "wide"],
+              ["申诉证据", "", false, "full", "evidence", data.evidenceCount],
+              ["状态", data.status, false]
+            ]
+          },
+          {
+            title: "审核处理",
+            fields: [
+              ["审核结果", "通过 / 驳回", true, "", "select"],
+              ["审核说明", "请输入处理说明，用户端可展示", true, "wide"]
+            ]
+          }
+        ]
+      });
+    }
+
+    function openAppealView(row) {
+      appealAuditRow = null;
+      const data = readAppealRow(row);
+      const isRollback = /已回滚/.test(data.status);
+      const sections = [
+        {
+          title: "申诉信息",
+          readonly: true,
+          fields: [
+            ["订单号", data.orderId, false],
+            ["用户 UID", data.uid, false],
+            ["扣除分数", isRollback ? "0" : data.originalScore, false],
+            ["扣分规则", data.rule, false],
+            ["申诉原因", data.reason, false, "wide"],
+            ["申诉证据", "", false, "full", "evidence", data.evidenceCount],
+            ["状态", data.status, false],
+            ["审核结果", data.result, false],
+            ["处理人", data.handler, false]
+          ]
+        }
+      ];
+
+      if (isRollback) {
+        const raw = String(data.originalScore || "-4").replace(/[^\d+-]/g, "") || "-4";
+        const deduct = raw.startsWith("-") ? raw : raw.startsWith("+") ? `-${raw.slice(1)}` : `-${raw}`;
+        const rollback = deduct.startsWith("-") ? `+${deduct.slice(1)}` : `+${String(deduct).replace(/^-/, "")}`;
+        sections.push({
+          title: "扣分变动",
+          readonly: true,
+          fields: [
+            ["变动类型", "扣分", false, "", "text"],
+            ["触发规则名称", data.rule, false, "", "text"],
+            ["分值变化", deduct, false, "", "text"],
+            ["变动时间", "2026-05-13 16:08:42", false, "", "text"],
+            ["扣分原因", `订单命中「${data.rule}」规则后扣减信誉积分，计入近期行为分。`, false, "wide", "text"]
+          ]
+        });
+        sections.push({
+          title: "回滚加分变动",
+          readonly: true,
+          fields: [
+            ["变动类型", "恢复", false, "", "text"],
+            ["触发规则名称", data.rule, false, "", "text"],
+            ["分值变化", rollback, false, "", "text"],
+            ["变动时间", "2026-05-14 11:26:05", false, "", "text"],
+            ["回滚原因", "申诉审核通过，生成回滚加分明细；原扣分记录保留，当前申诉扣除分数展示为 0。", false, "wide", "text"]
+          ]
+        });
+      }
+
+      openDialog({
+        title: "申诉详情",
+        desc: "",
+        viewOnly: true,
+        primaryAction: "关闭",
+        sections
+      });
+    }
+
+    function submitAppealAudit() {
+      if (!appealAuditRow) {
+        closeDialog();
+        return;
+      }
+      const resultSelect = modalBody.querySelector("select");
+      const result = resultSelect?.value?.trim() || "";
+      const cells = appealAuditRow.querySelectorAll("td");
+      const scoreCell = cells[2];
+      const originalScore = scoreCell?.dataset.originalScore || scoreCell?.textContent.trim() || "0";
+
+      if (/通过/.test(result)) {
+        if (scoreCell) {
+          scoreCell.dataset.originalScore = originalScore;
+          scoreCell.textContent = "0";
+          scoreCell.classList.remove("score-minus", "score-plus");
+        }
+        if (cells[6]) cells[6].innerHTML = '<span class="pill green">已回滚</span>';
+        if (cells[7]) cells[7].textContent = "已处理";
+        if (cells[8]) cells[8].textContent = "当前运营";
+        if (cells[9]) cells[9].innerHTML = '<span class="op secondary" data-dialog="appealView">查看</span>';
+      } else if (/驳回/.test(result)) {
+        if (scoreCell && !scoreCell.dataset.originalScore) {
+          scoreCell.dataset.originalScore = originalScore;
+        }
+        if (cells[6]) cells[6].innerHTML = '<span class="pill gray">驳回</span>';
+        if (cells[7]) cells[7].textContent = "已处理";
+        if (cells[8]) cells[8].textContent = "当前运营";
+        if (cells[9]) cells[9].innerHTML = '<span class="op secondary" data-dialog="appealView">查看</span>';
+      }
+
+      appealAuditRow = null;
+      closeDialog();
     }
 
     function openDialog(keyOrConfig) {
       const config = typeof keyOrConfig === "string"
         ? dialogConfigs[keyOrConfig] || dialogConfigs.systemRule
         : keyOrConfig;
+      if (typeof keyOrConfig === "string" && keyOrConfig === "legacyRule") {
+        const activeLegacy = document.querySelector(".legacy-pane.active")?.dataset.legacyPanel;
+        if (activeLegacy === "complaint") {
+          openComplaintRuleEdit(null, true);
+          return;
+        }
+        openCancelRuleEdit(null, true);
+        return;
+      }
+      const modalCard = modal.querySelector(".config-modal");
+      modalCard?.classList.toggle("is-view", Boolean(config.viewOnly));
+      modalCard?.classList.toggle("is-compact", Boolean(config.compact));
+      modalCard?.classList.toggle("is-manual-adjust", config.modalClass === "is-manual-adjust" || Boolean(config.manualAdjust));
+      modalCard?.classList.toggle("is-cancel-form", config.modalClass === "is-cancel-form");
+      modalCard?.classList.toggle("is-complaint-form", Boolean(config.complaintForm));
       modalTitle.textContent = config.title;
-      modalDesc.textContent = config.desc;
-      modalBody.innerHTML = config.sections.map(sectionHtml).join("");
+      const descText = config.desc || "";
+      modalDesc.textContent = descText;
+      modalDesc.hidden = !descText;
+      if (config.bodyHtml) {
+        modalBody.innerHTML = config.bodyHtml;
+      } else {
+        modalBody.innerHTML = (config.sections || []).map((section) => sectionHtml(section, { viewOnly: Boolean(config.viewOnly) })).join("");
+      }
       modalActions.innerHTML = actionHtml(config);
       modal.hidden = false;
+      requestAnimationFrame(() => {
+        modalBody.scrollTop = 0;
+        autosizeTextareas(modalBody, Boolean(config.compact));
+      });
     }
 
     function actionHtml(config) {
+      if (config.viewOnly) {
+        return `
+          <button class="btn primary" type="button" data-close-modal>${escapeHtml(config.primaryAction || "关闭")}</button>
+        `;
+      }
+
       if (config.danger) {
         return `
           <button class="btn" type="button" data-close-modal>取消</button>
@@ -3060,11 +4550,115 @@
         `;
       }
 
+      if (config.modalClass === "is-manual-adjust" || config.manualAdjust) {
+        return `
+          <button class="btn primary" type="button" data-close-modal>${escapeHtml(config.primaryAction || "提交")}</button>
+        `;
+      }
+
+      if (config.appealSubmit) {
+        return `
+          <button class="btn" type="button" data-close-modal>取消</button>
+          <button class="btn primary" type="button" data-appeal-submit>确认审核</button>
+        `;
+      }
+
+      if (config.hideActions) {
+        return "";
+      }
+
+      if (config.modalClass === "is-cancel-form") {
+        if (config.hideCancel) {
+          return `
+            <button class="btn primary" type="button" data-close-modal style="background:#52c41a;border-color:#52c41a;">${escapeHtml(config.primaryAction || "保存")}</button>
+          `;
+        }
+        return `
+          <button class="btn" type="button" data-close-modal>取消</button>
+          <button class="btn primary" type="button" data-close-modal style="background:#52c41a;border-color:#52c41a;">${escapeHtml(config.primaryAction || "保存")}</button>
+        `;
+      }
+
       return `
         <button class="btn" type="button" data-close-modal>取消</button>
-        <button class="btn ghost" type="button">保存草稿</button>
         <button class="btn primary" type="button" data-close-modal>${escapeHtml(config.primaryAction || "确认保存")}</button>
       `;
+    }
+
+    function openOrderCreditDetail(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const uid = cells[1]?.textContent.trim() || "101406347";
+      const changeType = cells[2]?.textContent.trim() || "扣分";
+      const score = cells[3]?.textContent.trim() || "-6";
+      const rule = cells[4]?.textContent.trim() || "恶意撤单（多次）";
+      const orderId = cells[5]?.textContent.trim() || "ORDER202605130042";
+      const appeal = cells[6]?.textContent.trim() || "未申诉";
+
+      const isRollback = /恢复|回滚/.test(changeType) || /已回滚/.test(appeal);
+      const isDeduct = /扣分/.test(changeType) || /^-/.test(score);
+      const isEarn = /加分/.test(changeType) || (/^\+/.test(score) && !isRollback);
+
+      const orderSection = {
+        title: "订单信息",
+        fields: [
+          ["订单号", orderId, false, "", "text"],
+          ["用户 UID", uid, false, "", "text"],
+          ["业务类型", "租号", false, "", "text"],
+          ["订单状态", isEarn ? "已完成结算" : "已完成 / 售后处理", false, "", "text"],
+          ["下单时间", "2026-05-13 14:22:18", false, "", "text"],
+          ["订单金额", isEarn ? "¥36.00" : "¥68.00", false, "", "text"]
+        ]
+      };
+
+      let creditSection;
+      if (isRollback) {
+        creditSection = {
+          title: "信誉积分变动（扣分后回滚）",
+          fields: [
+            ["触发规则名称", rule || "恶意撤单（多次）", false, "", "text"],
+            ["原扣分值", score.startsWith("+") ? `-${score.slice(1)}` : "-6", false, "", "text"],
+            ["原扣分时间", "2026-05-13 16:08:42", false, "", "text"],
+            ["原扣分原因", `订单命中「${rule || "恶意撤单（多次）"}」规则，核实后计入扣分。`, false, "wide", "text"],
+            ["回滚分值", score.startsWith("+") ? score : `+${String(score).replace(/^-/, "")}`, false, "", "text"],
+            ["回滚时间", "2026-05-14 11:26:05", false, "", "text"],
+            ["回滚原因", "申诉审核通过，生成恢复 / 回滚明细；原扣分记录保留。", false, "wide", "text"],
+            ["申诉状态", appeal || "已回滚", false, "", "text"],
+            ["关联申诉单号", "APPEAL202605140018", false, "", "text"]
+          ]
+        };
+      } else if (isDeduct) {
+        creditSection = {
+          title: "信誉积分变动（扣分）",
+          fields: [
+            ["变动类型", changeType, false, "", "text"],
+            ["触发规则名称", rule, false, "", "text"],
+            ["分值变化", score, false, "", "text"],
+            ["变动时间", "2026-05-13 16:08:42", false, "", "text"],
+            ["扣分原因", `订单关联规则「${rule}」命中后扣减信誉积分，计入近期行为分。`, false, "wide", "text"],
+            ["申诉状态", appeal, false, "", "text"]
+          ]
+        };
+      } else {
+        creditSection = {
+          title: "信誉积分变动（加分）",
+          fields: [
+            ["变动类型", changeType, false, "", "text"],
+            ["触发规则名称", rule, false, "", "text"],
+            ["分值变化", score, false, "", "text"],
+            ["变动时间", "2026-05-17 18:12:09", false, "", "text"],
+            ["加分说明", "订单正常结算后按履约规则增加信誉积分。", false, "wide", "text"],
+            ["申诉状态", appeal, false, "", "text"]
+          ]
+        };
+      }
+
+      openDialog({
+        title: "订单详情",
+        desc: "",
+        viewOnly: true,
+        primaryAction: "关闭",
+        sections: [orderSection, creditSection]
+      });
     }
 
     function deleteDialogConfig(action) {
@@ -3102,9 +4696,54 @@
         return;
       }
 
+      const orderDetailAction = event.target.closest("[data-order-detail]");
+      if (orderDetailAction) {
+        openOrderCreditDetail(orderDetailAction.closest("tr"));
+        return;
+      }
+
+      const appealSubmitBtn = event.target.closest("[data-appeal-submit]");
+      if (appealSubmitBtn) {
+        submitAppealAudit();
+        return;
+      }
+
+      const cancelAdd = event.target.closest("[data-cancel-add]");
+      if (cancelAdd) {
+        openCancelRuleEdit(null, true);
+        return;
+      }
+
+      const cancelEdit = event.target.closest("[data-cancel-edit]");
+      if (cancelEdit) {
+        openCancelRuleEdit(cancelEdit.closest("tr"), false);
+        return;
+      }
+
+      const complaintAdd = event.target.closest("[data-complaint-add]");
+      if (complaintAdd) {
+        openComplaintRuleEdit(null, true);
+        return;
+      }
+
+      const complaintEdit = event.target.closest("[data-complaint-edit]");
+      if (complaintEdit) {
+        openComplaintRuleEdit(complaintEdit.closest("tr"), false);
+        return;
+      }
+
       const dialogTarget = event.target.closest("[data-dialog]");
       if (dialogTarget) {
-        openDialog(dialogTarget.dataset.dialog);
+        const dialogKey = dialogTarget.dataset.dialog;
+        if (dialogKey === "appealAudit") {
+          openAppealAudit(dialogTarget.closest("tr"));
+          return;
+        }
+        if (dialogKey === "appealView") {
+          openAppealView(dialogTarget.closest("tr"));
+          return;
+        }
+        openDialog(dialogKey);
         return;
       }
       const deleteAction = event.target.closest(".op");
@@ -3115,6 +4754,50 @@
       const tableAction = event.target.closest(".op.secondary");
       if (tableAction) {
         const activePanel = document.querySelector(".panel.active")?.dataset.panel || "system";
+        const actionText = tableAction.textContent.trim();
+        if (actionText === "修改") {
+          const row = tableAction.closest("tr");
+          if (activePanel === "system") {
+            openSystemRuleEdit(row);
+            return;
+          }
+          if (activePanel === "deduct") {
+            openDeductRuleEdit(row);
+            return;
+          }
+          if (activePanel === "punish") {
+            openPunishRuleEdit(row);
+            return;
+          }
+          if (activePanel === "grade") {
+            openStatusRuleEdit(row);
+            return;
+          }
+          if (activePanel === "legacy") {
+            const activeLegacy = document.querySelector(".legacy-pane.active")?.dataset.legacyPanel;
+            if (activeLegacy === "complaint") {
+              openComplaintRuleEdit(row, false);
+            } else {
+              openCancelRuleEdit(row, false);
+            }
+            return;
+          }
+          if (activePanel === "special") {
+            const cardTitle = tableAction.closest(".card")?.querySelector(".card-title")?.textContent.trim() || "";
+            if (/触发规则/.test(cardTitle)) {
+              openRepairTriggerEdit(row);
+              return;
+            }
+            if (/修复规则/.test(cardTitle) && !/触发/.test(cardTitle)) {
+              openRepairRuleEdit(row);
+              return;
+            }
+            if (/题库/.test(cardTitle)) {
+              openRepairQuestionEdit(row);
+              return;
+            }
+          }
+        }
         const actionMap = {
           system: "systemRule",
           deduct: "deductRule",
@@ -3122,7 +4805,7 @@
           legacy: "legacyRule",
           grade: "statusRule",
           special: "repairRule",
-          detail: tableAction.textContent.includes("调整") ? "manualAdjust" : "logQuery",
+          detail: "orderCreditDetail",
           appeal: "appealAudit",
           log: "logQuery"
         };

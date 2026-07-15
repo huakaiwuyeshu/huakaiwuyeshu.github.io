@@ -1860,17 +1860,47 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 2px 0 8px;
+      margin: 0 0 8px;
       color: #344158;
       font-size: 13px;
       line-height: 18px;
       font-weight: 950;
     }
 
+    #home .home-cap-group {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+    }
+
+    #home .home-cap-group.is-limited {
+      border: 1px solid #f3d0d0;
+      background: linear-gradient(180deg, #fff7f7 0%, #fff 100%);
+      box-shadow: inset 3px 0 0 #ef5b5b;
+    }
+
+    #home .home-cap-group.is-normal {
+      border: 1px solid #cfe8d8;
+      background: linear-gradient(180deg, #f5fbf7 0%, #fff 100%);
+      box-shadow: inset 3px 0 0 #2f9e62;
+    }
+
+    #home .home-cap-group.is-limited .home-cap-title-row {
+      color: #b42318;
+    }
+
+    #home .home-cap-group.is-normal .home-cap-title-row {
+      color: #1f7a4c;
+    }
+
+    #home .home-cap-group .home-cap-title-row strong {
+      font-weight: 950;
+    }
+
     #home .home-cap-list,
     #home .home-appeal-list {
       display: grid;
-      gap: 8px;
+      gap: 0;
     }
 
     #home .home-cap-row,
@@ -1884,9 +1914,18 @@
       border-top: 1px solid #eef2f7;
     }
 
+    #home .home-cap-group.is-limited .home-cap-row {
+      border-top-color: #f3e0e0;
+    }
+
+    #home .home-cap-group.is-normal .home-cap-row {
+      border-top-color: #e0efe6;
+    }
+
     #home .home-cap-row:first-child,
     #home .home-appeal-row:first-child {
       border-top: 0;
+      padding-top: 2px;
     }
 
     #home .home-cap-title,
@@ -1908,66 +1947,459 @@
       font-weight: 760;
     }
 
-    #home .home-normal-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding-top: 2px;
+    #home .home-repair-entry {
+      border: 1px solid #d7ecdf;
+      background:
+        linear-gradient(160deg, rgba(240, 250, 244, .98), rgba(255, 255, 255, .99));
     }
 
-    #home .home-normal-chip {
-      min-height: 30px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #f7faf8;
-      border: 1px solid #dcece2;
-      color: var(--green);
-      font-size: 12px;
-      line-height: 16px;
+    #home .home-appeal-banner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ffe0a2;
+      background: linear-gradient(180deg, #fff8ea 0%, #fff 100%);
+    }
+
+    #home .home-appeal-banner strong {
+      display: block;
+      color: #182238;
+      font-size: 13px;
+      line-height: 18px;
       font-weight: 950;
     }
 
-    #home .home-trend-card {
-      padding: 16px 14px 12px;
+    #home .home-appeal-banner p {
+      margin: 2px 0 0;
+      color: #7a5a12;
+      font-size: 12px;
+      line-height: 17px;
+      font-weight: 750;
     }
 
-    #home .home-trend-topline {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 4px;
+    #home .home-appeal-banner .home-todo-btn {
+      min-width: 72px;
     }
 
-    #home .home-trend-summary {
+    #home .home-detail-row .home-appeal-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      margin-top: 6px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #3772ff;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    /* 演示：无修复资格时在 URL 加 ?repair=0 隐藏入口 */
+    body.hide-repair-entry #home [data-repair-entry] {
+      display: none;
+    }
+
+    /* 提升积分：贴合分数区，双规则展示 */
+    #home .home-earn-inline {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid #d5e4ff;
+      background: linear-gradient(160deg, #f3f8ff 0%, #fff 100%);
+    }
+
+    #home .home-earn-inline-head {
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 18px;
-      font-weight: 780;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
-    #home .home-trend-chart {
-      width: 100%;
-      height: 150px;
-      display: block;
-      margin-top: 8px;
-      overflow: visible;
+    #home .home-earn-inline-head strong {
+      color: #182238;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 950;
     }
 
-    #home .home-chart-label {
-      fill: #8a95a8;
+    #home .home-earn-inline-head > span {
+      color: #5b6b82;
       font-size: 11px;
+      line-height: 16px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    #home .home-earn-rules {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    #home .home-earn-rule {
+      padding: 10px 10px 9px;
+      border-radius: 12px;
+      border: 1px solid #e2ebf8;
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    #home .home-earn-rule-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: start;
+    }
+
+    #home .home-earn-rule-top b {
+      display: block;
+      color: #182238;
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 950;
+    }
+
+    #home .home-earn-rule-top p {
+      margin: 2px 0 0;
+      color: #687489;
+      font-size: 11px;
+      line-height: 16px;
+      font-weight: 750;
+    }
+
+    #home .home-earn-rule-tag {
+      flex: 0 0 auto;
+      min-height: 22px;
+      padding: 0 7px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    #home .home-earn-rule-tag.is-active {
+      color: #1d4fbf;
+      background: #eaf1ff;
+      border: 1px solid #c9dbff;
+    }
+
+    #home .home-earn-rule-tag.is-pending {
+      color: #9a6700;
+      background: #fff7e6;
+      border: 1px solid #ffe0a3;
+    }
+
+    #home .home-earn-rule-tag.is-done {
+      color: #1f7a4c;
+      background: #eef9f2;
+      border: 1px solid #c6ebd4;
+    }
+
+    #home .home-earn-rule-caps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      margin-top: 8px;
+    }
+
+    #home .home-earn-rule-caps span {
+      color: #445368;
+      font-size: 11px;
+      line-height: 16px;
       font-weight: 800;
     }
 
-    #home .home-chart-score {
-      fill: #263147;
-      font-size: 11px;
+    #home .home-earn-rule-caps strong {
+      color: #182238;
       font-weight: 950;
+    }
+
+    #home .home-earn-rule-progress {
+      margin-top: 7px;
+    }
+
+    #home .home-earn-rule-progress .home-earn-progress-bar {
+      height: 6px;
+      margin: 0;
+      background: #e8eef8;
+    }
+
+    #home .home-earn-rule-progress .home-earn-progress-bar span {
+      width: var(--p, 40%);
+      background: linear-gradient(90deg, #5b8cff, #3772ff);
+    }
+
+    #home .home-earn-rule.is-bonus .home-earn-rule-progress .home-earn-progress-bar span {
+      background: linear-gradient(90deg, #49b57d, #2f9e62);
+    }
+
+    #home .home-earn-inline .home-earn-btn {
+      width: 100%;
+      min-height: 40px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    #home .home-earn-card {
+      padding: 16px 14px;
+      border: 1px solid #d5e4ff;
+      background:
+        linear-gradient(160deg, rgba(237, 244, 255, .98), rgba(255, 255, 255, .99)),
+        #fff;
+      box-shadow: inset 3px 0 0 var(--blue);
+    }
+
+    #home .home-earn-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    #home .home-earn-item {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 10px 12px;
+      border: 1px solid #e5ebf2;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .94);
+    }
+
+    #home .home-earn-badge {
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      border-radius: 999px;
+      color: var(--blue);
+      background: #f3f8ff;
+      border: 1px solid #d5e4ff;
+      font-size: 12px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    #home .home-earn-item strong {
+      display: block;
+      color: #182238;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 950;
+    }
+
+    #home .home-earn-item span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 760;
+    }
+
+    #home .home-earn-actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    #home .home-earn-btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      color: #fff;
+      background: var(--blue);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 950;
+      box-shadow: 0 10px 22px rgba(47, 107, 255, .22);
+    }
+
+    #home .home-earn-tip {
+      color: #708098;
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 760;
+      text-align: center;
+    }
+
+    #home .home-action-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin: 8px 0 12px;
+      padding: 4px;
+      border-radius: 12px;
+      background: #f3f6fa;
+    }
+
+    #home .home-action-tabs button {
+      min-height: 34px;
+      border: 0;
+      border-radius: 10px;
+      color: var(--muted);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 950;
+      cursor: pointer;
+      transition: color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+    #home .home-action-tabs button.active {
+      color: var(--blue);
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, .06);
+    }
+
+    #home .home-action-pane { display: none; }
+    #home .home-action-pane.active { display: block; }
+
+    #home .home-earn-progress {
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f7f9fc;
+      border: 1px solid #eef2f7;
+    }
+
+    #home .home-earn-progress-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    #home .home-earn-progress-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: #e6edf6;
+      overflow: hidden;
+    }
+
+    #home .home-earn-progress-bar span {
+      display: block;
+      width: 40%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #53b6ff, var(--blue));
+      transition: width .35s ease;
+    }
+
+    #home .home-todo-card {
+      padding: 12px;
+      border: 1px solid #e7edf5;
+      border-radius: 12px;
+      background: #fbfcff;
+      margin-bottom: 8px;
+      transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+    }
+
+    #home .home-todo-card:active {
+      transform: scale(.99);
+    }
+
+    #home .home-todo-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    #home .home-todo-top strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    #home .home-todo-top p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 760;
+    }
+
+    #home .home-todo-actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    #home .home-todo-btn {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      border: 1px solid #cfe0ff;
+      color: var(--blue);
+      background: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 950;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    #home .home-todo-btn.primary {
+      border-color: var(--blue);
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 10px 22px rgba(47, 107, 255, .22);
+    }
+
+    #home .home-todo-btn.green {
+      border-color: #bfead9;
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    #home .home-todo-btn:active {
+      transform: scale(.98);
+    }
+
+    #home .home-footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 4px 0 8px;
+      color: #708098;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    #home .home-footer-links a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #home .home-detail-row {
+      transition: background .18s ease;
+    }
+
+    #home .home-detail-row:active {
+      background: #f7fbff;
+    }
+
+    #home .home-inline-link {
+      display: inline-block;
+      margin-top: 4px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 950;
+      text-decoration: none;
     }
 
     #home .home-link-btn {
@@ -2085,33 +2517,39 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
-      margin-top: 14px;
+      margin: 14px 0 2px;
+      padding: 2px 0 4px;
     }
 
     #home .home-quick-action {
       min-width: 0;
-      min-height: 58px;
-      padding: 8px 4px;
-      border: 1px solid #d8e5ff;
-      border-radius: 14px;
+      min-height: 64px;
+      padding: 10px 4px 8px;
+      border: 1px solid #e2e8f2;
+      border-radius: 16px;
       display: grid;
       place-items: center;
-      gap: 5px;
-      color: var(--blue);
-      background: #fff;
+      gap: 6px;
+      color: #2f4f86;
+      background: linear-gradient(180deg, #f7faff 0%, #fff 100%);
       text-decoration: none;
       font-size: 12px;
       line-height: 16px;
       font-weight: 950;
-      box-shadow: 0 6px 16px rgba(47, 107, 255, 0.05);
+      box-shadow: 0 4px 12px rgba(47, 107, 255, 0.06);
+    }
+
+    #home .home-quick-action:active {
+      transform: scale(0.98);
+      background: #f3f7ff;
     }
 
     #home .home-quick-action svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
+      width: 20px;
+      height: 20px;
+      stroke: #3772ff;
       fill: none;
-      stroke-width: 2.1;
+      stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
@@ -2184,7 +2622,7 @@
     <div class="scene-head">
       <div>
         <h1 class="scene-title">信誉积分首页</h1>
-        <p class="scene-sub">移动端保持与PC端一致的信息口径，但采用单列模块展示：先看状态，再看影响、变化、明细和申诉。</p>
+        <p class="scene-sub">分数区含提升积分入口；下方为能力、积分变化；信用修复仅在命中恢复答题条件时单独展示。</p>
       </div>
       <div class="scene-mark">移动端一级页</div>
     </div>
@@ -2197,11 +2635,11 @@
       </div>
 
       <main class="content">
-        <section class="home-card home-score-card">
+        <!-- A 信誉状态 -->
+        <section class="home-card home-score-card" aria-label="A 信誉状态">
           <div class="home-section-head">
             <div>
-              <h2 class="home-section-title">状态总览</h2>
-              <p class="home-section-sub">当前总分、风险状态与最近更新时间</p>
+              <h2 class="home-section-title">信誉状态</h2>
             </div>
             <span class="home-chip warn">部分受限</span>
           </div>
@@ -2228,6 +2666,48 @@
             </div>
           </div>
 
+          <div class="home-earn-inline" aria-label="提升积分">
+            <div class="home-earn-inline-head">
+              <strong>提升积分</strong>
+              <span>订单行为可加分</span>
+            </div>
+
+            <div class="home-earn-rules">
+              <div class="home-earn-rule">
+                <div class="home-earn-rule-top">
+                  <div>
+                    <b>正常结算（履约）</b>
+                    <p>订单完成并正常结算后获得履约加分</p>
+                  </div>
+                </div>
+                <div class="home-earn-rule-caps">
+                  <span>今日 <strong>2 / 5 分</strong></span>
+                  <span>近30天 <strong>36 / 100 分</strong></span>
+                </div>
+                <div class="home-earn-rule-progress" aria-label="近30天履约加分进度">
+                  <div class="home-earn-progress-bar"><span style="--p:36%"></span></div>
+                </div>
+              </div>
+
+              <div class="home-earn-rule is-bonus">
+                <div class="home-earn-rule-top">
+                  <div>
+                    <b>当月累积完单 5 天或 5 次</b>
+                    <p>达到任一门槛即可加分，每月仅 1 次</p>
+                  </div>
+                </div>
+                <div class="home-earn-rule-caps">
+                  <span>本月 <strong>2 / 5 天</strong></span>
+                  <span>本月 <strong>2 / 5 次</strong></span>
+                </div>
+                <div class="home-earn-rule-progress" aria-label="本月累计完单进度">
+                  <div class="home-earn-progress-bar"><span style="--p:40%"></span></div>
+                </div>
+              </div>
+            </div>
+
+            <a class="home-earn-btn" href="https://www.zuhaowan.com/" target="_blank" rel="noopener noreferrer">去下单加分</a>
+          </div>
 
           <div class="home-quick-actions" aria-label="信誉积分快捷入口">
             <a class="home-quick-action" href="#detail">
@@ -2244,91 +2724,29 @@
             </a>
             <a class="home-quick-action" href="#repair">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M6 21v-4h4"/></svg>
-              <span>信用修复</span>
+              <span>恢复路径</span>
             </a>
           </div>
         </section>
 
-        <section class="home-card home-card-pad" id="recoveryPath">
+        <!-- B 信誉积分变化（上移：承接订单申诉等可操作事项） -->
+        <section class="home-card home-detail-card" aria-label="B 信誉积分变化">
           <div class="home-section-head">
             <div>
-              <h2 class="home-section-title">能力影响</h2>
-              <p class="home-section-sub">优先告诉用户哪些能力受影响，哪些仍可正常使用</p>
-            </div>
-          </div>
-
-          <div class="home-cap-title-row"><span>当前受限</span><span>2 项</span></div>
-          <div class="home-cap-list">
-            <div class="home-cap-row">
-              <div>
-                <div class="home-cap-title">高价值账号租赁</div>
-                <div class="home-cap-desc">需达到配置分值后可租用</div>
-              </div>
-              <span class="home-chip red">受限</span>
-            </div>
-            <div class="home-cap-row">
-              <div>
-                <div class="home-cap-title">特价专区下单</div>
-                <div class="home-cap-desc">当前分值未满足活动准入要求</div>
-              </div>
-              <span class="home-chip red">受限</span>
-            </div>
-          </div>
-
-          <div class="home-cap-title-row" style="margin-top:12px;"><span>正常可用</span><span>3 项</span></div>
-          <div class="home-normal-chips">
-            <span class="home-normal-chip">投诉撤单能力</span>
-            <span class="home-normal-chip">领券与活动参与</span>
-            <span class="home-normal-chip">账号发布</span>
-          </div>
-        </section>
-
-        <section class="home-card home-trend-card">
-          <div class="home-trend-topline">
-            <div>
-              <h2 class="home-section-title">近15天信誉积分变化</h2>
-              <p class="home-section-sub">先看趋势，再从下方明细追溯原因</p>
-            </div>
-            <span class="home-chip blue">总分趋势</span>
-          </div>
-          <div class="home-trend-summary">
-            <span>近15天净变动</span>
-            <strong style="color:#c2413b;">-4分</strong>
-            <span>扣分 2 次，加分/回滚 2 次</span>
-          </div>
-          <svg class="home-trend-chart" viewBox="0 0 382 150" role="img" aria-label="近15天信誉积分变化折线图">
-            <defs>
-              <linearGradient id="homeTrendFillMobile" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#2f6bff" stop-opacity=".18"/>
-                <stop offset="100%" stop-color="#2f6bff" stop-opacity=".02"/>
-              </linearGradient>
-            </defs>
-            <path d="M22 22 H360 M22 57 H360 M22 92 H360 M22 127 H360" stroke="#edf1f6" stroke-width="1"/>
-            <path d="M28 60 C70 54 90 54 116 65 C148 78 162 78 184 74 C216 66 226 45 254 54 C288 64 306 104 346 114 L346 127 L28 127 Z" fill="url(#homeTrendFillMobile)"/>
-            <path d="M28 60 C70 54 90 54 116 65 C148 78 162 78 184 74 C216 66 226 45 254 54 C288 64 306 104 346 114" fill="none" stroke="#2f6bff" stroke-width="3.2" stroke-linecap="round"/>
-            <circle cx="28" cy="60" r="4.5" fill="#fff" stroke="#2f6bff" stroke-width="3"/>
-            <circle cx="116" cy="65" r="4.5" fill="#fff" stroke="#2f6bff" stroke-width="3"/>
-            <circle cx="184" cy="74" r="4.5" fill="#fff" stroke="#2f6bff" stroke-width="3"/>
-            <circle cx="254" cy="54" r="4.5" fill="#fff" stroke="#2f6bff" stroke-width="3"/>
-            <circle cx="346" cy="114" r="5.5" fill="#fff" stroke="#f2ae42" stroke-width="4"/>
-            <text class="home-chart-score" x="320" y="100">112</text>
-            <text class="home-chart-label" x="20" y="146">05-05</text>
-            <text class="home-chart-label" x="105" y="146">05-09</text>
-            <text class="home-chart-label" x="192" y="146">05-13</text>
-            <text class="home-chart-label" x="320" y="146">05-19</text>
-          </svg>
-        </section>
-
-        <section class="home-card home-detail-card">
-          <div class="home-section-head">
-            <div>
-              <h2 class="home-section-title">积分明细</h2>
-              <p class="home-section-sub">展示最近变动、关联订单和分值</p>
+              <h2 class="home-section-title">信誉积分变化</h2>
             </div>
             <a class="home-link-btn" href="#detail" aria-label="查看全部积分明细">
-              查看全部
+              全部
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
             </a>
+          </div>
+
+          <div class="home-appeal-banner">
+            <div>
+              <strong>1 笔订单扣分可申诉</strong>
+              <p>异常撤单 -12 · 订单号 202605190831</p>
+            </div>
+            <a class="home-todo-btn primary home-appeal-cta" href="#detail" style="margin:0;">去申诉</a>
           </div>
 
           <div class="home-detail-list">
@@ -2338,6 +2756,7 @@
                 <div class="home-detail-title">异常撤单扣分</div>
                 <div class="home-detail-desc">影响高价值账号租用准入</div>
                 <div class="home-order-line"><span class="home-order-badge">订单</span><span>202605190831 · 王者荣耀租号 · 2小时</span></div>
+                <span class="home-appeal-cta">去申诉</span>
               </div>
               <div class="home-delta minus">-12</div>
             </a>
@@ -2362,42 +2781,77 @@
           </div>
         </section>
 
-        <section class="home-card home-appeal-card">
-          <div class="home-section-head">
-            <div>
-              <h2 class="home-section-title">申诉状态</h2>
-              <p class="home-section-sub">只保留处理进度和历史结果入口</p>
+        <!-- 能力影响（跟在变化之后，先行动再看能力对照） -->
+        <section class="home-card home-score-card" aria-label="能力影响" style="padding-top:14px;">
+          <div class="home-cap-group is-limited" style="margin-top:0;">
+            <div class="home-cap-title-row"><strong>当前受限</strong><span>2 项</span></div>
+            <div class="home-cap-list">
+              <div class="home-cap-row">
+                <div>
+                  <div class="home-cap-title">高价值账号租赁</div>
+                  <div class="home-cap-desc">需达到配置分值后可租用</div>
+                </div>
+                <span class="home-chip red">受限</span>
+              </div>
+              <div class="home-cap-row">
+                <div>
+                  <div class="home-cap-title">特价专区下单</div>
+                  <div class="home-cap-desc">当前分值未满足活动准入要求</div>
+                </div>
+                <span class="home-chip red">受限</span>
+              </div>
             </div>
-            <a class="home-link-btn" href="#appeal" aria-label="查看申诉记录">
-              申诉记录
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-            </a>
           </div>
 
-          <div class="home-appeal-list">
-            <div class="home-appeal-row">
-              <div>
-                <div class="home-appeal-title">处理中</div>
-                <div class="home-appeal-desc">异常撤单扣分申诉</div>
+          <div class="home-cap-group is-normal">
+            <div class="home-cap-title-row"><strong>正常可用</strong><span>3 项</span></div>
+            <div class="home-cap-list">
+              <div class="home-cap-row">
+                <div>
+                  <div class="home-cap-title">投诉撤单</div>
+                  <div class="home-cap-desc">可正常发起投诉与撤单申请</div>
+                </div>
+                <span class="home-chip green">正常</span>
               </div>
-              <span class="home-chip blue">1 条</span>
-            </div>
-            <div class="home-appeal-row">
-              <div>
-                <div class="home-appeal-title">已通过</div>
-                <div class="home-appeal-desc">已生成积分回滚记录</div>
+              <div class="home-cap-row">
+                <div>
+                  <div class="home-cap-title">领券活动</div>
+                  <div class="home-cap-desc">可领取平台券并参与活动</div>
+                </div>
+                <span class="home-chip green">正常</span>
               </div>
-              <span class="home-chip green">+6分</span>
-            </div>
-            <div class="home-appeal-row">
-              <div>
-                <div class="home-appeal-title">未提交</div>
-                <div class="home-appeal-desc">可从扣分明细发起申诉</div>
+              <div class="home-cap-row">
+                <div>
+                  <div class="home-cap-title">账号发布</div>
+                  <div class="home-cap-desc">可正常发布与上架账号</div>
+                </div>
+                <span class="home-chip green">正常</span>
               </div>
-              <span class="home-chip warn">1 条</span>
             </div>
           </div>
         </section>
+
+        <!-- C 信用修复（仅命中后台恢复答题触发条件时展示） -->
+        <section class="home-card home-card-pad home-repair-entry" aria-label="D 信用修复" data-repair-entry>
+          <div class="home-section-head">
+            <div>
+              <h2 class="home-section-title">信用修复</h2>
+            </div>
+            <span class="home-chip green">可修复</span>
+          </div>
+          <div class="home-todo-card" style="margin:0;">
+            <div class="home-todo-top">
+              <div>
+                <strong>可恢复近期行为分 +10</strong>
+                <p>因命中恢复答题条件开放；完成基础规范答题后恢复积分</p>
+              </div>
+            </div>
+            <div class="home-todo-actions">
+              <a class="home-todo-btn green" href="#repair">开始修复</a>
+            </div>
+          </div>
+        </section>
+
         <div class="home-bottom-safe"></div>
       </main>
     </div>
@@ -2407,7 +2861,7 @@
     <div class="scene-head">
       <div>
         <h1 class="scene-title">积分明细页</h1>
-        <p class="scene-sub">明细页补齐未申诉、申诉提交、处理中和回滚状态。</p>
+        <p class="scene-sub">已回滚订单按正常完单加分展示；原扣分仅在详情查看。</p>
       </div>
       <div class="scene-mark">移动端二级页</div>
     </div>
@@ -2424,13 +2878,12 @@
       <main class="content">
         <section class="detail-intro">
           <h2>分值变动记录</h2>
-          <p>展示变动时间、类型、分值、规则名称、关联业务单号、来源系统和扣分有效期。</p>
           <div class="filters">
             <span class="active">全部</span>
             <span>扣分</span>
             <span>未申诉</span>
-            <span>申诉中</span>
             <span>已回滚</span>
+            <span>已驳回</span>
           </div>
         </section>
 
@@ -2445,13 +2898,12 @@
               <div class="delta minus">-4</div>
             </div>
             <div class="record-info">
-              <strong>规则名称</strong><span>账号异常使用命中规则</span>
-              <strong>关联单号</strong><span>ORDER202605120066</span>
-              <strong>来源系统</strong><span>订单系统</span>
-              <strong>申诉状态</strong><span class="status-value">未申诉，可提交申诉</span>
+              <strong>规则名称</strong><span>账号异常使用</span>
+              <strong>订单号</strong><span>ORDER202605120066</span>
+              <strong>申诉状态</strong><span class="status-value">未申诉</span>
             </div>
             <div class="record-actions">
-              <span class="note">当前仍在可申诉窗口内。</span>
+              <span class="note">仍在可申诉窗口内</span>
               <button class="button primary" data-open-appeal>申诉</button>
             </div>
           </article>
@@ -2460,41 +2912,59 @@
             <div class="record-top">
               <span class="type-badge minus">扣分</span>
               <div>
-                <div class="record-name">虚假投诉</div>
-                <div class="record-time">2026-05-10 14:26</div>
+                <div class="record-name">恶意撤单</div>
+                <div class="record-time">2026-05-08 18:05</div>
               </div>
-              <div class="delta minus">-8</div>
+              <div class="delta minus">-5</div>
             </div>
             <div class="record-info">
-              <strong>规则名称</strong><span>虚假投诉命中规则</span>
-              <strong>关联单号</strong><span>COMPLAINT202605100032</span>
-              <strong>来源系统</strong><span>投诉系统</span>
-              <strong>申诉状态</strong><span>审核中，预计 1-3 个工作日</span>
+              <strong>规则名称</strong><span>恶意撤单</span>
+              <strong>订单号</strong><span>ORDER202605080027</span>
+              <strong>申诉状态</strong><span>已驳回</span>
             </div>
             <div class="record-actions">
-              <span class="note">已提交申诉，审核完成后同步通知。</span>
-              <span class="button gray">处理中</span>
+              <span class="note">原扣分继续生效</span>
+              <span class="button gray">已驳回</span>
             </div>
           </article>
 
           <article class="record-card">
             <div class="record-top">
-              <span class="type-badge recover">恢复</span>
+              <span class="type-badge plus">加分</span>
               <div>
-                <div class="record-name">申诉通过回滚</div>
-                <div class="record-time">2026-05-14 16:40</div>
+                <div class="record-name">异常撤单（已回滚）</div>
+                <div class="record-time">2026-05-13 09:18</div>
               </div>
-              <div class="delta plus">+6</div>
+              <div class="delta plus">+2</div>
             </div>
             <div class="record-info">
-              <strong>规则名称</strong><span>申诉通过回滚</span>
-              <strong>关联单号</strong><span>APPEAL202605140018</span>
-              <strong>来源系统</strong><span>审核后台</span>
-              <strong>恢复说明</strong><span>关联原扣分 ORDER202605130042</span>
+              <strong>规则名称</strong><span>正常结算（履约）</span>
+              <strong>订单号</strong><span>ORDER202605130042</span>
+              <strong>申诉状态</strong><span>已回滚</span>
             </div>
             <div class="record-actions">
-              <span class="note">已同步刷新总分和限制状态。</span>
+              <span class="note">回滚后按正常完单加分；原扣分 -6 见详情</span>
               <span class="button green">已回滚</span>
+            </div>
+          </article>
+
+          <article class="record-card">
+            <div class="record-top">
+              <span class="type-badge plus">加分</span>
+              <div>
+                <div class="record-name">正常完单加分</div>
+                <div class="record-time">2026-05-18 22:04</div>
+              </div>
+              <div class="delta plus">+2</div>
+            </div>
+            <div class="record-info">
+              <strong>规则名称</strong><span>正常结算（履约）</span>
+              <strong>订单号</strong><span>ORDER202605180274</span>
+              <strong>申诉状态</strong><span>—</span>
+            </div>
+            <div class="record-actions">
+              <span class="note">履约加分记录</span>
+              <span class="button gray">记录</span>
             </div>
           </article>
         </section>
@@ -2567,7 +3037,7 @@
             </div>
             <div>
               <div class="appeal-title">扣分回滚明细</div>
-              <div class="appeal-info">原扣分：-6；回滚后补回：+6<br>关联申诉单：APPEAL202605140018</div>
+              <div class="appeal-info">原扣分：-6；回滚后按正常完单加分：+2<br>关联申诉单：APPEAL202605140018</div>
             </div>
             <div class="score-change plus">+6</div>
           </div>
@@ -2623,6 +3093,10 @@
         </section>
 
         <section class="rule-section">
+          <div class="rule-row">
+            <strong>加分规则</strong>
+            <span>订单行为可加分：① 正常结算（履约）— 当天最多 +5 分，近 30 天最高 +100 分；② 当月累积完单 5 天或 5 次 — 达到任一门槛可加分，每月仅 1 次。</span>
+          </div>
           <div class="rule-row">
             <strong>扣分规则</strong>
             <span>异常撤单、虚假投诉、账号异常、恶意操作等行为会按规则扣分；不同行为对应不同扣分值和有效期。</span>
@@ -2868,6 +3342,9 @@
     });
 
     const search = new URLSearchParams(location.search);
+    if (search.get("repair") === "0") {
+      document.body.classList.add("hide-repair-entry");
+    }
     if (search.get("modal") === "appeal") {
       location.hash = "detail";
       openAppealModal();
