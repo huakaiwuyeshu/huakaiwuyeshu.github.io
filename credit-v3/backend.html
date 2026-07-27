@@ -2684,42 +2684,42 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td>正常</td>
+                          <td>信誉优秀</td>
                           <td>160 - 200</td>
                           <td>80 - 100</td>
-                          <td class="left">当前信誉状态正常</td>
+                          <td class="left">当前信誉优秀</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>预警</td>
+                          <td>信誉良好</td>
                           <td>120 - 159</td>
                           <td>60 - 79</td>
-                          <td class="left">当前信誉状态需要关注</td>
+                          <td class="left">当前信誉良好</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>部分受限</td>
+                          <td>信誉一般</td>
                           <td>80 - 119</td>
                           <td>40 - 59</td>
-                          <td class="left">部分能力当前受限</td>
+                          <td class="left">当前信誉一般</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>限制</td>
+                          <td>信誉较差</td>
                           <td>40 - 79</td>
                           <td>20 - 39</td>
-                          <td class="left">当前功能不可用</td>
+                          <td class="left">当前信誉较差</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>高风险</td>
+                          <td>信誉高危</td>
                           <td>0 - 39</td>
                           <td>0 - 19</td>
-                          <td class="left">当前为高风险状态</td>
+                          <td class="left">当前为信誉高危状态</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
@@ -3178,7 +3178,7 @@
                         <tr>
                           <td>配置变更</td>
                           <td>等级配置</td>
-                          <td class="left">「预警」状态展示文案由「需关注」改为「当前信誉状态需要关注」</td>
+                          <td class="left">「信誉良好」状态展示文案由「需关注」改为「当前信誉良好」</td>
                           <td>何冰冰</td>
                           <td>2026-05-19 15:32</td>
                         </tr>
@@ -3370,10 +3370,10 @@
           {
             title: "信誉状态",
             fields: [
-              ["状态名称", "正常", false, "", "disabled"],
+              ["状态名称", "信誉优秀", false, "", "disabled"],
               ["总信誉积分区间", "160 - 200", true, "", "input"],
               ["近期行为分区间", "80 - 100", true, "", "input"],
-              ["展示文案", "当前信誉状态正常", true, "wide", "input"],
+              ["展示文案", "当前信誉优秀", true, "wide", "input"],
               ["状态", "开启 / 关闭", true, "", "select", "开启"]
             ]
           }
@@ -3760,7 +3760,7 @@
 
     function openStatusRuleEdit(row) {
       const cells = row ? row.querySelectorAll("td") : [];
-      const name = cells[0]?.textContent.trim() || "正常";
+      const name = cells[0]?.textContent.trim() || "信誉优秀";
       const totalRange = cells[1]?.textContent.trim() || "160 - 200";
       const recentRange = cells[2]?.textContent.trim() || "80 - 100";
       const copy = cells[3]?.textContent.trim() || "";
