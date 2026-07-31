@@ -2262,10 +2262,10 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td>高价值账号</td>
-                          <td class="left">总信誉积分 &lt; 80</td>
-                          <td><span class="pill warn">提醒</span></td>
-                          <td>当天</td>
+                          <td>限制下单</td>
+                          <td class="left">总信誉积分 &lt; 70</td>
+                          <td><span class="pill danger">拦截下单</span></td>
+                          <td>7 天</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
@@ -2293,14 +2293,6 @@
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
                         </tr>
-                        <tr>
-                          <td>活动参与</td>
-                          <td class="left">总信誉积分 &lt; 90</td>
-                          <td><span class="pill danger">禁止参与活动</span></td>
-                          <td>7 天</td>
-                          <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
-                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -2313,10 +2305,10 @@
                     </div>
                     <div class="bd">
                       <div class="flow">
-                        <div class="flow-step"><strong>找号</strong>高价值账号、特价专区、热门游戏前置判断</div>
-                        <div class="flow-step"><strong>下单</strong>判断是否可租，是否命中限制</div>
+                        <div class="flow-step"><strong>找号</strong>特价专区等场景前置判断</div>
+                        <div class="flow-step"><strong>下单</strong>限制下单：判断是否可租、是否命中限制</div>
                         <div class="flow-step"><strong>发布账号</strong>限制出租账号能力</div>
-                        <div class="flow-step"><strong>活动 / 领券</strong>限制参与或领取官方券</div>
+                        <div class="flow-step"><strong>领券</strong>限制领取官方券</div>
                       </div>
                     </div>
                   </div>
@@ -3330,11 +3322,11 @@
           {
             title: "限制策略",
             fields: [
-              ["限制场景", "高价值账号", false, "", "disabled"],
-              ["总信誉积分", "80", false, "", "threshold", "小于"],
+              ["限制场景", "限制下单", false, "", "disabled"],
+              ["总信誉积分", "70", false, "", "threshold", "小于"],
               ["近期行为分", "", false, "", "threshold", "小于"],
-              ["处理方式", "弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", "弹窗提醒"],
-              ["限制时长", "当天 / 一周 / 7 天 / 30 天 / 自定义天数", true, "", "select", "当天"],
+              ["处理方式", "弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", "拦截下单"],
+              ["限制时长", "当天 / 一周 / 7 天 / 30 天 / 自定义天数", true, "", "select", "7 天"],
               ["状态", "开启 / 关闭", true, "", "select", "开启"]
             ]
           }
@@ -3732,8 +3724,8 @@
 
     function openPunishRuleEdit(row) {
       const cells = row ? row.querySelectorAll("td") : [];
-      const scene = cells[0]?.textContent.trim() || "高价值账号";
-      const condition = cells[1]?.textContent.trim() || "总信誉积分 < 80";
+      const scene = cells[0]?.textContent.trim() || "限制下单";
+      const condition = cells[1]?.textContent.trim() || "总信誉积分 < 70";
       const handle = mapHandleType(cells[2]?.textContent.trim());
       const duration = mapDuration(cells[3]?.textContent.trim());
       const status = cells[4]?.textContent.trim() || "开启";
