@@ -2658,7 +2658,7 @@
             <div class="panel-shell">
               <div class="panel-head">
                 <h1 class="panel-title">等级配置</h1>
-                <p class="panel-desc">信誉状态名称支持动态配置；总信誉积分区间和近期行为分区间不可重复、不可交集。</p>
+                <p class="panel-desc">信誉状态名称支持动态配置；仅按总信誉积分区间划分状态，区间不可重复、不可交集。</p>
               </div>
               <div class="two-col">
                 <div>
@@ -2666,19 +2666,17 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 16%;">状态名称</th>
-                          <th style="width: 20%;">总信誉积分区间</th>
-                          <th style="width: 18%;">近期行为分区间</th>
-                          <th style="width: 28%;">展示文案</th>
-                          <th style="width: 8%;">状态</th>
-                          <th style="width: 10%;">操作</th>
+                          <th style="width: 18%;">状态名称</th>
+                          <th style="width: 24%;">总信誉积分区间</th>
+                          <th style="width: 34%;">展示文案</th>
+                          <th style="width: 10%;">状态</th>
+                          <th style="width: 14%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>信誉优秀</td>
                           <td>160 - 200</td>
-                          <td>80 - 100</td>
                           <td class="left">当前信誉优秀</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
@@ -2686,7 +2684,6 @@
                         <tr>
                           <td>信誉良好</td>
                           <td>120 - 159</td>
-                          <td>60 - 79</td>
                           <td class="left">当前信誉良好</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
@@ -2694,7 +2691,6 @@
                         <tr>
                           <td>信誉一般</td>
                           <td>80 - 119</td>
-                          <td>40 - 59</td>
                           <td class="left">当前信誉一般</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
@@ -2702,7 +2698,6 @@
                         <tr>
                           <td>信誉较差</td>
                           <td>40 - 79</td>
-                          <td>20 - 39</td>
                           <td class="left">当前信誉较差</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
@@ -2710,7 +2705,6 @@
                         <tr>
                           <td>信誉高危</td>
                           <td>0 - 39</td>
-                          <td>0 - 19</td>
                           <td class="left">当前为信誉高危状态</td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op secondary">修改</span><span class="op">停用</span></td>
@@ -2728,7 +2722,7 @@
                     <div class="bd">
                       <div class="side-list">
                         <div class="item">用户侧展示<small>三区首页：总分、风险状态、限制、最近变化、提升与恢复</small></div>
-                        <div class="item">后台判断<small>可同时使用总分和近期行为分</small></div>
+                        <div class="item">后台判断<small>仅按总信誉积分区间判定信誉状态</small></div>
                         <div class="item">不再使用<small>红包 / 券 / VIP / 近15天趋势图配置</small></div>
                       </div>
                     </div>
@@ -3364,7 +3358,6 @@
             fields: [
               ["状态名称", "信誉优秀", false, "", "disabled"],
               ["总信誉积分区间", "160 - 200", true, "", "input"],
-              ["近期行为分区间", "80 - 100", true, "", "input"],
               ["展示文案", "当前信誉优秀", true, "wide", "input"],
               ["状态", "开启 / 关闭", true, "", "select", "开启"]
             ]
@@ -3754,9 +3747,8 @@
       const cells = row ? row.querySelectorAll("td") : [];
       const name = cells[0]?.textContent.trim() || "信誉优秀";
       const totalRange = cells[1]?.textContent.trim() || "160 - 200";
-      const recentRange = cells[2]?.textContent.trim() || "80 - 100";
-      const copy = cells[3]?.textContent.trim() || "";
-      const status = cells[4]?.textContent.trim() || "开启";
+      const copy = cells[2]?.textContent.trim() || "";
+      const status = cells[3]?.textContent.trim() || "开启";
 
       openDialog({
         title: "修改等级配置",
@@ -3767,7 +3759,6 @@
             fields: [
               ["状态名称", name, false, "", "disabled"],
               ["总信誉积分区间", totalRange, true, "", "input"],
-              ["近期行为分区间", recentRange, true, "", "input"],
               ["展示文案", copy, true, "wide", "input"],
               ["状态", "开启 / 关闭", true, "", "select", status]
             ]
