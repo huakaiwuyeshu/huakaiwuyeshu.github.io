@@ -1212,6 +1212,81 @@
       white-space: pre-line;
     }
 
+    /* 惩罚配置：触发条件可编辑数值 */
+    .punish-cond {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .punish-cond-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 8px;
+      color: #34404f;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .punish-cond-row.is-exempt {
+      color: #5b6b7c;
+      font-weight: 650;
+    }
+
+    .punish-cond-label {
+      color: #1f2a37;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .punish-cond-op {
+      color: #2f73ff;
+      font-weight: 900;
+      min-width: 1em;
+      text-align: center;
+    }
+
+    .punish-num {
+      width: 56px;
+      height: 30px;
+      padding: 0 8px;
+      border: 1px solid #d5dce6;
+      border-radius: 6px;
+      background: #fff;
+      color: #151922;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .punish-num:hover {
+      border-color: #b8c6db;
+    }
+
+    .punish-num:focus {
+      border-color: #5f93ff;
+      box-shadow: 0 0 0 3px rgba(95, 147, 255, 0.14);
+    }
+
+    .punish-cond-unit {
+      color: #697382;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .punish-cond-note {
+      color: #08a676;
+      font-size: 12px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
     .config-modal.is-manual-adjust {
       width: min(520px, 100%);
     }
@@ -2244,7 +2319,7 @@
             <div class="panel-shell">
               <div class="panel-head">
                 <h1 class="panel-title">惩罚配置</h1>
-                <p class="panel-desc">限制策略只按信誉分触发业务限制，本期不按次数类或事件类条件单独触发。</p>
+                <p class="panel-desc">限制策略按信誉分触发业务限制；租号限制按单一信誉分阈值拦截，并可配置近30天结算单量豁免（达标单量用户不受限）。</p>
               </div>
               <div class="two-col">
                 <div>
@@ -2252,38 +2327,96 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 22%;">限制场景</th>
-                          <th style="width: 30%;">信誉分触发条件</th>
-                          <th style="width: 20%;">处理方式</th>
-                          <th style="width: 14%;">状态</th>
+                          <th style="width: 18%;">限制场景</th>
+                          <th style="width: 40%;">信誉分触发条件</th>
+                          <th style="width: 16%;">处理方式</th>
+                          <th style="width: 12%;">状态</th>
                           <th style="width: 14%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
+                        <tr data-punish-type="rental-limit" data-score-op="小于" data-score="40" data-settle-op="大于" data-settle-orders="3">
+                          <td>租号限制</td>
+                          <td class="left">
+                            <div class="punish-cond">
+                              <div class="punish-cond-row">
+                                <span class="punish-cond-label">信誉积分</span>
+                                <span class="punish-cond-op">&lt;</span>
+                                <input class="punish-num" type="text" inputmode="numeric" value="40" data-field="score" aria-label="信誉积分阈值" />
+                                <span class="punish-cond-unit">分限制租号</span>
+                              </div>
+                              <div class="punish-cond-row is-exempt">
+                                <span class="punish-cond-label">近30天结算单量</span>
+                                <span class="punish-cond-op">&gt;</span>
+                                <input class="punish-num" type="text" inputmode="numeric" value="3" data-field="settle" aria-label="近30天结算单量豁免阈值" />
+                                <span class="punish-cond-note">单不受限</span>
+                              </div>
+                            </div>
+                          </td>
+                          <td><span class="pill danger">限制租号</span></td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op">停用</span></td>
+                        </tr>
                         <tr>
                           <td>限制下单</td>
-                          <td class="left">总信誉积分 &lt; 70</td>
+                          <td class="left">
+                            <div class="punish-cond">
+                              <div class="punish-cond-row">
+                                <span class="punish-cond-label">总信誉积分</span>
+                                <span class="punish-cond-op">&lt;</span>
+                                <input class="punish-num" type="text" inputmode="numeric" value="70" data-field="score" aria-label="总信誉积分阈值" />
+                                <span class="punish-cond-unit">分</span>
+                              </div>
+                            </div>
+                          </td>
                           <td><span class="pill danger">拦截下单</span></td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>特价专区</td>
-                          <td class="left">近期行为分 &lt; 60</td>
+                          <td>租号限制(特价专区)</td>
+                          <td class="left">
+                            <div class="punish-cond">
+                              <div class="punish-cond-row">
+                                <span class="punish-cond-label">近期行为分</span>
+                                <span class="punish-cond-op">&lt;</span>
+                                <input class="punish-num" type="text" inputmode="numeric" value="60" data-field="score" aria-label="近期行为分阈值" />
+                                <span class="punish-cond-unit">分</span>
+                              </div>
+                            </div>
+                          </td>
                           <td><span class="pill danger">拦截下单</span></td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>发布账号</td>
-                          <td class="left">总信誉积分 &lt; 70</td>
+                          <td>限制发布帐号</td>
+                          <td class="left">
+                            <div class="punish-cond">
+                              <div class="punish-cond-row">
+                                <span class="punish-cond-label">总信誉积分</span>
+                                <span class="punish-cond-op">&lt;</span>
+                                <input class="punish-num" type="text" inputmode="numeric" value="70" data-field="score" aria-label="总信誉积分阈值" />
+                                <span class="punish-cond-unit">分</span>
+                              </div>
+                            </div>
+                          </td>
                           <td><span class="pill danger">拦截</span></td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op">停用</span></td>
                         </tr>
                         <tr>
-                          <td>领券中心</td>
-                          <td class="left">总信誉积分 &lt; 60</td>
+                          <td>限制领券中心领券</td>
+                          <td class="left">
+                            <div class="punish-cond">
+                              <div class="punish-cond-row">
+                                <span class="punish-cond-label">总信誉积分</span>
+                                <span class="punish-cond-op">&lt;</span>
+                                <input class="punish-num" type="text" inputmode="numeric" value="60" data-field="score" aria-label="总信誉积分阈值" />
+                                <span class="punish-cond-unit">分</span>
+                              </div>
+                            </div>
+                          </td>
                           <td><span class="pill danger">禁止领券</span></td>
                           <td><span class="pill on">开启</span></td>
                           <td><span class="op">停用</span></td>
@@ -2300,23 +2433,24 @@
                     </div>
                     <div class="bd">
                       <div class="flow">
-                        <div class="flow-step"><strong>找号</strong>特价专区等场景前置判断</div>
-                        <div class="flow-step"><strong>下单</strong>限制下单：判断是否可租、是否命中限制</div>
-                        <div class="flow-step"><strong>发布账号</strong>限制出租账号能力</div>
-                        <div class="flow-step"><strong>领券</strong>限制领取官方券</div>
+                        <div class="flow-step"><strong>找号 / 租号</strong>租号限制、租号限制(特价专区)、限制下单</div>
+                        <div class="flow-step"><strong>下单</strong>限制下单：判断是否可租；租号限制先看信誉分，再看近30天结算单量豁免</div>
+                        <div class="flow-step"><strong>发布帐号</strong>限制发布帐号能力</div>
+                        <div class="flow-step"><strong>领券</strong>限制领券中心领券</div>
                       </div>
                     </div>
                   </div>
                   <div class="side-box">
                     <div class="hd">
                       <strong>处理方式</strong>
-                      <span>建议统一成三类</span>
+                      <span>业务限制策略</span>
                     </div>
                     <div class="bd">
                       <div class="side-list">
-                        <div class="item">提醒<small>告诉用户原因和影响</small></div>
+                        <div class="item">限制租号<small>信誉积分低于阈值则限制；近30天结算单量超过豁免阈值时不受限</small></div>
+                        <div class="item">提醒<small>业务场景内告知原因和影响</small></div>
                         <div class="item">拦截下单<small>禁止继续租用</small></div>
-                        <div class="item">禁止参与<small>活动、领券等场景不可操作</small></div>
+                        <div class="item">禁止领券<small>领券中心等场景不可操作</small></div>
                       </div>
                     </div>
                   </div>
