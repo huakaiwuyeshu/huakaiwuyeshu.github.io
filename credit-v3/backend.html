@@ -2252,12 +2252,11 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 18%;">限制场景</th>
-                          <th style="width: 24%;">信誉分触发条件</th>
-                          <th style="width: 16%;">处理方式</th>
-                          <th style="width: 14%;">限制时长</th>
-                          <th style="width: 12%;">状态</th>
-                          <th style="width: 16%;">操作</th>
+                          <th style="width: 22%;">限制场景</th>
+                          <th style="width: 30%;">信誉分触发条件</th>
+                          <th style="width: 20%;">处理方式</th>
+                          <th style="width: 14%;">状态</th>
+                          <th style="width: 14%;">操作</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -2265,33 +2264,29 @@
                           <td>限制下单</td>
                           <td class="left">总信誉积分 &lt; 70</td>
                           <td><span class="pill danger">拦截下单</span></td>
-                          <td>7 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                          <td><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>特价专区</td>
                           <td class="left">近期行为分 &lt; 60</td>
                           <td><span class="pill danger">拦截下单</span></td>
-                          <td>7 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                          <td><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>发布账号</td>
                           <td class="left">总信誉积分 &lt; 70</td>
                           <td><span class="pill danger">拦截</span></td>
-                          <td>30 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                          <td><span class="op">停用</span></td>
                         </tr>
                         <tr>
                           <td>领券中心</td>
                           <td class="left">总信誉积分 &lt; 60</td>
                           <td><span class="pill danger">禁止领券</span></td>
-                          <td>30 天</td>
                           <td><span class="pill on">开启</span></td>
-                          <td><span class="op secondary">修改</span><span class="op">停用</span></td>
+                          <td><span class="op">停用</span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -2334,7 +2329,7 @@
             <div class="panel-shell">
               <div class="panel-head">
                 <h1 class="panel-title">历史功能拓展</h1>
-                <p class="panel-desc">撤单限制配置、租客投诉规则列表均对齐现有后台；原「信誉积分」拆分为「历史信誉分」「近期行为分」两个维度独立配置。</p>
+                <p class="panel-desc">撤单限制配置、租客投诉规则列表均对齐现有后台；原「信誉积分」拆分为「信誉积分（总分）」「近期行为分」两个维度独立配置。</p>
               </div>
               <div class="toolbar">
                 <div class="group">
@@ -2383,7 +2378,7 @@
                           <th>编号</th>
                           <th>用户身份</th>
                           <th>游戏类型</th>
-                          <th>历史信誉分</th>
+                          <th>信誉积分（总分）</th>
                           <th>近期行为分</th>
                           <th>用户注册时间</th>
                           <th>近一周订单数</th>
@@ -2522,7 +2517,7 @@
                           <th>编号</th>
                           <th>用户身份</th>
                           <th>游戏类型</th>
-                          <th>历史信誉分</th>
+                          <th>信誉积分（总分）</th>
                           <th>近期行为分</th>
                           <th>限制方式</th>
                           <th style="min-width: 180px;">投诉类型</th>
@@ -3834,10 +3829,10 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="form-label"><em>*</em>历史信誉分：</div>
+            <div class="form-label"><em>*</em>信誉积分（总分）：</div>
             <div class="form-control">
-              <select aria-label="历史信誉分条件">${optionHtml(scoreOps, hist.op)}</select>
-              <input class="w-sm" type="text" value="${escapeHtml(hist.value)}" ${hist.op === "不限" ? "disabled" : ""} aria-label="历史信誉分分值" />
+              <select aria-label="信誉积分（总分）条件">${optionHtml(scoreOps, hist.op)}</select>
+              <input class="w-sm" type="text" value="${escapeHtml(hist.value)}" ${hist.op === "不限" ? "disabled" : ""} aria-label="信誉积分（总分）分值" />
               <span>分</span>
             </div>
           </div>
@@ -3978,7 +3973,7 @@
         ? games.map((game) => `<span class="tag">${escapeHtml(game)} <i>×</i></span>`).join("")
         : "";
 
-      // 严格对齐原图字段，仅把「用户信誉积分」拆成历史信誉分、近期行为分两行
+      // 严格对齐原图字段，仅把「用户信誉积分」拆成信誉积分（总分）、近期行为分两行
       return `
         <div class="complaint-page-head">你当前的位置：租号玩 &gt; 投诉处理 &gt; 租客投诉规则配置</div>
         <div class="complaint-page-title">${escapeHtml(pageTitle)}</div>
@@ -4002,11 +3997,11 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="form-label"><em>*</em>历史信誉分：</div>
+            <div class="form-label"><em>*</em>信誉积分（总分）：</div>
             <div class="form-control">
               <div class="score-inline">
                 <span>小于等于</span>
-                <input class="w-sm" type="text" value="${escapeHtml(histValue)}" aria-label="历史信誉分" />
+                <input class="w-sm" type="text" value="${escapeHtml(histValue)}" aria-label="信誉积分（总分）" />
                 <span>分</span>
                 <span class="hint">（范围0-100，不填默认为0）</span>
               </div>
