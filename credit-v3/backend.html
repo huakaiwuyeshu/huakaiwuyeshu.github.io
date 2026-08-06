@@ -294,12 +294,95 @@
       background: #5f8ff7;
     }
 
+    .yunshang-primary-row {
+      display: flex;
+      gap: 8px;
+      margin: 14px 18px 0;
+      padding: 8px;
+      border: 1px solid #dbe5f2;
+      border-radius: 8px;
+      background: #f7f9fc;
+    }
+
+    .yunshang-primary {
+      min-width: 128px;
+      height: 36px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      color: #36557e;
+      background: transparent;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .yunshang-primary.active {
+      color: #fff;
+      border-color: #4f83ee;
+      background: #5f8ff7;
+      box-shadow: 0 4px 10px rgba(47, 103, 241, .18);
+    }
+
     .legacy-pane {
       display: none;
     }
 
     .legacy-pane.active {
       display: block;
+    }
+
+    .yunshang-group {
+      display: none;
+    }
+
+    .yunshang-group.active {
+      display: block;
+    }
+
+    .yunshang-secondary-row {
+      margin-top: 10px;
+    }
+
+    .yunshang-pane {
+      display: none;
+    }
+
+    .yunshang-pane.active {
+      display: block;
+    }
+
+    .yunshang-shot-wrap {
+      padding: 14px 18px 22px;
+      background: #f7f9fc;
+    }
+
+    .yunshang-shot {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .yunshang-note {
+      margin: 0 18px 14px;
+      padding: 10px 12px;
+      border: 1px solid #dbe5f2;
+      border-radius: 8px;
+      background: #f8fbff;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .yunshang-note strong {
+      color: var(--ink);
     }
 
     .workspace {
@@ -1203,6 +1286,67 @@
       white-space: nowrap;
     }
 
+    .config-modal.is-rental-limit {
+      width: min(720px, 100%);
+    }
+
+    .rental-tier-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .rental-tier-head {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 72px;
+      gap: 8px;
+      color: #66788a;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 0 2px;
+    }
+
+    .rental-tier-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 72px;
+      gap: 8px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #e6ebf2;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    .rental-tier-row .threshold-row {
+      margin-top: 0;
+      grid-template-columns: 100px minmax(0, 1fr);
+    }
+
+    .rental-tier-row .unit-row {
+      margin-top: 0;
+    }
+
+    .rental-tier-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .rental-tier-remove {
+      color: #e34d59;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+    }
+
+    .rental-tier-remove.is-disabled {
+      color: #b8c2cc;
+      cursor: not-allowed;
+    }
+
     .field-tip {
       margin-top: 6px;
       color: #e34d59;
@@ -1955,6 +2099,7 @@
           <button class="tab" data-tab="appeal">申诉审核</button>
           <button class="tab" data-tab="log">操作日志</button>
           <button class="tab" data-tab="legacy">历史功能拓展</button>
+          <button class="tab" data-tab="yunshang">网易云商功能兼容</button>
         </div>
       </section>
 
@@ -2783,6 +2928,78 @@
             </div>
           </section>
 
+          <section class="panel" data-panel="yunshang">
+            <div class="panel-shell">
+              <div class="panel-head">
+                <h1 class="panel-title">网易云商功能兼容</h1>
+                <p class="panel-desc">调整为两级 Tab：一级区分接待页面与会话查询；接待页面已合并左侧会话列表与顶部用户名标识位，并同步覆盖客户资料、用户信息的信誉展示。</p>
+              </div>
+
+              <div class="yunshang-primary-row" aria-label="网易云商兼容一级页面">
+                <button class="yunshang-primary active" data-yunshang-group-tab="reception">接待页面</button>
+                <button class="yunshang-primary" data-yunshang-group-tab="session-query">会话查询</button>
+              </div>
+
+              <div class="yunshang-group active" data-yunshang-group-panel="reception">
+                <div class="subtab-row yunshang-secondary-row" aria-label="接待页面二级页面">
+                  <button class="subtab active" data-yunshang-tab="reception-page">接待页面</button>
+                  <button class="subtab" data-yunshang-tab="reception-customer-profile">客户资料界面</button>
+                  <button class="subtab" data-yunshang-tab="reception-user-info">用户信息页面</button>
+                </div>
+
+                <div class="yunshang-pane active" data-yunshang-panel="reception-page">
+                  <p class="yunshang-note"><strong>接待页面：</strong>左侧会话列表新增「一般」标识，上侧用户名称后展示「高危」等信誉标识，两个接待页面修改点合并展示。</p>
+                  <div class="yunshang-shot-wrap">
+                    <img class="yunshang-shot" src="./assets/yunshang-reception-page.png" alt="接待页面列表与用户名展示信誉标识" />
+                  </div>
+                </div>
+
+                <div class="yunshang-pane" data-yunshang-panel="reception-customer-profile">
+                  <p class="yunshang-note"><strong>客户资料界面：</strong>客户资料「标签」区域保留原有标签，并追加「高危」信誉标识。</p>
+                  <div class="yunshang-shot-wrap">
+                    <img class="yunshang-shot" src="./assets/yunshang-reception-customer-profile.png" alt="接待页面客户资料增加高危标签" />
+                  </div>
+                </div>
+
+                <div class="yunshang-pane" data-yunshang-panel="reception-user-info">
+                  <p class="yunshang-note"><strong>用户信息页面：</strong>用户信息「信誉积分」字段改为红色字体展示。</p>
+                  <div class="yunshang-shot-wrap">
+                    <img class="yunshang-shot" src="./assets/yunshang-reception-user-info.png" alt="接待页面用户信息信誉积分红色展示" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="yunshang-group" data-yunshang-group-panel="session-query">
+                <div class="subtab-row yunshang-secondary-row" aria-label="会话查询二级页面">
+                  <button class="subtab" data-yunshang-tab="session-query-page">会话查询页面</button>
+                  <button class="subtab" data-yunshang-tab="session-customer-profile">客户资料页面</button>
+                  <button class="subtab" data-yunshang-tab="session-user-info">用户信息页面</button>
+                </div>
+
+                <div class="yunshang-pane" data-yunshang-panel="session-query-page">
+                  <p class="yunshang-note"><strong>会话查询页面：</strong>用户名后增加「高危 / 较差」等信誉标识。</p>
+                  <div class="yunshang-shot-wrap">
+                    <img class="yunshang-shot" src="./assets/yunshang-session-query-page.png" alt="会话查询用户名后增加信誉标识" />
+                  </div>
+                </div>
+
+                <div class="yunshang-pane" data-yunshang-panel="session-customer-profile">
+                  <p class="yunshang-note"><strong>客户资料页面：</strong>客户资料「标签」区域保留原有标签，并追加「高危」信誉标识。</p>
+                  <div class="yunshang-shot-wrap">
+                    <img class="yunshang-shot" src="./assets/yunshang-session-customer-profile.png" alt="会话查询客户资料增加高危标签" />
+                  </div>
+                </div>
+
+                <div class="yunshang-pane" data-yunshang-panel="session-user-info">
+                  <p class="yunshang-note"><strong>用户信息页面：</strong>用户信息「信誉积分」字段改为红色字体展示。</p>
+                  <div class="yunshang-shot-wrap">
+                    <img class="yunshang-shot" src="./assets/yunshang-session-user-info.png" alt="会话查询用户信息信誉积分红色展示" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section class="panel" data-panel="grade">
             <div class="panel-shell">
               <div class="panel-head">
@@ -3149,7 +3366,7 @@
                     <table>
                       <thead>
                         <tr>
-                          <th style="width: 12%;">订单号</th>
+                          <th style="width: 12%;">申诉单ID</th>
                           <th style="width: 9%;">用户 UID</th>
                           <th style="width: 8%;">扣除分数</th>
                           <th style="width: 12%;">扣分规则</th>
@@ -3286,7 +3503,7 @@
                         <tr>
                           <td>配置变更</td>
                           <td>惩罚配置</td>
-                          <td class="left">「特价专区」限制策略总分阈值由 80 改为 70</td>
+                          <td class="left">「租号限制(特价专区)」限制策略总分阈值由 80 改为 70</td>
                           <td>何冰冰</td>
                           <td>2026-05-19 14:08</td>
                         </tr>
@@ -3396,6 +3613,10 @@
     const panels = document.querySelectorAll(".panel");
     const legacySubtabs = document.querySelectorAll("[data-legacy-tab]");
     const legacyPanes = document.querySelectorAll("[data-legacy-panel]");
+    const yunshangGroupTabs = document.querySelectorAll("[data-yunshang-group-tab]");
+    const yunshangGroups = document.querySelectorAll("[data-yunshang-group-panel]");
+    const yunshangSubtabs = document.querySelectorAll("[data-yunshang-tab]");
+    const yunshangPanes = document.querySelectorAll("[data-yunshang-panel]");
     const modal = document.getElementById("configModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalDesc = document.getElementById("modalDesc");
@@ -3449,9 +3670,26 @@
               ["总信誉积分", "70", false, "", "threshold", "小于"],
               ["近期行为分", "", false, "", "threshold", "小于"],
               ["处理方式", "弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", "拦截下单"],
-              ["限制时长", "当天 / 一周 / 7 天 / 30 天 / 自定义天数", true, "", "select", "7 天"],
               ["状态", "开启 / 关闭", true, "", "select", "开启"]
             ]
+          }
+        ]
+      },
+      rentalLimitRule: {
+        title: "修改租号限制",
+        desc: "按单一信誉分阈值限制租号；近30天结算单量达到豁免阈值时不受限制。",
+        modalClass: "is-rental-limit",
+        sections: [
+          {
+            title: "租号限制配置",
+            fields: [
+              ["限制场景", "租号限制", false, "", "disabled"],
+              ["处理方式", "限制租号", false, "", "disabled"],
+              ["信誉积分", "40", false, "", "threshold", "小于"],
+              ["近30天结算单量", "3", false, "", "threshold", "大于"],
+              ["状态", "开启 / 关闭", true, "", "select", "开启"]
+            ],
+            tip: "示例：信誉积分 < 40 限制租号，但近30天结算单量 > 3 单的用户不受限制。"
           }
         ]
       },
@@ -3667,6 +3905,29 @@
       legacyPanes.forEach((pane) => pane.classList.toggle("active", pane.dataset.legacyPanel === tabKey));
     }
 
+    const yunshangDefaultTabs = {
+      reception: "reception-page",
+      "session-query": "session-query-page",
+    };
+
+    function syncYunshangGroup(groupKey) {
+      yunshangGroupTabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.yunshangGroupTab === groupKey));
+      yunshangGroups.forEach((group) => group.classList.toggle("active", group.dataset.yunshangGroupPanel === groupKey));
+    }
+
+    function activateYunshang(tabKey) {
+      const targetTab = Array.from(yunshangSubtabs).find((tab) => tab.dataset.yunshangTab === tabKey);
+      const parentGroup = targetTab?.closest("[data-yunshang-group-panel]")?.dataset.yunshangGroupPanel;
+      if (parentGroup) syncYunshangGroup(parentGroup);
+      yunshangSubtabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.yunshangTab === tabKey));
+      yunshangPanes.forEach((pane) => pane.classList.toggle("active", pane.dataset.yunshangPanel === tabKey));
+    }
+
+    function activateYunshangGroup(groupKey) {
+      syncYunshangGroup(groupKey);
+      activateYunshang(yunshangDefaultTabs[groupKey] || "reception-page");
+    }
+
     function detailValueClass(label, value) {
       const text = String(value || "").trim();
       if (/分值|扣分值|回滚分值|分值变化/.test(label)) {
@@ -3741,7 +4002,7 @@
         "一级分类", "二级场景", "二级分类", "适用业务", "行为类型", "行为范围",
         "分值配置方式",
         "是否允许申诉", "状态", "投诉类型", "投诉选项", "核实结果",
-        "限制场景", "处理方式", "限制时长", "源策略", "目标场景",
+        "限制场景", "处理方式", "限制时长", "源策略", "目标场景", "提醒方式", "配置类型",
         "历史功能类型", "用户身份", "游戏类型", "历史累积分条件", "近期行为分条件", "限制方式",
         "复制内容", "生效方式", "是否触发限制策略", "关联限制策略",
         "调整类型", "关联业务单号", "申诉状态", "审核结果",
@@ -3830,6 +4091,7 @@
 
     function mapHandleType(text) {
       const t = String(text || "").trim();
+      if (/限制租号/.test(t)) return "限制租号";
       if (/提醒/.test(t)) return "弹窗提醒";
       if (/禁止领券/.test(t)) return "禁止领券";
       if (/禁止参与/.test(t)) return "禁止参与活动";
@@ -3844,14 +4106,63 @@
       return t || "当天";
     }
 
+    function parseRentalLimitConfig(row) {
+      const scoreInput = row?.querySelector('input[data-field="score"]');
+      const settleInput = row?.querySelector('input[data-field="settle"]');
+      const scoreOp = row?.dataset?.scoreOp || "小于";
+      const score = (scoreInput?.value || row?.dataset?.score || "40").trim();
+      const settleOp = row?.dataset?.settleOp || "大于";
+      const settleOrders = (settleInput?.value || row?.dataset?.settleOrders || "3").trim();
+      return { scoreOp, score, settleOp, settleOrders };
+    }
+
+    function parsePunishCondition(row) {
+      const scoreInput = row?.querySelector('input[data-field="score"]');
+      const label = row?.querySelector(".punish-cond-label")?.textContent.trim() || "总信誉积分";
+      const score = (scoreInput?.value || "70").trim();
+      if (/近期行为/.test(label)) {
+        return { totalOp: "小于", total: "", recentOp: "小于", recent: score };
+      }
+      return { totalOp: "小于", total: score, recentOp: "小于", recent: "" };
+    }
+
+    function openRentalLimitEdit(row) {
+      const cells = row ? row.querySelectorAll("td") : [];
+      const status = cells[3]?.textContent.trim() || "开启";
+      const { scoreOp, score, settleOp, settleOrders } = parseRentalLimitConfig(row);
+
+      openDialog({
+        title: "修改租号限制",
+        desc: "按单一信誉分阈值限制租号；近30天结算单量达到豁免条件时不受限制。",
+        modalClass: "is-rental-limit",
+        bodyHtml: `
+          <section class="modal-section">
+            <div class="modal-section-title">租号限制配置</div>
+            <div class="modal-fields">
+              ${fieldHtml(["限制场景", "租号限制", false, "", "disabled"])}
+              ${fieldHtml(["处理方式", "限制租号", false, "", "disabled"])}
+              ${fieldHtml(["信誉积分", score, false, "", "threshold", scoreOp])}
+              ${fieldHtml(["近30天结算单量", settleOrders, false, "", "threshold", settleOp])}
+              ${fieldHtml(["状态", "开启 / 关闭", true, "", "select", status])}
+            </div>
+            <div class="modal-tips">示例：信誉积分 &lt; 40 限制租号，但近30天结算单量 &gt; 3 单的用户不受限制。列表内数值支持直接填写。</div>
+          </section>
+        `
+      });
+    }
+
     function openPunishRuleEdit(row) {
       const cells = row ? row.querySelectorAll("td") : [];
       const scene = cells[0]?.textContent.trim() || "限制下单";
-      const condition = cells[1]?.textContent.trim() || "总信誉积分 < 70";
+      const isRentalLimit = scene === "租号限制" || row?.dataset?.punishType === "rental-limit";
+      if (isRentalLimit) {
+        openRentalLimitEdit(row);
+        return;
+      }
+
       const handle = mapHandleType(cells[2]?.textContent.trim());
-      const duration = mapDuration(cells[3]?.textContent.trim());
-      const status = cells[4]?.textContent.trim() || "开启";
-      const { totalOp, total, recentOp, recent } = parseScoreThresholds(condition);
+      const status = cells[3]?.textContent.trim() || "开启";
+      const { totalOp, total, recentOp, recent } = parsePunishCondition(row);
 
       openDialog({
         title: "修改限制策略",
@@ -3864,7 +4175,6 @@
               ["总信誉积分", total, false, "", "threshold", totalOp],
               ["近期行为分", recent, false, "", "threshold", recentOp],
               ["处理方式", "弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", handle],
-              ["限制时长", [duration, "当天", "一周", "7 天", "30 天", "自定义天数"].filter((v, i, a) => v && a.indexOf(v) === i).join(" / "), true, "", "select", duration],
               ["状态", "开启 / 关闭", true, "", "select", status]
             ]
           }
@@ -4629,6 +4939,7 @@
       modalCard?.classList.toggle("is-view", Boolean(config.viewOnly));
       modalCard?.classList.toggle("is-compact", Boolean(config.compact));
       modalCard?.classList.toggle("is-manual-adjust", config.modalClass === "is-manual-adjust" || Boolean(config.manualAdjust));
+      modalCard?.classList.toggle("is-rental-limit", config.modalClass === "is-rental-limit");
       modalCard?.classList.toggle("is-cancel-form", config.modalClass === "is-cancel-form");
       modalCard?.classList.toggle("is-complaint-form", Boolean(config.complaintForm));
       modalTitle.textContent = config.title;
@@ -4805,6 +5116,18 @@
       const legacyGo = event.target.closest("[data-legacy-tab]");
       if (legacyGo) {
         activateLegacy(legacyGo.dataset.legacyTab);
+        return;
+      }
+
+      const yunshangGroupGo = event.target.closest("[data-yunshang-group-tab]");
+      if (yunshangGroupGo) {
+        activateYunshangGroup(yunshangGroupGo.dataset.yunshangGroupTab);
+        return;
+      }
+
+      const yunshangGo = event.target.closest("[data-yunshang-tab]");
+      if (yunshangGo) {
+        activateYunshang(yunshangGo.dataset.yunshangTab);
         return;
       }
 
