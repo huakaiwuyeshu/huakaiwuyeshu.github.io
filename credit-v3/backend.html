@@ -3267,7 +3267,7 @@
                   <div class="form-grid">
                     <div class="field"><label>用户名称</label><div class="input"></div></div>
                     <div class="field"><label>变动类型</label><select class="input"><option>全部</option><option>加分</option><option>扣分</option><option>恢复</option><option>回滚</option><option>系统调整</option></select></div>
-                    <div class="field"><label>申诉状态</label><select class="input"><option>全部</option><option>未申诉</option><option>已回滚</option><option>驳回</option></select></div>
+                    <div class="field"><label>申诉状态</label><select class="input"><option>全部</option><option>未申诉</option><option>不可申诉</option><option>已回滚</option><option>驳回</option></select></div>
                   </div>
                 </div>
               </div>
@@ -3328,22 +3328,33 @@
                           <td><span class="pill warn">未申诉</span></td>
                           <td><span class="op secondary" data-order-detail>查看</span></td>
                         </tr>
+                        <tr>
+                          <td>5</td>
+                          <td>101406347</td>
+                          <td><span class="pill danger">扣分</span></td>
+                          <td>-8</td>
+                          <td class="left">账号处置（封禁）</td>
+                          <td class="left">ORDER202605180055</td>
+                          <td><span class="pill gray">不可申诉</span></td>
+                          <td><span class="op secondary" data-order-detail>查看</span></td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
                   <div class="footer-info">
-                    操作仅支持查看：点击后弹出订单详情，并展示该订单关联的信誉积分扣分 / 回滚明细。
+                    操作仅支持查看：点击后弹出订单详情，并展示该订单关联的信誉积分扣分 / 回滚明细。不可申诉记录不展示申诉原因、证据与审核字段。
                   </div>
                 </div>
                 <aside class="sidebar">
                   <div class="side-box">
                     <div class="hd">
                       <strong>申诉状态</strong>
-                      <span>仅三种状态</span>
+                      <span>支持四种状态</span>
                     </div>
                     <div class="bd">
                       <div class="side-list">
-                        <div class="item">未申诉<small>用户尚未发起申诉，或该记录无需申诉</small></div>
+                        <div class="item">未申诉<small>用户尚未发起申诉</small></div>
+                        <div class="item">不可申诉<small>规则不允许申诉（如账号处置类），详情仅展示基础与积分变动信息</small></div>
                         <div class="item">已回滚<small>申诉通过后已生成恢复 / 回滚明细</small></div>
                         <div class="item">驳回<small>申诉审核未通过，原扣分继续生效</small></div>
                       </div>
@@ -3801,23 +3812,28 @@
         appealSubmit: true,
         sections: [
           {
-            title: "申诉信息",
+            title: "详情信息",
             readonly: true,
             fields: [
-              ["订单号", "ORDER202605130042", false],
-              ["用户 UID", "101406347", false],
-              ["扣除分数", "-6", false],
-              ["扣分规则", "恶意撤单", false],
-              ["申诉原因", "订单责任需复核", false, "wide"],
-              ["申诉证据", "", false, "full", "evidence", "2"],
-              ["状态", "待审核", false]
+              ["订单号", "ORDER202605130042", false, "", "text"],
+              ["用户 UID", "101406347", false, "", "text"],
+              ["订单状态", "已完成", false, "", "text"],
+              ["下单时间", "2026-05-13 14:22:18", false, "", "text"],
+              ["订单金额", "¥68.00", false, "", "text"],
+              ["变动类型", "扣分", false, "", "text"],
+              ["扣分规则", "恶意撤单", false, "", "text"],
+              ["分值变化", "-6", false, "", "text"],
+              ["变动时间", "2026-05-13 16:08:42", false, "", "text"],
+              ["申诉状态", "待审核", false, "", "text"],
+              ["申诉原因", "订单责任需复核", false, "wide", "text"],
+              ["申诉证据", "", false, "full", "evidence", "2"]
             ]
           },
           {
             title: "审核处理",
             fields: [
               ["审核结果", "通过 / 驳回", true, "", "select"],
-              ["审核说明", "请输入处理说明，用户端可展示", true, "wide"]
+              ["审核说明", "请输入审核说明（必填）", true, "wide", "textarea"]
             ]
           }
         ]
@@ -3829,18 +3845,23 @@
         primaryAction: "关闭",
         sections: [
           {
-            title: "申诉信息",
+            title: "详情信息",
             readonly: true,
             fields: [
-              ["订单号", "ORDER202605100032", false],
-              ["用户 UID", "101406347", false],
-              ["扣除分数", "-3", false],
-              ["扣分规则", "虚假投诉", false],
-              ["申诉原因", "举证不足", false, "wide"],
+              ["订单号", "ORDER202605100032", false, "", "text"],
+              ["用户 UID", "101406347", false, "", "text"],
+              ["订单状态", "已完成", false, "", "text"],
+              ["下单时间", "2026-05-10 11:08:26", false, "", "text"],
+              ["订单金额", "¥42.00", false, "", "text"],
+              ["变动类型", "扣分", false, "", "text"],
+              ["扣分规则", "虚假投诉", false, "", "text"],
+              ["分值变化", "-3", false, "", "text"],
+              ["变动时间", "2026-05-10 15:36:12", false, "", "text"],
+              ["申诉状态", "驳回", false, "", "text"],
+              ["申诉原因", "举证不足", false, "wide", "text"],
               ["申诉证据", "", false, "full", "evidence", "1"],
-              ["状态", "驳回", false],
-              ["审核结果", "已处理", false],
-              ["处理人", "何冰冰", false]
+              ["审核结果", "驳回", false, "", "text"],
+              ["审核说明", "证据不足以支撑责任改判，维持原扣分。", false, "wide", "text"]
             ]
           }
         ]
@@ -3870,25 +3891,23 @@
         primaryAction: "关闭",
         sections: [
           {
-            title: "订单信息",
+            title: "详情信息",
+            readonly: true,
             fields: [
               ["订单号", "ORDER202605130042", false, "", "text"],
               ["用户 UID", "101406347", false, "", "text"],
-              ["业务类型", "租号", false, "", "text"],
               ["订单状态", "已完成", false, "", "text"],
               ["下单时间", "2026-05-13 14:22:18", false, "", "text"],
-              ["订单金额", "¥68.00", false, "", "text"]
-            ]
-          },
-          {
-            title: "信誉积分变动",
-            fields: [
+              ["订单金额", "¥68.00", false, "", "text"],
               ["变动类型", "扣分", false, "", "text"],
-              ["触发规则名称", "恶意撤单（多次）", false, "", "text"],
+              ["扣分规则", "恶意撤单", false, "", "text"],
               ["分值变化", "-6", false, "", "text"],
               ["变动时间", "2026-05-13 16:08:42", false, "", "text"],
-              ["扣分原因", "订单在履约过程中命中「恶意撤单（多次）」规则，经核实后计入近期行为分扣分。", false, "wide", "text"],
-              ["申诉状态", "未申诉", false, "", "text"]
+              ["申诉状态", "待审核", false, "", "text"],
+              ["申诉原因", "订单责任需复核", false, "wide", "text"],
+              ["申诉证据", "", false, "full", "evidence", "2"],
+              ["审核结果", "未处理", false, "", "text"],
+              ["审核说明", "--", false, "wide", "text"]
             ]
           }
         ]
@@ -4788,7 +4807,7 @@
         displayScore,
         originalScore,
         rule: cells[3]?.textContent.trim() || "恶意撤单",
-        reason: cells[4]?.textContent.trim() || "",
+        reason: cells[4]?.textContent.trim() || "订单责任需复核",
         evidenceCount: String(row?.querySelectorAll(".evidence-thumb").length || 1),
         status: cells[6]?.textContent.trim() || "待审核",
         result: cells[7]?.textContent.trim() || "未处理",
@@ -4796,32 +4815,76 @@
       };
     }
 
+    /** 订单详情 / 申诉审核共用详情字段（只读部分） */
+    function buildSharedOrderAppealFields(data, options = {}) {
+      const base = [
+        ["订单号", data.orderId, false, "", "text"],
+        ["用户 UID", data.uid, false, "", "text"],
+        ["订单状态", data.orderStatus, false, "", "text"],
+        ["下单时间", data.orderTime, false, "", "text"],
+        ["订单金额", data.orderAmount, false, "", "text"],
+        ["变动类型", data.changeType, false, "", "text"],
+        ["扣分规则", data.rule, false, "", "text"],
+        ["分值变化", data.scoreDelta, false, "", "text"],
+        ["变动时间", data.changeTime, false, "", "text"],
+        ["申诉状态", data.appealStatus, false, "", "text"]
+      ];
+      // 不可申诉：仅展示基础订单 + 积分变动 + 申诉状态
+      if (options.nonAppealable) return base;
+      return [
+        ...base,
+        ["申诉原因", data.appealReason, false, "wide", "text"],
+        ["申诉证据", "", false, "full", "evidence", data.evidenceCount]
+      ];
+    }
+
+    function defaultOrderAppealDetail(overrides = {}) {
+      return {
+        orderId: "ORDER202605130042",
+        uid: "101406347",
+        orderStatus: "已完成",
+        orderTime: "2026-05-13 14:22:18",
+        orderAmount: "¥68.00",
+        changeType: "扣分",
+        rule: "恶意撤单",
+        scoreDelta: "-6",
+        changeTime: "2026-05-13 16:08:42",
+        appealStatus: "待审核",
+        appealReason: "订单责任需复核",
+        evidenceCount: "2",
+        auditResult: "未处理",
+        auditNote: "--",
+        ...overrides
+      };
+    }
+
     function openAppealAudit(row) {
       appealAuditRow = row || null;
       const data = readAppealRow(row);
+      const detail = defaultOrderAppealDetail({
+        orderId: data.orderId,
+        uid: data.uid,
+        rule: data.rule,
+        scoreDelta: data.originalScore,
+        appealStatus: data.status,
+        appealReason: data.reason || "订单责任需复核",
+        evidenceCount: data.evidenceCount
+      });
       openDialog({
         title: "申诉审核",
         desc: "",
         appealSubmit: true,
         sections: [
           {
-            title: "申诉信息",
+            title: "详情信息",
             readonly: true,
-            fields: [
-              ["订单号", data.orderId, false],
-              ["用户 UID", data.uid, false],
-              ["扣除分数", data.originalScore, false],
-              ["扣分规则", data.rule, false],
-              ["申诉原因", data.reason, false, "wide"],
-              ["申诉证据", "", false, "full", "evidence", data.evidenceCount],
-              ["状态", data.status, false]
-            ]
+            fields: buildSharedOrderAppealFields(detail)
           },
           {
             title: "审核处理",
             fields: [
               ["审核结果", "通过 / 驳回", true, "", "select"],
-              ["审核说明", "请输入处理说明，用户端可展示", true, "wide"]
+              ["审核说明", "请输入审核说明（必填）", true, "wide", "textarea"]
             ]
           }
         ]
@@ -4832,58 +4895,38 @@
       appealAuditRow = null;
       const data = readAppealRow(row);
       const isRollback = /已回滚/.test(data.status);
-      const sections = [
-        {
-          title: "申诉信息",
-          readonly: true,
-          fields: [
-            ["订单号", data.orderId, false],
-            ["用户 UID", data.uid, false],
-            ["扣除分数", isRollback ? "0" : data.originalScore, false],
-            ["扣分规则", data.rule, false],
-            ["申诉原因", data.reason, false, "wide"],
-            ["申诉证据", "", false, "full", "evidence", data.evidenceCount],
-            ["状态", data.status, false],
-            ["审核结果", data.result, false],
-            ["处理人", data.handler, false]
-          ]
-        }
-      ];
-
-      if (isRollback) {
-        const raw = String(data.originalScore || "-4").replace(/[^\d+-]/g, "") || "-4";
-        const deduct = raw.startsWith("-") ? raw : raw.startsWith("+") ? `-${raw.slice(1)}` : `-${raw}`;
-        const rollback = deduct.startsWith("-") ? `+${deduct.slice(1)}` : `+${String(deduct).replace(/^-/, "")}`;
-        sections.push({
-          title: "扣分变动",
-          readonly: true,
-          fields: [
-            ["变动类型", "扣分", false, "", "text"],
-            ["触发规则名称", data.rule, false, "", "text"],
-            ["分值变化", deduct, false, "", "text"],
-            ["变动时间", "2026-05-13 16:08:42", false, "", "text"],
-            ["扣分原因", `订单命中「${data.rule}」规则后扣减信誉积分，计入近期行为分。`, false, "wide", "text"]
-          ]
-        });
-        sections.push({
-          title: "回滚加分变动",
-          readonly: true,
-          fields: [
-            ["变动类型", "恢复", false, "", "text"],
-            ["触发规则名称", data.rule, false, "", "text"],
-            ["分值变化", rollback, false, "", "text"],
-            ["变动时间", "2026-05-14 11:26:05", false, "", "text"],
-            ["回滚原因", "申诉审核通过，生成回滚加分明细；原扣分记录保留，当前申诉扣除分数展示为 0。", false, "wide", "text"]
-          ]
-        });
-      }
-
+      const isReject = /驳回/.test(data.status);
+      const detail = defaultOrderAppealDetail({
+        orderId: data.orderId,
+        uid: data.uid,
+        rule: data.rule,
+        scoreDelta: isRollback ? "0" : data.originalScore,
+        appealStatus: data.status,
+        appealReason: data.reason || "举证不足",
+        evidenceCount: data.evidenceCount,
+        auditResult: isReject ? "驳回" : isRollback ? "通过" : (data.result || "已处理"),
+        auditNote: isReject
+          ? "证据不足以支撑责任改判，维持原扣分。"
+          : isRollback
+            ? "申诉审核通过，已生成回滚明细；原扣分记录保留。"
+            : "--"
+      });
       openDialog({
         title: "申诉详情",
         desc: "",
         viewOnly: true,
         primaryAction: "关闭",
-        sections
+        sections: [
+          {
+            title: "详情信息",
+            readonly: true,
+            fields: [
+              ...buildSharedOrderAppealFields(detail),
+              ["审核结果", detail.auditResult, false, "", "text"],
+              ["审核说明", detail.auditNote, false, "wide", "text"]
+            ]
+          }
+        ]
       });
     }
 
@@ -4894,6 +4937,16 @@
       }
       const resultSelect = modalBody.querySelector("select");
       const result = resultSelect?.value?.trim() || "";
+      const noteField = modalBody.querySelector("textarea.fake-input, input.fake-input");
+      const note = noteField?.value?.trim() || "";
+      if (!result) {
+        alert("请选择审核结果");
+        return;
+      }
+      if (!note) {
+        alert("请填写审核说明");
+        return;
+      }
       const cells = appealAuditRow.querySelectorAll("td");
       const scoreCell = cells[2];
       const originalScore = scoreCell?.dataset.originalScore || scoreCell?.textContent.trim() || "0";
@@ -5013,74 +5066,73 @@
       const uid = cells[1]?.textContent.trim() || "101406347";
       const changeType = cells[2]?.textContent.trim() || "扣分";
       const score = cells[3]?.textContent.trim() || "-6";
-      const rule = cells[4]?.textContent.trim() || "恶意撤单（多次）";
+      const rule = cells[4]?.textContent.trim() || "恶意撤单";
       const orderId = cells[5]?.textContent.trim() || "ORDER202605130042";
-      const appeal = cells[6]?.textContent.trim() || "未申诉";
+      const appeal = cells[6]?.textContent.trim() || "待审核";
 
+      const isNonAppealable = /不可申诉/.test(appeal);
       const isRollback = /恢复|回滚/.test(changeType) || /已回滚/.test(appeal);
-      const isDeduct = /扣分/.test(changeType) || /^-/.test(score);
       const isEarn = /加分/.test(changeType) || (/^\+/.test(score) && !isRollback);
+      const isReject = /驳回/.test(appeal);
+      const hasAppeal = !isNonAppealable && !/未申诉/.test(appeal);
 
-      const orderSection = {
-        title: "订单信息",
-        fields: [
-          ["订单号", orderId, false, "", "text"],
-          ["用户 UID", uid, false, "", "text"],
-          ["业务类型", "租号", false, "", "text"],
-          ["订单状态", isEarn ? "已完成结算" : "已完成 / 售后处理", false, "", "text"],
-          ["下单时间", "2026-05-13 14:22:18", false, "", "text"],
-          ["订单金额", isEarn ? "¥36.00" : "¥68.00", false, "", "text"]
-        ]
-      };
+      const detail = defaultOrderAppealDetail({
+        orderId,
+        uid,
+        orderStatus: isNonAppealable ? "已完成" : isEarn ? "已完成结算" : "已完成",
+        orderTime: isNonAppealable
+          ? "2026-05-18 09:42:16"
+          : isEarn
+            ? "2026-05-17 12:05:33"
+            : "2026-05-13 14:22:18",
+        orderAmount: isNonAppealable ? "¥88.00" : isEarn ? "¥36.00" : "¥68.00",
+        changeType: isRollback ? "恢复" : changeType,
+        rule,
+        scoreDelta: score,
+        changeTime: isNonAppealable
+          ? "2026-05-18 10:05:40"
+          : isRollback
+            ? "2026-05-14 11:26:05"
+            : isEarn
+              ? "2026-05-17 18:12:09"
+              : "2026-05-13 16:08:42",
+        appealStatus: isNonAppealable ? "不可申诉" : appeal || "待审核",
+        appealReason: hasAppeal
+          ? isReject
+            ? "举证不足"
+            : "订单责任需复核"
+          : "--",
+        evidenceCount: hasAppeal ? (isReject ? "1" : "2") : "1",
+        auditResult: isRollback ? "通过" : isReject ? "驳回" : hasAppeal ? "未处理" : "--",
+        auditNote: isRollback
+          ? "申诉审核通过，已生成回滚明细；原扣分记录保留。"
+          : isReject
+            ? "证据不足以支撑责任改判，维持原扣分。"
+            : "--"
+      });
 
-      let creditSection;
-      if (isRollback) {
-        creditSection = {
-          title: "信誉积分变动（扣分后回滚）",
-          fields: [
-            ["触发规则名称", rule || "恶意撤单（多次）", false, "", "text"],
-            ["原扣分值", score.startsWith("+") ? `-${score.slice(1)}` : "-6", false, "", "text"],
-            ["原扣分时间", "2026-05-13 16:08:42", false, "", "text"],
-            ["原扣分原因", `订单命中「${rule || "恶意撤单（多次）"}」规则，核实后计入扣分。`, false, "wide", "text"],
-            ["回滚分值", score.startsWith("+") ? score : `+${String(score).replace(/^-/, "")}`, false, "", "text"],
-            ["回滚时间", "2026-05-14 11:26:05", false, "", "text"],
-            ["回滚原因", "申诉审核通过，生成恢复 / 回滚明细；原扣分记录保留。", false, "wide", "text"],
-            ["申诉状态", appeal || "已回滚", false, "", "text"],
-            ["关联申诉单号", "APPEAL202605140018", false, "", "text"]
-          ]
-        };
-      } else if (isDeduct) {
-        creditSection = {
-          title: "信誉积分变动（扣分）",
-          fields: [
-            ["变动类型", changeType, false, "", "text"],
-            ["触发规则名称", rule, false, "", "text"],
-            ["分值变化", score, false, "", "text"],
-            ["变动时间", "2026-05-13 16:08:42", false, "", "text"],
-            ["扣分原因", `订单关联规则「${rule}」命中后扣减信誉积分，计入近期行为分。`, false, "wide", "text"],
-            ["申诉状态", appeal, false, "", "text"]
-          ]
-        };
-      } else {
-        creditSection = {
-          title: "信誉积分变动（加分）",
-          fields: [
-            ["变动类型", changeType, false, "", "text"],
-            ["触发规则名称", rule, false, "", "text"],
-            ["分值变化", score, false, "", "text"],
-            ["变动时间", "2026-05-17 18:12:09", false, "", "text"],
-            ["加分说明", "订单正常结算后按履约规则增加信誉积分。", false, "wide", "text"],
-            ["申诉状态", appeal, false, "", "text"]
-          ]
-        };
-      }
+      if (!hasAppeal) detail.appealReason = "--";
+
+      const fields = isNonAppealable
+        ? buildSharedOrderAppealFields(detail, { nonAppealable: true })
+        : [
+            ...buildSharedOrderAppealFields(detail),
+            ["审核结果", detail.auditResult, false, "", "text"],
+            ["审核说明", detail.auditNote, false, "wide", "text"]
+          ];
 
       openDialog({
         title: "订单详情",
         desc: "",
         viewOnly: true,
         primaryAction: "关闭",
-        sections: [orderSection, creditSection]
+        sections: [
+          {
+            title: "详情信息",
+            readonly: true,
+            fields
+          }
+        ]
       });
     }
 
