@@ -1487,36 +1487,6 @@
         popup: null
       },
       {
-        id: "orderCredit",
-        title: "下单环节：信誉积分不足",
-        desc: "点击租用或确认支付后，因总信誉积分未达要求而拦截。",
-        hint: "点击立即租用 / 确认支付触发弹窗",
-        devices: ["mobile", "pc"],
-        popup: {
-          icon: "!",
-          title: "暂不可租用",
-          text: "当前信誉积分未达到该账号租用要求，本次高价值账号租用暂不可继续。可进入信誉积分页查看限制原因、扣分有效期和恢复路径。",
-          primary: "查看信誉分",
-          secondary: "我知道了",
-          link: "./mobile.html"
-        }
-      },
-      {
-        id: "orderViolation",
-        title: "下单环节：近期违规限制",
-        desc: "点击下单后，因近期存在有效违规记录而限制租用。",
-        hint: "点击立即租用 / 确认支付触发弹窗",
-        devices: ["mobile", "pc"],
-        popup: {
-          icon: "!",
-          title: "近期违规限制租用",
-          text: "近期存在有效违规记录，该记录有效期内会限制租用部分高价值账号。扣分失效或申诉复核通过后，限制状态将同步刷新。",
-          primary: "查看详情",
-          secondary: "我知道了",
-          link: "./mobile.html#detail"
-        }
-      },
-      {
         id: "complaintWarn",
         title: "订单详情：投诉撤单提醒",
         desc: "点击投诉撤单时，低信誉用户出现二次确认提醒，仍可继续投诉。",
@@ -1924,7 +1894,7 @@
       document.querySelectorAll(".js-open-modal").forEach((node) => node.addEventListener("click", openModal));
       document.querySelectorAll(".js-close-modal").forEach((node) => node.addEventListener("click", closeModal));
       document.querySelectorAll(".mask[data-close='1']").forEach((node) => node.addEventListener("click", closeModal));
-      document.querySelectorAll(".js-next-order").forEach((node) => node.addEventListener("click", () => setScenario("orderCredit")));
+      document.querySelectorAll(".js-next-order").forEach((node) => node.addEventListener("click", () => setScenario("complaintWarn")));
       document.querySelectorAll(".js-next-detail").forEach((node) => node.addEventListener("click", () => setScenario("detail")));
     }
 
