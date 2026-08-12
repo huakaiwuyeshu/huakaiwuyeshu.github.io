@@ -2464,7 +2464,7 @@
             <div class="panel-shell">
               <div class="panel-head">
                 <h1 class="panel-title">惩罚配置</h1>
-                <p class="panel-desc">限制策略按信誉分触发业务限制；租号限制按单一信誉分阈值拦截，并可配置近30天结算单量豁免（达标单量用户不受限）。</p>
+                <p class="panel-desc">限制策略按信誉分触发业务限制；支持配置预警弹窗（总信誉分低于阈值时前端弹出提示，不拦截业务）；租号限制可配置近30天结算单量豁免。</p>
               </div>
               <div class="two-col">
                 <div>
@@ -2480,6 +2480,22 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <tr data-punish-type="warn-popup">
+                          <td>预警弹窗</td>
+                          <td class="left">
+                            <div class="punish-cond">
+                              <div class="punish-cond-row">
+                                <span class="punish-cond-label">总信誉积分</span>
+                                <span class="punish-cond-op">&lt;</span>
+                                <input class="punish-num" type="text" inputmode="numeric" value="80" data-field="score" aria-label="总信誉积分预警阈值" />
+                                <span class="punish-cond-unit">分</span>
+                              </div>
+                            </div>
+                          </td>
+                          <td><span class="pill warn">前端弹窗提醒</span></td>
+                          <td><span class="pill on">开启</span></td>
+                          <td><span class="op">停用</span></td>
+                        </tr>
                         <tr data-punish-type="rental-limit" data-score-op="小于" data-score="40" data-settle-op="大于" data-settle-orders="3">
                           <td>租号限制</td>
                           <td class="left">
@@ -2578,6 +2594,7 @@
                     </div>
                     <div class="bd">
                       <div class="flow">
+                        <div class="flow-step"><strong>登录 / 首页</strong>预警弹窗：总信誉分低于阈值时前端弹出提示（不拦截业务）</div>
                         <div class="flow-step"><strong>找号 / 租号</strong>租号限制、租号限制(特价专区)、限制下单</div>
                         <div class="flow-step"><strong>下单</strong>限制下单：判断是否可租；租号限制先看信誉分，再看近30天结算单量豁免</div>
                         <div class="flow-step"><strong>发布帐号</strong>限制发布帐号能力</div>
@@ -2588,12 +2605,12 @@
                   <div class="side-box">
                     <div class="hd">
                       <strong>处理方式</strong>
-                      <span>业务限制策略</span>
+                      <span>业务限制 + 预警提醒</span>
                     </div>
                     <div class="bd">
                       <div class="side-list">
+                        <div class="item">前端弹窗提醒<small>总信誉分低于配置阈值时弹出预警，仅提示不拦截</small></div>
                         <div class="item">限制租号<small>信誉积分低于阈值则限制；近30天结算单量超过豁免阈值时不受限</small></div>
-                        <div class="item">提醒<small>业务场景内告知原因和影响</small></div>
                         <div class="item">拦截下单<small>禁止继续租用</small></div>
                         <div class="item">禁止领券<small>领券中心等场景不可操作</small></div>
                       </div>
@@ -3680,7 +3697,7 @@
               ["限制场景", "限制下单", false, "", "disabled"],
               ["总信誉积分", "70", false, "", "threshold", "小于"],
               ["近期行为分", "", false, "", "threshold", "小于"],
-              ["处理方式", "弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", "拦截下单"],
+              ["处理方式", "前端弹窗提醒 / 弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", "拦截下单"],
               ["状态", "开启 / 关闭", true, "", "select", "开启"]
             ]
           }
@@ -4111,6 +4128,7 @@
     function mapHandleType(text) {
       const t = String(text || "").trim();
       if (/限制租号/.test(t)) return "限制租号";
+      if (/前端弹窗|预警/.test(t)) return "前端弹窗提醒";
       if (/提醒/.test(t)) return "弹窗提醒";
       if (/禁止领券/.test(t)) return "禁止领券";
       if (/禁止参与/.test(t)) return "禁止参与活动";
@@ -4193,7 +4211,7 @@
               ["限制场景", scene, false, "", "disabled"],
               ["总信誉积分", total, false, "", "threshold", totalOp],
               ["近期行为分", recent, false, "", "threshold", recentOp],
-              ["处理方式", "弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", handle],
+              ["处理方式", "前端弹窗提醒 / 弹窗提醒 / 拦截下单 / 禁止参与活动 / 禁止领券", true, "", "select", handle],
               ["状态", "开启 / 关闭", true, "", "select", status]
             ]
           }
