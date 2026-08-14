@@ -1610,6 +1610,96 @@
       margin-top: 16px;
     }
 
+    /* 登录前置提醒弹窗（对齐惩罚配置·前置提醒） */
+    .login-warn-modal {
+      width: min(320px, calc(100vw - 48px));
+      padding: 28px 22px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(17, 24, 39, 0.10);
+      background: #fff;
+      box-shadow: 0 26px 78px rgba(15, 23, 42, 0.28);
+      text-align: center;
+    }
+
+    .login-warn-modal .login-warn-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 12px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: var(--warn);
+      background: var(--warn-soft);
+      border: 1px solid #f2dfbd;
+      font-size: 24px;
+      font-weight: 950;
+    }
+
+    .login-warn-modal h2 {
+      margin: 0;
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 950;
+    }
+
+    .login-warn-modal .login-warn-body {
+      margin: 12px 0 0;
+      color: #445368;
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .login-warn-modal .login-warn-body strong {
+      color: var(--text);
+      font-weight: 950;
+    }
+
+    .login-warn-modal .login-warn-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .login-warn-modal .login-warn-actions .button {
+      min-height: 42px;
+      border-radius: 12px;
+    }
+
+    .rule-update-modal {
+      width: min(352px, calc(100vw - 40px));
+      text-align: left;
+    }
+
+    .rule-update-modal .login-warn-icon {
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-color: #d7e4ff;
+    }
+
+    .rule-update-modal .login-warn-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .rule-update-modal h2 {
+      text-align: center;
+    }
+
+    .rule-update-modal .login-warn-body {
+      text-align: justify;
+      text-justify: inter-ideograph;
+      text-wrap: pretty;
+    }
+
     .prototype-switch {
       position: fixed;
       top: 18px;
@@ -2647,7 +2737,7 @@
           <div class="home-score-main">
             <div class="home-score-num"><strong>112</strong><span>分</span></div>
             <div class="home-score-meta">
-              <div class="home-meta-row"><span>受限能力</span><strong>2 项</strong></div>
+              <div class="home-meta-row"><span>受限能力</span><strong>3 项</strong></div>
               <div class="home-meta-row"><span>正常可用</span><strong>3 项</strong></div>
               <div class="home-meta-row"><span>最近更新</span><strong>05-19 11:16</strong></div>
             </div>
@@ -2784,8 +2874,15 @@
         <!-- 能力影响（跟在变化之后，先行动再看能力对照） -->
         <section class="home-card home-score-card" aria-label="能力影响" style="padding-top:14px;">
           <div class="home-cap-group is-limited" style="margin-top:0;">
-            <div class="home-cap-title-row"><strong>当前受限</strong><span>2 项</span></div>
+            <div class="home-cap-title-row"><strong>当前受限</strong><span>3 项</span></div>
             <div class="home-cap-list">
+              <div class="home-cap-row" data-open-rental-limit role="button" tabindex="0" style="cursor:pointer;">
+                <div>
+                  <div class="home-cap-title">平台下单（租号限制）</div>
+                  <div class="home-cap-desc">分值低于准入标准，限制有效期内不可下单</div>
+                </div>
+                <span class="home-chip red">受限</span>
+              </div>
               <div class="home-cap-row">
                 <div>
                   <div class="home-cap-title">高价值账号租赁</div>
@@ -3203,6 +3300,55 @@
     </div>
   </section>
 
+  <div class="modal-layer" id="ruleUpdateModal" hidden>
+    <section class="login-warn-modal rule-update-modal" role="dialog" aria-modal="true" aria-labelledby="ruleUpdateTitle" aria-describedby="ruleUpdateBody">
+      <div class="login-warn-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 11v5"/>
+          <path d="M12 8h.01"/>
+        </svg>
+      </div>
+      <h2 id="ruleUpdateTitle">信誉积分规则更新提醒</h2>
+      <p class="login-warn-body" id="ruleUpdateBody">
+        平台已对信誉积分规则进行调整，新版规则将更全面地评估您的近期行为和历史信用表现，并影响部分账号租赁、优惠领取及售后权益。请您及时了解新版规则，保持良好的租号行为。
+      </p>
+      <div class="login-warn-actions">
+        <a class="button primary" href="#rules" data-rule-update-view>查看规则</a>
+        <button class="button gray" type="button" data-close-rule-update>我知道了</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-layer" id="loginWarnModal" hidden>
+    <section class="login-warn-modal" role="dialog" aria-modal="true" aria-labelledby="loginWarnTitle">
+      <div class="login-warn-icon" aria-hidden="true">!</div>
+      <h2 id="loginWarnTitle">信誉积分预警</h2>
+      <p class="login-warn-body">
+        您当前信誉积分为 <strong id="loginWarnScore">72</strong> 分，分值过低可能会影响部分功能使用。请保持良好的使用行为，避免积分继续降低。
+      </p>
+      <div class="login-warn-actions">
+        <a class="button primary" href="#home" data-login-warn-detail>查看详情</a>
+        <button class="button gray" type="button" data-close-login-warn>我知道了</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- 对齐后台惩罚配置·租号限制：下单/租号时拦截提示 -->
+  <div class="modal-layer" id="rentalLimitModal" hidden>
+    <section class="login-warn-modal" role="dialog" aria-modal="true" aria-labelledby="rentalLimitTitle">
+      <div class="login-warn-icon" aria-hidden="true">!</div>
+      <h2 id="rentalLimitTitle">温馨提示</h2>
+      <p class="login-warn-body">
+        您当前信誉积分为 <strong id="rentalLimitScore">55</strong> 分，因分值低于平台下单准入标准，您的平台下单权限已被限制，限制有效期至 <strong id="rentalLimitUntil">2026-06-19</strong>。
+      </p>
+      <div class="login-warn-actions">
+        <a class="button primary" href="#home" data-rental-limit-detail>查看详情</a>
+        <button class="button gray" type="button" data-close-rental-limit>我知道了</button>
+      </div>
+    </section>
+  </div>
+
   <div class="modal-layer" id="appealModal" hidden>
     <section class="appeal-modal" role="dialog" aria-modal="true" aria-labelledby="appealModalTitle">
       <header class="modal-head">
@@ -3271,10 +3417,68 @@
     });
 
     const appealModal = document.getElementById("appealModal");
+    const loginWarnModal = document.getElementById("loginWarnModal");
+    const rentalLimitModal = document.getElementById("rentalLimitModal");
+    const ruleUpdateModal = document.getElementById("ruleUpdateModal");
+    let creditHomeReady = false;
+    let ruleUpdateShown = false;
+
+    function isOnCreditHome() {
+      return location.hash === "#home";
+    }
+
+    function isOtherModalOpen() {
+      return Boolean(
+        (loginWarnModal && !loginWarnModal.hidden)
+        || (rentalLimitModal && !rentalLimitModal.hidden)
+        || (appealModal && !appealModal.hidden)
+      );
+    }
+
+    function openRuleUpdateModal() {
+      if (!ruleUpdateModal) return;
+      ruleUpdateShown = true;
+      ruleUpdateModal.hidden = false;
+    }
+
+    function closeRuleUpdateModal() {
+      if (ruleUpdateModal) ruleUpdateModal.hidden = true;
+    }
+
+    function maybeOpenRuleUpdateModal() {
+      const params = new URLSearchParams(location.search);
+      if (!creditHomeReady || ruleUpdateShown || params.get("ruleUpdate") === "0") return;
+      if (!isOnCreditHome() || isOtherModalOpen()) return;
+      openRuleUpdateModal();
+    }
     const submitAppeal = document.getElementById("submitAppeal");
     const completeRepair = document.getElementById("completeRepair");
     const repairQuiz = document.getElementById("repairQuiz");
     const repairResult = document.getElementById("repairResult");
+
+    function openLoginWarnModal(score) {
+      if (!loginWarnModal) return;
+      const scoreEl = document.getElementById("loginWarnScore");
+      if (scoreEl && score != null) scoreEl.textContent = String(score);
+      loginWarnModal.hidden = false;
+    }
+
+    function closeLoginWarnModal() {
+      if (loginWarnModal) loginWarnModal.hidden = true;
+    }
+
+    function openRentalLimitModal(options = {}) {
+      if (!rentalLimitModal) return;
+      const scoreEl = document.getElementById("rentalLimitScore");
+      const untilEl = document.getElementById("rentalLimitUntil");
+      if (scoreEl && options.score != null) scoreEl.textContent = String(options.score);
+      if (untilEl && options.until) untilEl.textContent = String(options.until);
+      rentalLimitModal.hidden = false;
+    }
+
+    function closeRentalLimitModal() {
+      if (rentalLimitModal) rentalLimitModal.hidden = true;
+    }
 
     function openAppealModal() {
       appealModal.hidden = false;
@@ -3325,13 +3529,58 @@
         openAppealModal();
         return;
       }
+      const ruleUpdateView = event.target.closest("[data-rule-update-view]");
+      if (ruleUpdateView) {
+        closeRuleUpdateModal();
+        return;
+      }
+      if (event.target.closest("[data-close-rule-update]") || event.target === ruleUpdateModal) {
+        closeRuleUpdateModal();
+        return;
+      }
+      const loginWarnDetail = event.target.closest("[data-login-warn-detail]");
+      if (loginWarnDetail) {
+        closeLoginWarnModal();
+        location.hash = "home";
+        document.getElementById("home")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      if (event.target.closest("[data-close-login-warn]") || event.target === loginWarnModal) {
+        closeLoginWarnModal();
+        return;
+      }
+      const rentalLimitDetail = event.target.closest("[data-rental-limit-detail]");
+      if (rentalLimitDetail) {
+        event.preventDefault();
+        closeRentalLimitModal();
+        location.hash = "home";
+        document.getElementById("home")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      if (event.target.closest("[data-close-rental-limit]") || event.target === rentalLimitModal) {
+        closeRentalLimitModal();
+        return;
+      }
+      if (event.target.closest("[data-open-rental-limit]")) {
+        openRentalLimitModal({ score: 55, until: "2026-06-19" });
+        return;
+      }
       if (event.target.closest("[data-close-appeal]") || event.target === appealModal) {
         closeAppealModal();
       }
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeAppealModal();
+      if (event.key === "Escape") {
+        if (ruleUpdateModal && !ruleUpdateModal.hidden) closeRuleUpdateModal();
+        else if (rentalLimitModal && !rentalLimitModal.hidden) closeRentalLimitModal();
+        else if (loginWarnModal && !loginWarnModal.hidden) closeLoginWarnModal();
+        else closeAppealModal();
+      }
+    });
+
+    window.addEventListener("hashchange", () => {
+      maybeOpenRuleUpdateModal();
     });
 
     submitAppeal.addEventListener("click", submitAppealForm);
@@ -3351,7 +3600,24 @@
     } else if (search.get("submitted") === "1") {
       location.hash = "detail";
       submitAppealForm();
+    } else if (search.get("rentalLimit") === "1") {
+      // 模拟下单/租号命中后台「租号限制」
+      location.hash = location.hash || "home";
+      openRentalLimitModal({
+        score: search.get("score") || 55,
+        until: search.get("until") || "2026-06-19"
+      });
+    } else if (search.get("loginWarn") === "1") {
+      location.hash = location.hash || "home";
+      openLoginWarnModal(search.get("score") || 72);
+    } else if (search.get("ruleUpdate") === "1") {
+      location.hash = "home";
+    } else if (search.get("loginWarn") !== "0" && !isOnCreditHome()) {
+      // 模拟登录：信誉分低于后台「前置提醒」阈值时弹出（示例 72 分）
+      openLoginWarnModal(search.get("score") || 72);
     }
+    creditHomeReady = true;
+    maybeOpenRuleUpdateModal();
   </script>
 </body>
 </html>
